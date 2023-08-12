@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Repositories;
 
-
 use Fintech\Core\Exceptions\MongodbRepositoryException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;

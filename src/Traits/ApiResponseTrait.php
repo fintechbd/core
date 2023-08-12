@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fintech\Core\Traits;
 
 use Symfony\Component\HttpFoundation\Response;
