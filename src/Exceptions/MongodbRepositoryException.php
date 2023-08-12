@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Fintech\Core\Exceptions;
 
 use Exception;
 

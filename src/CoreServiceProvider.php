@@ -2,7 +2,6 @@
 
 namespace Fintech\Core;
 
-use Fintech\Core\Commands\CoreCommand;
 use Fintech\Core\Commands\InstallCommand;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +18,6 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__.'/../config/core.php', 'core'
         );
 
-        $this->app->register(RouteServiceProvider::class);
     }
 
     /**
@@ -27,19 +25,20 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->publishes([
-            __DIR__.'/../config/core.php' => config_path('core.php'),
-        ]);
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'core');
 
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+
         $this->publishes([
             __DIR__.'/../lang' => $this->app->langPath('vendor/core'),
         ]);
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+        $this->publishes([
+            __DIR__.'/../config/core.php' => config_path('core.php'),
+        ]);
 
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/core'),

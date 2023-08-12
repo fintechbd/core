@@ -4,8 +4,7 @@
 namespace Fintech\Core\Abstracts;
 
 
-use App\Exceptions\CountryRepositoryException;
-use App\Exceptions\EloquentRepositoryException;
+use Fintech\Core\Exceptions\MongodbRepositoryException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Jenssegers\Mongodb\Collection;
@@ -33,7 +32,7 @@ abstract class MongodbRepository
      *
      * @param array $attributes
      * @return Model|null
-     * @throws CountryRepositoryException
+     * @throws MongodbRepositoryException
      */
     public function create(array $attributes = [])
     {
@@ -58,7 +57,7 @@ abstract class MongodbRepository
      * @param int|string $id
      * @param array $attributes
      * @return Model|null
-     * @throws CountryRepositoryException
+     * @throws MongodbRepositoryException
      */
     public function update(int|string $id, array $attributes = [])
     {
@@ -92,7 +91,7 @@ abstract class MongodbRepository
      * @param string|int $id
      * @param bool $onlyTrashed
      * @return bool|null
-     * @throws CountryRepositoryException
+     * @throws MongodbRepositoryException
      */
     public function read(int|string $id, $onlyTrashed = false)
     {
@@ -115,7 +114,7 @@ abstract class MongodbRepository
      *
      * @param string|int $id
      * @return bool|null
-     * @throws CountryRepositoryException
+     * @throws MongodbRepositoryException
      */
     public function delete(int|string $id)
     {
@@ -145,7 +144,7 @@ abstract class MongodbRepository
      *
      * @param string|int $id
      * @return bool|null
-     * @throws CountryRepositoryException
+     * @throws MongodbRepositoryException
      */
     public function restore(int|string $id)
     {
