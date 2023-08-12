@@ -2,7 +2,6 @@
 
 namespace Fintech\Core;
 
-use Fintech\Core\Commands\CoreCommand;
 use Fintech\Core\Commands\InstallCommand;
 use Illuminate\Support\ServiceProvider;
 

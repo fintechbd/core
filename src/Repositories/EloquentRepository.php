@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fintech\Core\Abstracts;
-
 
 use App\Exceptions\CountryRepositoryException;
 use App\Exceptions\EloquentRepositoryException;
@@ -15,7 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 abstract class EloquentRepository
 {
     /**
-     * @var Illuminate\Database\Eloquent\Model $model
+     * @var Illuminate\Database\Eloquent\Model
      */
     protected $model;
 
@@ -23,16 +21,15 @@ abstract class EloquentRepository
      * return a list or pagination of items from
      * filtered options
      *
-     * @param array $filters
      * @return LengthAwarePaginator|Builder[]|Collection
      */
-    public abstract function list(array $filters = []);
+    abstract public function list(array $filters = []);
 
     /**
      * Create a new entry resource
      *
-     * @param array $attributes
      * @return Model|null
+     *
      * @throws CountryRepositoryException
      */
     public function create(array $attributes = [])
@@ -55,9 +52,8 @@ abstract class EloquentRepository
     /**
      * find and update a resource attributes
      *
-     * @param int|string $id
-     * @param array $attributes
      * @return Model|null
+     *
      * @throws CountryRepositoryException
      */
     public function update(int|string $id, array $attributes = [])
@@ -89,9 +85,9 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param string|int $id
-     * @param bool $onlyTrashed
+     * @param  bool  $onlyTrashed
      * @return bool|null
+     *
      * @throws CountryRepositoryException
      */
     public function read(int|string $id, $onlyTrashed = false)
@@ -113,8 +109,8 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param string|int $id
      * @return bool|null
+     *
      * @throws CountryRepositoryException
      */
     public function delete(int|string $id)
@@ -143,13 +139,13 @@ abstract class EloquentRepository
     /**
      * find and restore a entry from records
      *
-     * @param string|int $id
      * @return bool|null
+     *
      * @throws CountryRepositoryException
      */
     public function restore(int|string $id)
     {
-        if (!method_exists($this->model, 'restore')) {
+        if (! method_exists($this->model, 'restore')) {
             throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` Trait to perform restoration.');
         }
 
@@ -188,8 +184,7 @@ abstract class EloquentRepository
      * After modifying the query path the query buider
      * to execute method collect output
      *
-     * @param $query
-     * @param array $options
+     * @param  array  $options
      * @return mixed
      */
     protected function execute(&$query, &$options = [])
@@ -206,7 +201,7 @@ abstract class EloquentRepository
         //Prepare Output
         if (isset($options['paginate']) && $options['paginate'] == true) {
             return $query->paginate($options['per_page'], ['*'], 'page', $options['page']);
-        } else if (isset($options['paginate']) && $options['paginate'] == 'simple') {
+        } elseif (isset($options['paginate']) && $options['paginate'] == 'simple') {
             return $query->simplePaginate($options['per_page'], ['*'], 'page', $options['page']);
         } else {
             return $query->get();
