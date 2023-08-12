@@ -3,7 +3,6 @@
 namespace Fintech\Core\Exceptions;
 
 use Exception;
-use Throwable;
 
 /**
  * Class EloquentRepositoryException

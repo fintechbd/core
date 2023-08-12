@@ -15,7 +15,8 @@ class CoreServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/core.php', 'core'
+            __DIR__.'/../config/core.php',
+            'core'
         );
 
     }
