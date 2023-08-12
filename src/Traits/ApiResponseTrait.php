@@ -5,6 +5,10 @@ namespace Fintech\Core\Traits;
 
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Trait ApiResponseTrait
+ * @package Fintech\Core\Traits
+ */
 trait ApiResponseTrait
 {
     private function format($data)

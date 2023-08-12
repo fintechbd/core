@@ -3,7 +3,10 @@
 
 namespace Fintech\Core\Traits;
 
-
+/**
+ * Trait HasPaginateQuery
+ * @package Fintech\Core\Traits
+ */
 trait HasPaginateQuery
 {
     /**

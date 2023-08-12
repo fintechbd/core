@@ -1,7 +1,6 @@
 <?php
 
-
-namespace Fintech\Core\Abstracts;
+namespace Fintech\Core\Repositories;
 
 
 use Fintech\Core\Exceptions\MongodbRepositoryException;
@@ -10,11 +9,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Jenssegers\Mongodb\Collection;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\ModelNotFoundException;
+use InvalidArgumentException;
 
+/**
+ * Class MongodbRepository
+ * @package Fintech\Core\Repositories
+ */
 abstract class MongodbRepository
 {
     /**
-     * @var Jenssegers\Mongodb\Eloquent\Model $model
+     * @var \Jenssegers\Mongodb\Eloquent\Model
      */
     protected $model;
 
@@ -22,16 +26,15 @@ abstract class MongodbRepository
      * return a list or pagination of items from
      * filtered options
      *
-     * @param array $filters
      * @return LengthAwarePaginator|Builder[]|Collection
      */
-    public abstract function list(array $filters = []);
+    abstract public function list(array $filters = []);
 
     /**
      * Create a new entry resource
      *
-     * @param array $attributes
      * @return Model|null
+     *
      * @throws MongodbRepositoryException
      */
     public function create(array $attributes = [])
@@ -45,7 +48,7 @@ abstract class MongodbRepository
             }
         } catch (\Throwable $exception) {
 
-            throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
+            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
         }
 
         return null;
@@ -54,9 +57,8 @@ abstract class MongodbRepository
     /**
      * find and update a resource attributes
      *
-     * @param int|string $id
-     * @param array $attributes
      * @return Model|null
+     *
      * @throws MongodbRepositoryException
      */
     public function update(int|string $id, array $attributes = [])
@@ -79,7 +81,7 @@ abstract class MongodbRepository
             }
         } catch (\Throwable $exception) {
 
-            throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
+            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
         }
 
         return null;
@@ -88,9 +90,9 @@ abstract class MongodbRepository
     /**
      * find and delete a entry from records
      *
-     * @param string|int $id
-     * @param bool $onlyTrashed
+     * @param  bool  $onlyTrashed
      * @return bool|null
+     *
      * @throws MongodbRepositoryException
      */
     public function read(int|string $id, $onlyTrashed = false)
@@ -112,8 +114,8 @@ abstract class MongodbRepository
     /**
      * find and delete a entry from records
      *
-     * @param string|int $id
      * @return bool|null
+     *
      * @throws MongodbRepositoryException
      */
     public function delete(int|string $id)
@@ -133,7 +135,7 @@ abstract class MongodbRepository
 
         } catch (\Throwable $exception) {
 
-            throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
+            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
         }
 
         return null;
@@ -142,13 +144,13 @@ abstract class MongodbRepository
     /**
      * find and restore a entry from records
      *
-     * @param string|int $id
      * @return bool|null
+     *
      * @throws MongodbRepositoryException
      */
     public function restore(int|string $id)
     {
-        if (!method_exists($this->model, 'restore')) {
+        if (! method_exists($this->model, 'restore')) {
             throw new InvalidArgumentException('This model does not have `Jenssegers\Mongodb\Eloquent\SoftDeletes` Trait to perform restoration.');
         }
 
@@ -167,7 +169,7 @@ abstract class MongodbRepository
 
         } catch (\Throwable $exception) {
 
-            throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
+            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
         }
 
         return null;
@@ -187,8 +189,7 @@ abstract class MongodbRepository
      * After modifying the query path the query buider
      * to execute method collect output
      *
-     * @param $query
-     * @param array $options
+     * @param  array  $options
      * @return mixed
      */
     protected function execute(&$query, &$options = [])
@@ -205,7 +206,7 @@ abstract class MongodbRepository
         //Prepare Output
         if (isset($options['paginate']) && $options['paginate'] == true) {
             return $query->paginate($options['per_page'], ['*'], 'page', $options['page']);
-        } else if (isset($options['paginate']) && $options['paginate'] == 'simple') {
+        } elseif (isset($options['paginate']) && $options['paginate'] == 'simple') {
             return $query->simplePaginate($options['per_page'], ['*'], 'page', $options['page']);
         } else {
             return $query->get();

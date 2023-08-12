@@ -4,6 +4,10 @@ namespace Fintech\Core\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class InstallCommand
+ * @package Fintech\Core\Commands
+ */
 class InstallCommand extends Command
 {
     public $signature = 'core:install';
