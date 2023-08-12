@@ -2,9 +2,9 @@
 
 namespace Fintech\Core\Tests;
 
+use Fintech\Core\CoreServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Fintech\Core\CoreServiceProvider;
 
 class TestCase extends Orchestra
 {

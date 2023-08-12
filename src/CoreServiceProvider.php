@@ -2,9 +2,9 @@
 
 namespace Fintech\Core;
 
-use Illuminate\Support\ServiceProvider;
-use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Commands\CoreCommand;
+use Fintech\Core\Commands\InstallCommand;
+use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -30,7 +30,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/core.php' => config_path('core.php'),
         ]);
-
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
