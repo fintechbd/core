@@ -3,6 +3,7 @@
 namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Exceptions\EloquentRepositoryException;
+use Fintech\Core\Exceptions\ResourceNotFoundException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,7 @@ use InvalidArgumentException;
 abstract class EloquentRepository
 {
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $model;
 
@@ -25,6 +26,7 @@ abstract class EloquentRepository
      * return a list or pagination of items from
      * filtered options
      *
+     * @param array $filters
      * @return LengthAwarePaginator|Builder[]|Collection
      */
     abstract public function list(array $filters = []);
@@ -32,6 +34,7 @@ abstract class EloquentRepository
     /**
      * Create a new entry resource
      *
+     * @param array $attributes
      * @return Model|null
      *
      * @throws EloquentRepositoryException
@@ -56,6 +59,8 @@ abstract class EloquentRepository
     /**
      * find and update a resource attributes
      *
+     * @param int|string $id
+     * @param array $attributes
      * @return Model|null
      *
      * @throws EloquentRepositoryException
@@ -90,24 +95,22 @@ abstract class EloquentRepository
      * find and delete a entry from records
      *
      * @param  bool  $onlyTrashed
-     * @return bool|null
+     * @return Model|null
      *
-     * @throws EloquentRepositoryException
+     * @throws ResourceNotFoundException
      */
     public function read(int|string $id, $onlyTrashed = false)
     {
         try {
 
             return ($onlyTrashed)
-                ? $this->model->onlyTrashed()->findOrFail($id)
+                ? $this->model->onlyTrashed()->findOrFail($id) /** @phpstan-ignore-line */
                 : $this->model->findOrFail($id);
 
         } catch (\Throwable $exception) {
 
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
+            throw new ResourceNotFoundException($exception->getMessage(), 0, $exception);
         }
-
-        return null;
     }
 
     /**
@@ -116,6 +119,7 @@ abstract class EloquentRepository
      * @return bool|null
      *
      * @throws EloquentRepositoryException
+     * @throws ResourceNotFoundException
      */
     public function delete(int|string $id)
     {
@@ -125,7 +129,7 @@ abstract class EloquentRepository
 
         } catch (\Throwable $exception) {
 
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
+            throw new ResourceNotFoundException($exception->getMessage(), 0, $exception);
         }
 
         try {
@@ -136,8 +140,6 @@ abstract class EloquentRepository
 
             throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
         }
-
-        return null;
     }
 
     /**
@@ -155,11 +157,12 @@ abstract class EloquentRepository
 
         try {
 
+            /** @phpstan-ignore-next-line */
             $this->model = $this->model->onlyTrashed()->findOrFail($id);
 
         } catch (\Throwable $exception) {
 
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
+            throw new ResourceNotFoundException($exception->getMessage(), 0, $exception);
         }
 
         try {
@@ -170,8 +173,6 @@ abstract class EloquentRepository
 
             throw new EloquentRepositoryException($exception->getMessage(), 0, $exception);
         }
-
-        return null;
     }
 
     /**
