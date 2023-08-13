@@ -1,4 +1,4 @@
-name: run-tests
+name: "Running Unit Feature Testing"
 
 on:
   push:

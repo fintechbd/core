@@ -1,4 +1,4 @@
-name: PHPStan
+name: "PHP Standard Testing"
 
 on:
   push:
