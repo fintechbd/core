@@ -16,7 +16,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__.'/../config/core.php',
-            'core'
+            'fintech.core'
         );
 
     }
@@ -38,7 +38,7 @@ class CoreServiceProvider extends ServiceProvider
         ]);
 
         $this->publishes([
-            __DIR__.'/../config/core.php' => config_path('core.php'),
+            __DIR__.'/../config/core.php' => config_path('fintech/core.php'),
         ]);
 
         $this->publishes([
