@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fintech\Core\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
