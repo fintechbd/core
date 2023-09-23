@@ -1,4 +1,4 @@
-name: PHPStan
+name: "PHP Standard Testing"
 
 on:
   push:
@@ -23,4 +23,4 @@ jobs:
         uses: ramsey/composer-install@v2
 
       - name: Run PHPStan
-        run: ./vendor/bin/phpstan --error-format=github
+        run: ./vendor/bin/phpstan --error-format=github --generate-baseline

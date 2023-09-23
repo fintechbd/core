@@ -1,0 +1,14 @@
+<?php
+
+namespace Fintech\Core\Exceptions;
+
+use Exception;
+
+/**
+ * Class MongodbRepositoryException
+ * @package Fintech\Core\Exceptions
+ */
+class MongodbRepositoryException extends Exception
+{
+    //
+}
