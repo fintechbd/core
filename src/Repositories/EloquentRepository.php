@@ -24,6 +24,7 @@ abstract class EloquentRepository
      * return a list or pagination of items from
      * filtered options
      *
+     * @param array $filters
      * @return LengthAwarePaginator|Builder[]|Collection
      */
     abstract public function list(array $filters = []);
@@ -53,6 +54,7 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
+     * @param int|string $id
      * @param  bool  $onlyTrashed
      * @return Model|null
      *
@@ -80,7 +82,7 @@ abstract class EloquentRepository
      */
     public function update(int|string $id, array $attributes = [])
     {
-        $model = $this->read($id);
+        $model = $this->find($id);
 
         if (!$model) {
             throw (new ModelNotFoundException)->setModel(
@@ -106,7 +108,7 @@ abstract class EloquentRepository
      */
     public function delete(int|string $id)
     {
-        $model = $this->read($id);
+        $model = $this->find($id);
 
         if (!$model) {
             throw (new ModelNotFoundException)->setModel(

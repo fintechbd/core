@@ -79,7 +79,7 @@ abstract class MongodbRepository
      */
     public function update(int|string $id, array $attributes = [])
     {
-        $model = $this->read($id);
+        $model = $this->find($id);
 
         if (!$model) {
             throw (new ModelNotFoundException)->setModel(
@@ -105,7 +105,7 @@ abstract class MongodbRepository
      */
     public function delete(int|string $id)
     {
-        $model = $this->read($id);
+        $model = $this->find($id);
 
         if (!$model) {
             throw (new ModelNotFoundException)->setModel(
