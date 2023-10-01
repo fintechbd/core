@@ -97,6 +97,38 @@ trait ApiResponseTrait
     }
 
     /**
+     * return response with http 401 if request
+     * token or ip banned
+     *
+     * @param $data
+     * @return JsonResponse
+     */
+    protected function banned($data)
+    {
+        if (is_string($data)) {
+            $data = ['message' => $data];
+        }
+
+        return response()->json($this->format($data), Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * return response with http 403 if access forbidden
+     * to that request
+     *
+     * @param $data
+     * @return JsonResponse
+     */
+    protected function forbidden($data)
+    {
+        if (is_string($data)) {
+            $data = ['message' => $data];
+        }
+
+        return response()->json($this->format($data), Response::HTTP_FORBIDDEN);
+    }
+
+    /**
      * return response with http 404 not found
      *
      * @param $data
