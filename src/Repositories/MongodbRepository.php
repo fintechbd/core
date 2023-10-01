@@ -82,8 +82,9 @@ abstract class MongodbRepository
         $model = $this->find($id);
 
         if (!$model) {
-            throw (new ModelNotFoundException)->setModel(
-                get_class($model), array_diff([$id], $this->model->modelKeys())
+            throw (new ModelNotFoundException())->setModel(
+                get_class($model),
+                array_diff([$id], $this->model->modelKeys())
             );
         }
 
@@ -108,8 +109,9 @@ abstract class MongodbRepository
         $model = $this->find($id);
 
         if (!$model) {
-            throw (new ModelNotFoundException)->setModel(
-                get_class($model), array_diff([$id], $this->model->modelKeys())
+            throw (new ModelNotFoundException())->setModel(
+                get_class($model),
+                array_diff([$id], $this->model->modelKeys())
             );
         }
 
@@ -128,8 +130,9 @@ abstract class MongodbRepository
         $model = $this->find($id, true);
 
         if (!$model) {
-            throw (new ModelNotFoundException)->setModel(
-                get_class($model), array_diff([$id], $this->model->modelKeys())
+            throw (new ModelNotFoundException())->setModel(
+                get_class($model),
+                array_diff([$id], $this->model->modelKeys())
             );
         }
 
