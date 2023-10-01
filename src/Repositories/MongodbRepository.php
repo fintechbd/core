@@ -2,13 +2,11 @@
 
 namespace Fintech\Core\Repositories;
 
-use Fintech\Core\Exceptions\MongodbRepositoryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
-use Jenssegers\Mongodb\Collection;
-use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
+use MongoDB\Laravel\Collection;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class MongodbRepository
@@ -17,9 +15,9 @@ use InvalidArgumentException;
 abstract class MongodbRepository
 {
     /**
-     * @var \Jenssegers\Mongodb\Eloquent\Model
+     * @var Model $model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * return a list or pagination of items from
@@ -32,55 +30,20 @@ abstract class MongodbRepository
     /**
      * Create a new entry resource
      *
+     * @param array $attributes
      * @return Model|null
      *
-     * @throws MongodbRepositoryException
+     * @throws \Throwable
      */
     public function create(array $attributes = [])
     {
-        try {
-            if ($this->model->saveOrFail($attributes)) {
+        $this->model->fill($attributes);
 
-                $this->model->refresh();
+        if ($this->model->saveOrFail()) {
 
-                return $this->model;
-            }
-        } catch (\Throwable $exception) {
+            $this->model->refresh();
 
-            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
-        }
-
-        return null;
-    }
-
-    /**
-     * find and update a resource attributes
-     *
-     * @return Model|null
-     *
-     * @throws MongodbRepositoryException
-     */
-    public function update(int|string $id, array $attributes = [])
-    {
-        try {
-
-            $this->model = $this->model->findOrFail($id);
-
-        } catch (\Throwable $exception) {
-
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
-        }
-
-        try {
-            if ($this->model->updateOrFail($attributes)) {
-
-                $this->model->refresh();
-
-                return $this->model;
-            }
-        } catch (\Throwable $exception) {
-
-            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
+            return $this->model;
         }
 
         return null;
@@ -90,21 +53,45 @@ abstract class MongodbRepository
      * find and delete a entry from records
      *
      * @param  bool  $onlyTrashed
-     * @return bool|null
+     * @return Model|null
      *
-     * @throws MongodbRepositoryException
      */
-    public function read(int|string $id, $onlyTrashed = false)
+    public function find(int|string $id, $onlyTrashed = false)
     {
-        try {
+        if($onlyTrashed) {
+            if (! method_exists($this->model, 'restore')) {
+                throw new InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
+            }
 
-            return ($onlyTrashed)
-                ? $this->model->onlyTrashed()->findOrFail($id)
-                : $this->model->findOrFail($id);
+            return $this->model->onlyTrashed()->find($id);
+        }
 
-        } catch (\Throwable $exception) {
+        return $this->model->find($id);
+    }
 
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
+    /**
+     * find and update a resource attributes
+     *
+     * @param int|string $id
+     * @param  array $attributes
+     * @return Model|null
+     *
+     */
+    public function update(int|string $id, array $attributes = [])
+    {
+        $model = $this->read($id);
+
+        if (!$model) {
+            throw (new ModelNotFoundException)->setModel(
+                get_class($model), array_diff([$id], $this->model->modelKeys())
+            );
+        }
+
+        if ($model->updateOrFail($attributes)) {
+
+            $this->model->refresh();
+
+            return $this->model;
         }
 
         return null;
@@ -115,100 +102,37 @@ abstract class MongodbRepository
      *
      * @return bool|null
      *
-     * @throws MongodbRepositoryException
      */
     public function delete(int|string $id)
     {
-        try {
+        $model = $this->read($id);
 
-            $this->model = $this->model->findOrFail($id);
-
-        } catch (\Throwable $exception) {
-
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
+        if (!$model) {
+            throw (new ModelNotFoundException)->setModel(
+                get_class($model), array_diff([$id], $this->model->modelKeys())
+            );
         }
 
-        try {
-
-            return $this->model->deleteOrFail();
-
-        } catch (\Throwable $exception) {
-
-            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
-        }
-
-        return null;
+        return $model->deleteOrFail();
     }
 
     /**
      * find and restore a entry from records
      *
-     * @return bool|null
+     * @param int|string $id
+     * @return bool
      *
-     * @throws MongodbRepositoryException
      */
     public function restore(int|string $id)
     {
-        if (! method_exists($this->model, 'restore')) {
-            throw new InvalidArgumentException('This model does not have `Jenssegers\Mongodb\Eloquent\SoftDeletes` Trait to perform restoration.');
+        $model = $this->find($id, true);
+
+        if (!$model) {
+            throw (new ModelNotFoundException)->setModel(
+                get_class($model), array_diff([$id], $this->model->modelKeys())
+            );
         }
 
-        try {
-
-            $this->model = $this->model->onlyTrashed()->findOrFail($id);
-
-        } catch (\Throwable $exception) {
-
-            throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
-        }
-
-        try {
-
-            return $this->model->restore();
-
-        } catch (\Throwable $exception) {
-
-            throw new MongodbRepositoryException($exception->getMessage(), 0, $exception);
-        }
-
-        return null;
-    }
-
-    /**
-     * return a fresh instance of eloquent query builder
-     *
-     * @return mixed
-     */
-    protected function queryBuilder()
-    {
-        return $this->model->newQuery();
-    }
-
-    /**
-     * After modifying the query path the query buider
-     * to execute method collect output
-     *
-     * @param  array  $options
-     * @return mixed
-     */
-    protected function execute(&$query, &$options = [])
-    {
-        $options['sort'] = $options['sort'] ?? $this->model->getKeyName();
-        $options['dir'] = $options['dir'] ?? 'desc';
-        $options['paginate'] = $options['paginate'] ?? false;
-        $options['per_page'] = $options['per_page'] ?? $this->model->getPerPage();
-        $options['page'] = $options['page'] ?? 1;
-
-        //Handle Sorting
-        $query->orderBy($options['sort'], $options['direction']);
-
-        //Prepare Output
-        if (isset($options['paginate']) && $options['paginate'] == true) {
-            return $query->paginate($options['per_page'], ['*'], 'page', $options['page']);
-        } elseif (isset($options['paginate']) && $options['paginate'] == 'simple') {
-            return $query->simplePaginate($options['per_page'], ['*'], 'page', $options['page']);
-        } else {
-            return $query->get();
-        }
+        return $model->restore();
     }
 }
