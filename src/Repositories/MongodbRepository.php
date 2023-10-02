@@ -3,9 +3,7 @@
 namespace Fintech\Core\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use InvalidArgumentException;
-use MongoDB\Laravel\Collection;
 use MongoDB\Laravel\Eloquent\Model;
 
 /**
