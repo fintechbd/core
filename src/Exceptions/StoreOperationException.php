@@ -7,23 +7,24 @@ use Fintech\Core\Traits\ModelExceptionTrait;
 use Throwable;
 
 /**
- * Class ModelOperationException
+ * Class StoreOperationException
  * @package Fintech\Core\Exceptions
  */
-class ModelOperationException extends Exception
+class StoreOperationException extends Exception
 {
     use ModelExceptionTrait;
 
     /**
-     * ModelOperationException constructor.
+     * StoreOperationException constructor.
      *
-     * @param  string  $message
-     * @param  int  $code
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
      */
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {
         if (strlen($message) == 0) {
-            $message = 'Item create failed';
+            $message = __('core::messages.exception.store', ['model' => $this->getModel()]);
         }
 
         parent::__construct($message, $code, $previous);

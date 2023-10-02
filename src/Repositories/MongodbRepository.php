@@ -3,10 +3,9 @@
 namespace Fintech\Core\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use InvalidArgumentException;
-use MongoDB\Laravel\Collection;
 use MongoDB\Laravel\Eloquent\Model;
+use Throwable;
 
 /**
  * Class MongodbRepository
@@ -25,7 +24,7 @@ abstract class MongodbRepository
      * @param array $attributes
      * @return Model|null
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function create(array $attributes = [])
     {
@@ -44,9 +43,11 @@ abstract class MongodbRepository
     /**
      * find and delete a entry from records
      *
-     * @param  bool  $onlyTrashed
+     * @param int|string $id
+     * @param bool $onlyTrashed
      * @return Model|null
      *
+     * @throws Throwable
      */
     public function find(int|string $id, $onlyTrashed = false)
     {
@@ -65,9 +66,10 @@ abstract class MongodbRepository
      * find and update a resource attributes
      *
      * @param int|string $id
-     * @param  array $attributes
+     * @param array $attributes
      * @return Model|null
      *
+     * @throws Throwable
      */
     public function update(int|string $id, array $attributes = [])
     {
@@ -93,8 +95,10 @@ abstract class MongodbRepository
     /**
      * find and delete a entry from records
      *
+     * @param int|string $id
      * @return bool|null
      *
+     * @throws Throwable
      */
     public function delete(int|string $id)
     {
@@ -116,6 +120,7 @@ abstract class MongodbRepository
      * @param int|string $id
      * @return bool
      *
+     * @throws Throwable
      */
     public function restore(int|string $id)
     {

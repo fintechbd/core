@@ -7,15 +7,15 @@ use Fintech\Core\Traits\ModelExceptionTrait;
 use Throwable;
 
 /**
- * Class UpdateOperationException
+ * Class RestoreOperationException
  * @package Fintech\Core\Exceptions
  */
-class UpdateOperationException extends Exception
+class RestoreOperationException extends Exception
 {
     use ModelExceptionTrait;
 
     /**
-     * UpdateOperationException constructor.
+     * RestoreOperationException constructor.
      *
      * @param string $message
      * @param int $code
@@ -24,7 +24,7 @@ class UpdateOperationException extends Exception
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {
         if (strlen($message) == 0) {
-            $message = __('core::messages.exception.update', ['model' => $this->getModel(), 'id' => $this->getId()]);
+            $message = __('core::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]);
         }
 
         parent::__construct($message, $code, $previous);

@@ -2,12 +2,10 @@
 
 namespace Fintech\Core\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use InvalidArgumentException;
+use Throwable;
 
 /**
  * Class EloquentRepository
@@ -26,7 +24,7 @@ abstract class EloquentRepository
      * @param array $attributes
      * @return Model|null
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function create(array $attributes = [])
     {
@@ -49,6 +47,7 @@ abstract class EloquentRepository
      * @param  bool  $onlyTrashed
      * @return Model|null
      *
+     * @throws Throwable
      */
     public function find(int|string $id, $onlyTrashed = false)
     {
@@ -67,9 +66,10 @@ abstract class EloquentRepository
      * find and update a resource attributes
      *
      * @param int|string $id
-     * @param  array $attributes
+     * @param array $attributes
      * @return Model|null
      *
+     * @throws Throwable
      */
     public function update(int|string $id, array $attributes = [])
     {
@@ -95,8 +95,10 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
+     * @param int|string $id
      * @return bool|null
      *
+     * @throws Throwable
      */
     public function delete(int|string $id)
     {
@@ -118,6 +120,7 @@ abstract class EloquentRepository
      * @param int|string $id
      * @return bool
      *
+     * @throws Throwable
      */
     public function restore(int|string $id)
     {
