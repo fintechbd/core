@@ -14,6 +14,8 @@ class UpdateOperationException extends Exception
 {
     use ModelExceptionTrait;
 
+    protected $type = 'update';
+
     /**
      * UpdateOperationException constructor.
      *

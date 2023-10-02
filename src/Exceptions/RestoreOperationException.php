@@ -14,6 +14,7 @@ class RestoreOperationException extends Exception
 {
     use ModelExceptionTrait;
 
+    protected $type = 'restore';
     /**
      * RestoreOperationException constructor.
      *

@@ -14,6 +14,8 @@ class StoreOperationException extends Exception
 {
     use ModelExceptionTrait;
 
+    protected $type = 'store';
+
     /**
      * StoreOperationException constructor.
      *
