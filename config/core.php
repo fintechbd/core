@@ -4,5 +4,5 @@
 return [
     'blameable_models' => [
 
-    ]
+    ],
 ];

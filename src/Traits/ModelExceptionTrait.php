@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Fintech\Core\Traits;
-
 
 trait ModelExceptionTrait
 {
@@ -16,7 +14,7 @@ trait ModelExceptionTrait
     /**
      * The affected model IDs.
      *
-     * @var int|string $id
+     * @var int|string
      */
     protected $id;
 
@@ -24,7 +22,7 @@ trait ModelExceptionTrait
      * Set the affected Eloquent model and instance ids.
      *
      * @param  class-string<TModel>  $model
-     * @param null $id
+     * @param  null  $id
      * @return $this
      */
     public function setModel($model, $id = null)
@@ -59,7 +57,7 @@ trait ModelExceptionTrait
      */
     private function setMessage()
     {
-        $this->message = match($this->type){
+        $this->message = match ($this->type) {
             'delete' => __('core::messages.exception.delete', ['model' => $this->getModel(), 'id' => $this->getId()]),
             'store' => __('core::messages.exception.store', ['model' => $this->getModel()]),
             'update' => __('core::messages.exception.update', ['model' => $this->getModel(), 'id' => $this->getId()]),

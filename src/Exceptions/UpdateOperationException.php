@@ -8,7 +8,6 @@ use Throwable;
 
 /**
  * Class UpdateOperationException
- * @package Fintech\Core\Exceptions
  */
 class UpdateOperationException extends Exception
 {
@@ -19,9 +18,8 @@ class UpdateOperationException extends Exception
     /**
      * UpdateOperationException constructor.
      *
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
+     * @param  string  $message
+     * @param  int  $code
      */
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {

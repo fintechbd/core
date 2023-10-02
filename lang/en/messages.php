@@ -24,5 +24,5 @@ return [
         'delete' => 'There\'s been an error. :model with ID::id might not have been deleted.',
         'restore' => 'There\'s been an error. :model with ID::id might not have been restored.',
         'default' => 'There\'s been an error. Please try again later.',
-    ]
+    ],
 ];

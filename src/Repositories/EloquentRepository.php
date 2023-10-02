@@ -9,19 +9,14 @@ use Throwable;
 
 /**
  * Class EloquentRepository
- * @package Fintech\Core\Repositories
  */
 abstract class EloquentRepository
 {
-    /**
-     * @var Model $model
-     */
     protected Model $model;
 
     /**
      * Create a new entry resource
      *
-     * @param array $attributes
      * @return Model|null
      *
      * @throws Throwable
@@ -43,7 +38,6 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param int|string $id
      * @param  bool  $onlyTrashed
      * @return Model|null
      *
@@ -51,7 +45,7 @@ abstract class EloquentRepository
      */
     public function find(int|string $id, $onlyTrashed = false)
     {
-        if($onlyTrashed) {
+        if ($onlyTrashed) {
             if (! method_exists($this->model, 'restore')) {
                 throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
             }
@@ -65,8 +59,6 @@ abstract class EloquentRepository
     /**
      * find and update a resource attributes
      *
-     * @param int|string $id
-     * @param array $attributes
      * @return Model|null
      *
      * @throws Throwable
@@ -75,7 +67,7 @@ abstract class EloquentRepository
     {
         $model = $this->find($id);
 
-        if (!$model) {
+        if (! $model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())
@@ -95,7 +87,6 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param int|string $id
      * @return bool|null
      *
      * @throws Throwable
@@ -104,7 +95,7 @@ abstract class EloquentRepository
     {
         $model = $this->find($id);
 
-        if (!$model) {
+        if (! $model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())
@@ -117,7 +108,6 @@ abstract class EloquentRepository
     /**
      * find and restore a entry from records
      *
-     * @param int|string $id
      * @return bool
      *
      * @throws Throwable
@@ -126,7 +116,7 @@ abstract class EloquentRepository
     {
         $model = $this->find($id, true);
 
-        if (!$model) {
+        if (! $model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())

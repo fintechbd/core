@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Trait BlameableTrait
- * @package Fintech\Core\Traits
  *
  * @property-read null|MorphTo $creator
  * @property-read null|MorphTo $editor
@@ -17,8 +16,6 @@ trait BlameableTrait
 {
     /**
      * return the model class that created this model
-     *
-     * @return MorphTo
      */
     public function creator(): MorphTo
     {
@@ -27,7 +24,6 @@ trait BlameableTrait
 
     /**
      * return the model class that updated this model
-     * @return MorphTo
      */
     public function editor(): MorphTo
     {
@@ -36,7 +32,6 @@ trait BlameableTrait
 
     /**
      * return the model class that deleted this model
-     * @return MorphTo
      */
     public function destroyer(): MorphTo
     {
@@ -45,7 +40,6 @@ trait BlameableTrait
 
     /**
      * return the model class that restored this model
-     * @return MorphTo
      */
     public function restorer(): MorphTo
     {

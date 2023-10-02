@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Core
- * @package Fintech\Core\Facades
+ *
  * @see \Fintech\Core\Core
  */
 class Core extends Facade

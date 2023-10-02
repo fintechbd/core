@@ -4,7 +4,6 @@ namespace Fintech\Core\Traits;
 
 /**
  * Trait HasPaginateQuery
- * @package Fintech\Core\Traits
  */
 trait HasPaginateQuery
 {
@@ -18,8 +17,6 @@ trait HasPaginateQuery
      * paginate => receive collection or paginate response
      * per_page => how many item per request
      * page  => to which slot want to pull data
-     *
-     * @return array
      */
     protected function getPaginateOptions(): array
     {
@@ -39,11 +36,11 @@ trait HasPaginateQuery
      * Manipulate the list request of index method
      * If you need to overwrite the method use `getPaginateOptions`
      * method to attach pagination option to request
+     *
      * @return void
      */
     protected function prepareForValidation()
     {
         $this->merge($this->getPaginateOptions());
     }
-
 }

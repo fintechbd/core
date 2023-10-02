@@ -8,19 +8,18 @@ use Throwable;
 
 /**
  * Class RestoreOperationException
- * @package Fintech\Core\Exceptions
  */
 class RestoreOperationException extends Exception
 {
     use ModelExceptionTrait;
 
     protected $type = 'restore';
+
     /**
      * RestoreOperationException constructor.
      *
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
+     * @param  string  $message
+     * @param  int  $code
      */
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {
