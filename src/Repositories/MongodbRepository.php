@@ -20,14 +20,6 @@ abstract class MongodbRepository
     protected Model $model;
 
     /**
-     * return a list or pagination of items from
-     * filtered options
-     *
-     * @return LengthAwarePaginator|Builder[]|Collection
-     */
-    abstract public function list(array $filters = []);
-
-    /**
      * Create a new entry resource
      *
      * @param array $attributes
