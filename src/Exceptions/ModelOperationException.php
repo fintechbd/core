@@ -3,16 +3,19 @@
 namespace Fintech\Core\Exceptions;
 
 use Exception;
+use Fintech\Core\Traits\ModelExceptionTrait;
 use Throwable;
 
 /**
- * Class StoreOperationException
+ * Class ModelOperationException
  * @package Fintech\Core\Exceptions
  */
-class StoreOperationException extends Exception
+class ModelOperationException extends Exception
 {
+    use ModelExceptionTrait;
+
     /**
-     * StoreOperationException constructor.
+     * ModelOperationException constructor.
      *
      * @param  string  $message
      * @param  int  $code
