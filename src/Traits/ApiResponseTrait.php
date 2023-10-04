@@ -53,14 +53,14 @@ trait ApiResponseTrait
     }
 
     /**
-     * return response with http 202 update
+     * return response with http 200 update
      * request accepted
      *
      * @return JsonResponse
      */
     protected function updated($data)
     {
-        return response()->json($this->format($data), Response::HTTP_ACCEPTED);
+        return response()->json($this->format($data), Response::HTTP_OK);
     }
 
     /**

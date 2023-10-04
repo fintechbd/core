@@ -26,4 +26,10 @@ return [
         'default' => 'There\'s been an error. Please try again later.',
         'relation_missing' => ':model:::method() missing relational return type hinting.'
     ],
+    'action' => [
+        'show' => 'Preview',
+        'update' => 'Edit',
+        'destroy' => 'Delete',
+        'restore' => 'Restore',
+    ],
 ];
