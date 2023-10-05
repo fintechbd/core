@@ -23,7 +23,6 @@ abstract class EloquentRepository
     /**
      * split the direct model fields and relational fields
      *
-     * @param array $inputs
      * @return array[]
      *
      * @throws RelationReturnMissingException
@@ -62,9 +61,7 @@ abstract class EloquentRepository
     /**
      * Create a new entry resource
      *
-     * @param array $attributes
      * @return Model|null
-     *
      */
     public function create(array $attributes = [])
     {
@@ -85,9 +82,6 @@ abstract class EloquentRepository
         });
     }
 
-    /**
-     * @param array $relations
-     */
     private function runRelationCreateOperation(array $relations = [])
     {
         if (empty($relations)) {
@@ -120,8 +114,7 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param int|string $id
-     * @param bool $onlyTrashed
+     * @param  bool  $onlyTrashed
      * @return Model|null
      */
     public function find(int|string $id, $onlyTrashed = false)
@@ -140,10 +133,7 @@ abstract class EloquentRepository
     /**
      * find and update a resource attributes
      *
-     * @param int|string $id
-     * @param array $attributes
      * @return Model|null
-     *
      */
     public function update(int|string $id, array $attributes = [])
     {
@@ -172,9 +162,6 @@ abstract class EloquentRepository
 
     }
 
-    /**
-     * @param array $relations
-     */
     private function runRelationUpdateOperation(array $relations = [])
     {
         if (empty($relations)) {
@@ -188,15 +175,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-//                case HasOne::class:
-//
-//                    $this->model->{$relation}()->create($params['value']);
-//                    break;
-//
-//                case HasMany::class:
-//
-//                    $this->model->{$relation}()->createMany($params['value']);
-//                    break;
+                    //                case HasOne::class:
+                    //
+                    //                    $this->model->{$relation}()->create($params['value']);
+                    //                    break;
+                    //
+                    //                case HasMany::class:
+                    //
+                    //                    $this->model->{$relation}()->createMany($params['value']);
+                    //                    break;
 
                 default:
                     break;
@@ -207,7 +194,6 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param int|string $id
      * @return bool|null
      *
      * @throws Throwable
