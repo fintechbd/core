@@ -18,11 +18,12 @@ use Throwable;
  */
 abstract class EloquentRepository
 {
-    protected Model $model;
+    protected ?Model $model;
 
     /**
      * split the direct model fields and relational fields
      *
+     * @param array $inputs
      * @return array[]
      *
      * @throws RelationReturnMissingException
@@ -61,9 +62,9 @@ abstract class EloquentRepository
     /**
      * Create a new entry resource
      *
+     * @param array $attributes
      * @return Model|null
      *
-     * @throws Throwable
      */
     public function create(array $attributes = [])
     {
@@ -84,6 +85,9 @@ abstract class EloquentRepository
         });
     }
 
+    /**
+     * @param array $relations
+     */
     private function runRelationCreateOperation(array $relations = [])
     {
         if (empty($relations)) {
@@ -116,7 +120,8 @@ abstract class EloquentRepository
     /**
      * find and delete a entry from records
      *
-     * @param  bool  $onlyTrashed
+     * @param int|string $id
+     * @param bool $onlyTrashed
      * @return Model|null
      */
     public function find(int|string $id, $onlyTrashed = false)
@@ -135,25 +140,29 @@ abstract class EloquentRepository
     /**
      * find and update a resource attributes
      *
+     * @param int|string $id
+     * @param array $attributes
      * @return Model|null
      *
-     * @throws Throwable
      */
     public function update(int|string $id, array $attributes = [])
     {
-        $model = $this->find($id);
+        $this->model = $this->find($id);
 
-        if (! $model) {
+        if (! $this->model) {
             throw (new ModelNotFoundException())->setModel(
-                get_class($model),
+                get_class($this->model),
                 array_diff([$id], $this->model->modelKeys())
             );
         }
 
-        return DB::transaction(function () use (&$model, &$attributes) {
-            if ($model->updateOrFail($attributes)) {
+        return DB::transaction(function () use (&$attributes) {
 
-                $this->model->refresh();
+            [$directFields, $relationFields] = $this->splitDirectAndRelationFields($attributes);
+
+            if ($this->model->updateOrFail($directFields)) {
+
+                $this->runRelationUpdateOperation($relationFields);
 
                 return $this->model;
             }
@@ -164,8 +173,41 @@ abstract class EloquentRepository
     }
 
     /**
+     * @param array $relations
+     */
+    private function runRelationUpdateOperation(array $relations = [])
+    {
+        if (empty($relations)) {
+            return;
+        }
+
+        foreach ($relations as $relation => $params) {
+            switch ($params['type']) {
+                case BelongsToMany::class:
+
+                    $this->model->{$relation}()->sync($params['value']);
+                    break;
+
+//                case HasOne::class:
+//
+//                    $this->model->{$relation}()->create($params['value']);
+//                    break;
+//
+//                case HasMany::class:
+//
+//                    $this->model->{$relation}()->createMany($params['value']);
+//                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
      * find and delete a entry from records
      *
+     * @param int|string $id
      * @return bool|null
      *
      * @throws Throwable
