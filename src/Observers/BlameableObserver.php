@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Observers;
 
-
 class BlameableObserver
 {
     /**
