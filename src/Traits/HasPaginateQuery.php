@@ -25,8 +25,16 @@ trait HasPaginateQuery
         $options['per_page'] = $this->input('per_page') ?? 20;
         $options['page'] = $this->input('page') ?? 1;
         $options['paginate'] = true;
-        if (strlen($this->input('paginate', '')) != 0) {
+        $options['trashed'] = false;
+
+        $paginateInput = $this->input('paginate', '');
+        $trashedInput = $this->input('trashed', '');
+
+        if ($paginateInput != null && strlen($paginateInput) != 0) {
             $options['paginate'] = $this->boolean('paginate') ?? true;
+        }
+        if ($trashedInput != null && strlen($trashedInput) != 0) {
+            $options['trashed'] = $this->boolean('trashed') ?? true;
         }
 
         return $options;
