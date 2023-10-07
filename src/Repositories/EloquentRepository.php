@@ -61,6 +61,7 @@ abstract class EloquentRepository
     /**
      * Create a new entry resource
      *
+     * @param array $attributes
      * @return Model|null
      */
     public function create(array $attributes = [])
@@ -71,9 +72,9 @@ abstract class EloquentRepository
 
             $this->model->fill($directFields);
 
-            if ($this->model->saveOrFail()) {
+            if ($this->model->save()) {
 
-                $this->runRelationCreateOperation($relationFields);
+                $this->relationCreateOperation($relationFields);
 
                 return $this->model;
             }
@@ -82,7 +83,110 @@ abstract class EloquentRepository
         });
     }
 
-    private function runRelationCreateOperation(array $relations = [])
+    /**
+     * find and delete a entry from records
+     *
+     * @param int|string $id
+     * @param bool $onlyTrashed
+     * @return Model|null
+     */
+    public function find(int|string $id, $onlyTrashed = false)
+    {
+        if ($onlyTrashed) {
+            if (! method_exists($this->model, 'restore')) {
+                throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
+            }
+
+            return $this->model->onlyTrashed()->find($id);
+        }
+
+        return $this->model->find($id);
+    }
+
+    /**
+     * find and update a resource attributes
+     *
+     * @param int|string $id
+     * @param array $attributes
+     * @return Model|null
+     */
+    public function update(int|string $id, array $attributes = [])
+    {
+        $this->model = $this->find($id);
+
+        if (! $this->model) {
+            throw (new ModelNotFoundException())->setModel(
+                get_class($this->model),
+                array_diff([$id], $this->model->modelKeys())
+            );
+        }
+
+        return DB::transaction(function () use (&$attributes) {
+
+            [$directFields, $relationFields] = $this->splitDirectAndRelationFields($attributes);
+
+            if ($this->model->update($directFields)) {
+
+                $this->relationUpdateOperation($relationFields);
+
+                return $this->model;
+            }
+
+            return null;
+        });
+
+    }
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param int|string $id
+     * @return bool|null
+     *
+     * @throws Throwable
+     */
+    public function delete(int|string $id)
+    {
+        $model = $this->find($id);
+
+        if (! $model) {
+            throw (new ModelNotFoundException())->setModel(
+                get_class($this->model),
+                array_diff([$id], $this->model->modelKeys())
+            );
+        }
+
+        return $model->deleteOrFail();
+    }
+
+    /**
+     * find and restore a entry from records
+     *
+     * @param int|string $id
+     * @return bool
+     *
+     */
+    public function restore(int|string $id)
+    {
+        $model = $this->find($id, true);
+
+        if (! $model) {
+            throw (new ModelNotFoundException())->setModel(
+                get_class($this->model),
+                array_diff([$id], $this->model->modelKeys())
+            );
+        }
+
+        return $model->restore();
+    }
+
+    /**
+     * @param array $relations
+     *
+     * @return void
+     *
+     */
+    private function relationCreateOperation(array $relations = [])
     {
         if (empty($relations)) {
             return;
@@ -112,57 +216,12 @@ abstract class EloquentRepository
     }
 
     /**
-     * find and delete a entry from records
+     * @param array $relations
      *
-     * @param  bool  $onlyTrashed
-     * @return Model|null
-     */
-    public function find(int|string $id, $onlyTrashed = false)
-    {
-        if ($onlyTrashed) {
-            if (! method_exists($this->model, 'restore')) {
-                throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
-            }
-
-            return $this->model->onlyTrashed()->find($id);
-        }
-
-        return $this->model->find($id);
-    }
-
-    /**
-     * find and update a resource attributes
+     * @return void
      *
-     * @return Model|null
      */
-    public function update(int|string $id, array $attributes = [])
-    {
-        $this->model = $this->find($id);
-
-        if (! $this->model) {
-            throw (new ModelNotFoundException())->setModel(
-                get_class($this->model),
-                array_diff([$id], $this->model->modelKeys())
-            );
-        }
-
-        return DB::transaction(function () use (&$attributes) {
-
-            [$directFields, $relationFields] = $this->splitDirectAndRelationFields($attributes);
-
-            if ($this->model->updateOrFail($directFields)) {
-
-                $this->runRelationUpdateOperation($relationFields);
-
-                return $this->model;
-            }
-
-            return null;
-        });
-
-    }
-
-    private function runRelationUpdateOperation(array $relations = [])
+    private function relationUpdateOperation(array $relations = [])
     {
         if (empty($relations)) {
             return;
@@ -175,61 +234,19 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
             }
         }
-    }
-
-    /**
-     * find and delete a entry from records
-     *
-     * @return bool|null
-     *
-     * @throws Throwable
-     */
-    public function delete(int|string $id)
-    {
-        $model = $this->find($id);
-
-        if (! $model) {
-            throw (new ModelNotFoundException())->setModel(
-                get_class($model),
-                array_diff([$id], $this->model->modelKeys())
-            );
-        }
-
-        return $model->deleteOrFail();
-    }
-
-    /**
-     * find and restore a entry from records
-     *
-     * @return bool
-     *
-     * @throws Throwable
-     */
-    public function restore(int|string $id)
-    {
-        $model = $this->find($id, true);
-
-        if (! $model) {
-            throw (new ModelNotFoundException())->setModel(
-                get_class($model),
-                array_diff([$id], $this->model->modelKeys())
-            );
-        }
-
-        return $model->restore();
     }
 }
