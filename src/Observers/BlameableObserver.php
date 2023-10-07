@@ -64,7 +64,7 @@ class BlameableObserver
      */
     private function setAttribute($model, string $attribute): bool
     {
-        $model->setAttribute($attribute, auth()->id());
+        $model->setAttribute($attribute, ((auth()->check()) ? auth()->id() : null));
 
         return $model->isDirty($attribute);
     }
