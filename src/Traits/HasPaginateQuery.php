@@ -33,7 +33,7 @@ trait HasPaginateQuery
         $trashedInput = $this->input('trashed', '');
 
         if ($paginateInput != null && strlen($paginateInput) != 0) {
-            $options['paginate'] = $this->boolean('paginate',true);
+            $options['paginate'] = $this->boolean('paginate', true);
         }
         if ($trashedInput != null && strlen($trashedInput) != 0) {
             $options['trashed'] = $this->boolean('trashed', true);

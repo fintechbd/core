@@ -4,7 +4,6 @@ namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
-use Fintech\Core\Supports\Utility;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
