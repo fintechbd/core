@@ -23,3 +23,15 @@ if (! function_exists('action_link')) {
         ];
     }
 }
+
+if (! function_exists('currency')) {
+
+    /**
+     * @param string $code
+     * @return \Fintech\Core\Supports\Currency
+     */
+    function currency($code = 'USD')
+    {
+        return new \Fintech\Core\Supports\Currency($code);
+    }
+}

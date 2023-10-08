@@ -3,6 +3,7 @@
 namespace Fintech\Core;
 
 use Fintech\Core\Commands\InstallCommand;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
@@ -50,5 +51,7 @@ class CoreServiceProvider extends ServiceProvider
                 InstallCommand::class,
             ]);
         }
+
+        AliasLoader::getInstance()->alias('Utility', \Fintech\Core\Supports\Utility::class);
     }
 }

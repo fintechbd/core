@@ -4,6 +4,7 @@ namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
+use Fintech\Core\Supports\Utility;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -262,9 +263,9 @@ abstract class EloquentRepository
      */
     public function executeQuery(Builder $query)
     {
-        $asPagination = request('paginate', false);
+        $asPagination = request()->boolean('paginate');
 
-        $perPageCount = request('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+        $perPageCount = request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
