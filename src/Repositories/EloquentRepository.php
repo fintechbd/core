@@ -3,6 +3,10 @@
 namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Exceptions\RelationReturnMissingException;
+use Fintech\Core\Supports\Constant;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,6 +23,8 @@ use Throwable;
 abstract class EloquentRepository
 {
     protected ?Model $model;
+
+    protected string $paginateFunction;
 
     /**
      * split the direct model fields and relational fields
@@ -42,12 +48,12 @@ abstract class EloquentRepository
 
                 $reflectionMethod = $reflection->getMethod($field);
 
-                if (! $reflectionMethod->hasReturnType()) {
+                if (!$reflectionMethod->hasReturnType()) {
                     throw (new RelationReturnMissingException())
                         ->setModel($reflectionMethod->class, $reflectionMethod->name);
                 }
 
-                $relationFields[$field] = ['type' => (string) $reflectionMethod->getReturnType(), 'value' => $value];
+                $relationFields[$field] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
 
                 continue;
             }
@@ -93,7 +99,7 @@ abstract class EloquentRepository
     public function find(int|string $id, $onlyTrashed = false)
     {
         if ($onlyTrashed) {
-            if (! method_exists($this->model, 'restore')) {
+            if (!method_exists($this->model, 'restore')) {
                 throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
             }
 
@@ -114,7 +120,7 @@ abstract class EloquentRepository
     {
         $this->model = $this->find($id);
 
-        if (! $this->model) {
+        if (!$this->model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($this->model),
                 array_diff([$id], $this->model->modelKeys())
@@ -149,7 +155,7 @@ abstract class EloquentRepository
     {
         $model = $this->find($id);
 
-        if (! $model) {
+        if (!$model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($this->model),
                 array_diff([$id], $this->model->modelKeys())
@@ -170,7 +176,7 @@ abstract class EloquentRepository
     {
         $model = $this->find($id, true);
 
-        if (! $model) {
+        if (!$model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($this->model),
                 array_diff([$id], $this->model->modelKeys())
@@ -234,19 +240,40 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
             }
         }
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder[]|Paginator|Collection
+     */
+    public function executeQuery(Builder $query)
+    {
+        $asPagination = request('paginate', false);
+
+        $perPageCount = request('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+
+        $paginateMethod = config('fintech.core.pagination_type', 'paginate');
+
+        if (!method_exists($query, $paginateMethod)) {
+            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+        }
+
+        return ($asPagination)
+            ? $query->{$paginateMethod}($perPageCount)
+            : $query->get();
     }
 }

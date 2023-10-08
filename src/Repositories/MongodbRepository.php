@@ -2,8 +2,12 @@
 
 namespace Fintech\Core\Repositories;
 
+use Fintech\Core\Supports\Constant;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
+use MongoDB\Laravel\Collection;
+use MongoDB\Laravel\Eloquent\Builder;
 use MongoDB\Laravel\Eloquent\Model;
 use Throwable;
 
@@ -124,5 +128,26 @@ abstract class MongodbRepository
         }
 
         return $model->restore();
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder[]|Paginator|Collection
+     */
+    public function executeQuery(Builder $query)
+    {
+        $asPagination = request('paginate', false);
+
+        $perPageCount = request('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+
+        $paginateMethod = config('fintech.core.pagination_type', 'paginate');
+
+        if (!method_exists($query, $paginateMethod)) {
+            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+        }
+
+        return ($asPagination)
+            ? $query->{$paginateMethod}($perPageCount)
+            : $query->get();
     }
 }
