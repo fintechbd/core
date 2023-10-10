@@ -15,5 +15,29 @@ return [
     | 3. options: cursorPaginate -> for advance memory cursor pagination
     |
     */
-    'pagination_type' => 'simplePaginate'
+    'pagination_type' => 'simplePaginate',
+
+    /*
+    |--------------------------------------------------------------------------
+    | System Setting Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'setting_model' => \Fintech\Core\Models\Setting::class,
+
+    //** Model Config Point Do not Remove **//
+
+    /*
+    |--------------------------------------------------------------------------
+    | Repositories
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'repositories' => [
+        \Fintech\Auth\Interfaces\PermissionRepository::class => \Fintech\Auth\Repositories\Eloquent\PermissionRepository::class,
+
+        //** Repository Binding Config Point Do not Remove **//
+    ],
 ];
