@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('core')->name('core.')->group(function () {
+    Route::apiResource('settings', \Fintech\Core\Http\Controllers\SettingController::class);
+    Route::post('settings/{id}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
 
+    //DO NOT REMOVE THIS LINE//
 });

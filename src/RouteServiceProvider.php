@@ -29,7 +29,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(__DIR__.'/../routes/api.php');
         });
 
-        Route::middlewareGroup('ip_verified', [IpAddressVerified::class]);
     }
 
     /**
