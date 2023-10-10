@@ -2,7 +2,6 @@
 
 namespace Fintech\Core;
 
-use Fintech\Auth\Http\Middlewares\IpAddressVerified;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;

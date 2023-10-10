@@ -74,7 +74,7 @@ class SettingController extends Controller
             $setting = \Core::setting()->create($inputs);
 
             if (!$setting) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.setting_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.setting_model'));
             }
 
             return $this->created([
@@ -104,7 +104,7 @@ class SettingController extends Controller
             $setting = \Core::setting()->find($id);
 
             if (!$setting) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.setting_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
             }
 
             return new SettingResource($setting);
@@ -136,14 +136,14 @@ class SettingController extends Controller
             $setting = \Core::setting()->read($id);
 
             if (!$setting) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.setting_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (!\Core::setting()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.setting_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.setting_model'), $id);
             }
 
             return $this->updated(__('core::messages.resource.updated', ['model' => 'Setting']));
@@ -175,7 +175,7 @@ class SettingController extends Controller
             $setting = \Core::setting()->read($id);
 
             if (!$setting) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.setting_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
             }
 
             if (!\Core::setting()->destroy($id)) {
@@ -211,7 +211,7 @@ class SettingController extends Controller
             $setting = \Core::setting()->find($id, true);
 
             if (!$setting) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.setting_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
             }
 
             if (!\Core::setting()->restore($id)) {

@@ -16,13 +16,13 @@ class SettingRepository extends EloquentRepository implements InterfacesCountryR
 {
     public function __construct()
     {
-       $model = app(config('core.country_model', \App\Models\Country::class));
+        $model = app(config('core.country_model', \App\Models\Country::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-       }
+        if (!$model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**

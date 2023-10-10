@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\SettingRepository;
 
 /**
@@ -16,7 +15,8 @@ class SettingService
      * SettingService constructor.
      * @param SettingRepository $settingRepository
      */
-    public function __construct(SettingRepository $settingRepository) {
+    public function __construct(SettingRepository $settingRepository)
+    {
         $this->settingRepository = $settingRepository;
     }
 

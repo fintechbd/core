@@ -9,9 +9,9 @@ use Fintech\Core\Traits\BlameableTrait;
 
 class Setting extends Model implements Auditable
 {
-   use \OwenIt\Auditing\Auditable;
-   use SoftDeletes;
-   use BlameableTrait;
+    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
+    use BlameableTrait;
 
     /*
     |--------------------------------------------------------------------------
