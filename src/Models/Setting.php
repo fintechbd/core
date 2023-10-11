@@ -6,7 +6,6 @@ use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class Setting extends Model
 {
     use AuditableTrait;
