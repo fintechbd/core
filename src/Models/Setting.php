@@ -2,16 +2,16 @@
 
 namespace Fintech\Core\Models;
 
+use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use Fintech\Core\Traits\BlameableTrait;
 
-class Setting extends Model implements Auditable
+
+class Setting extends Model
 {
-    use \OwenIt\Auditing\Auditable;
+    use AuditableTrait;
     use SoftDeletes;
-    use BlameableTrait;
+
 
     /*
     |--------------------------------------------------------------------------
