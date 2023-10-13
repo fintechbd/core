@@ -12,6 +12,11 @@ use Fintech\Core\Interfaces\SettingRepository;
 class SettingService
 {
     /**
+     * @var SettingRepository
+     */
+    private SettingRepository $settingRepository;
+
+    /**
      * SettingService constructor.
      * @param SettingRepository $settingRepository
      */

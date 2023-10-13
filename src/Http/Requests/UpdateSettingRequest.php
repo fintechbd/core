@@ -22,31 +22,20 @@ class UpdateSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => ['nullable', 'integer', 'min:1'],
+            'package' => ['string', 'required', 'min:3', 'max:255'],
+            'label' => ['string', 'required', 'min:5', 'max:255'],
+            'description' => ['string', 'required', 'min:5', 'max:255'],
+            'key' => ['string', 'required', 'min:3', 'max:255'],
+            'type' => ['string', 'required', 'in:null,string,boolean,integer,double'],
+            'value' => ['nullable'],
         ];
     }
 
-    /**
-     * Get the validation attributes that apply to the request.
-     *
-     * @return array
-     */
-    public function attributes()
+    protected function prepareForValidation()
     {
-        return [
-            //
-        ];
-    }
-
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            //
-        ];
+        $this->merge([
+            'type' => strtolower($this->input('type', 'string'))
+        ]);
     }
 }

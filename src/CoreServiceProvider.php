@@ -3,7 +3,10 @@
 namespace Fintech\Core;
 
 use Fintech\Core\Commands\InstallCommand;
-use Illuminate\Foundation\AliasLoader;
+use Fintech\Core\Facades\Core;
+use Fintech\Core\Supports\Utility;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
@@ -16,7 +19,7 @@ class CoreServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/core.php',
+            __DIR__ . '/../config/core.php',
             'fintech.core'
         );
 
@@ -30,22 +33,22 @@ class CoreServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'core');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'core');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'core');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/core'),
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/core'),
         ]);
 
         $this->publishes([
-            __DIR__.'/../config/core.php' => config_path('fintech/core.php'),
+            __DIR__ . '/../config/core.php' => config_path('fintech/core.php'),
         ]);
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/core'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/core'),
         ]);
 
         if ($this->app->runningInConsole()) {
@@ -54,6 +57,15 @@ class CoreServiceProvider extends ServiceProvider
             ]);
         }
 
-        AliasLoader::getInstance()->alias('Utility', \Fintech\Core\Supports\Utility::class);
+        $this->loadSettings();
+    }
+
+    private function loadSettings()
+    {
+        if (Schema::hasTable('settings')) {
+            Core::setting()->list()->each(function ($setting) {
+                Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
+            });
+        }
     }
 }

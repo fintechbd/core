@@ -2,10 +2,15 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Services\SettingService;
+
 class Core
 {
+    /**
+     * @return SettingService
+     */
     public function setting()
     {
-        return app();
+        return app(SettingService::class);
     }
 }

@@ -6,9 +6,8 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\SettingRepository as InterfacesSettingRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
-use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class SettingRepository
@@ -18,7 +17,7 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
 {
     public function __construct()
     {
-        $model = app(config('core.country_model', \App\Models\Country::class));
+        $model = app(config('fintech.core.setting_model', \Fintech\Core\Models\Setting::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
@@ -36,6 +35,12 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
     public function list(array $filters = [])
     {
         $query = $this->model->newQuery();
+
+        if (isset($filters['user_id']) && !empty($filters['user_id'])) {
+            $query->where('user_id', $filters['user_id']);
+        } else {
+            $query->whereNull('user_id');
+        }
 
         //Searching
         if (isset($filters['search']) && ! empty($filters['search'])) {

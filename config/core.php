@@ -36,7 +36,7 @@ return [
     | This value will be used to across system where model is needed
     */
     'repositories' => [
-        \Fintech\Auth\Interfaces\PermissionRepository::class => \Fintech\Auth\Repositories\Eloquent\PermissionRepository::class,
+        \Fintech\Core\Interfaces\SettingRepository::class => \Fintech\Core\Repositories\Eloquent\SettingRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
