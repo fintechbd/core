@@ -3,7 +3,6 @@
 namespace Fintech\Core\Http\Controllers;
 
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Http\Requests\UpdateConfigurationRequest;
 use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
