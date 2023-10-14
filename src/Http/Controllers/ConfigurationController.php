@@ -26,20 +26,20 @@ class ConfigurationController extends Controller
 {
     use ApiResponseTrait;
 
-    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules'];
+    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules', 'packages'];
 
     /**
      * @lrd:start
      * Return a listing of the configurations in key and value format.
      * @lrd:end
      *
-     * @param string $package
+     * @param string $configuration
      * @return ConfigurationResource|JsonResponse
      */
-    public function show(string $package): ConfigurationResource|JsonResponse
+    public function show(string $configuration): ConfigurationResource|JsonResponse
     {
         try {
-            $configurations = Config::get("fintech.{$package}", []);
+            $configurations = Config::get("fintech.{$configuration}", []);
 
             foreach ($configurations as $key => $value) {
                 foreach ($this->hiddenFields as $field) {
@@ -64,31 +64,12 @@ class ConfigurationController extends Controller
      * @lrd:end
      *
      * @param UpdateConfigurationRequest $request
-     * @param string|int $id
+     * @param string $configuration
      * @return JsonResponse
      */
-    public function update(UpdateConfigurationRequest $request, string|int $id): JsonResponse
+    public function update(UpdateConfigurationRequest $request, string $configuration): JsonResponse
     {
         try {
-
-            $setting = \Core::setting()->read($id);
-
-            if (!$setting) {
-                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
-            }
-
-            $inputs = $request->validated();
-
-            if (!\Core::setting()->update($id, $inputs)) {
-
-                throw (new UpdateOperationException())->setModel(config('fintech.core.setting_model'), $id);
-            }
-
-            return $this->updated(__('core::messages.resource.updated', ['model' => 'Setting']));
-
-        } catch (ModelNotFoundException $exception) {
-
-            return $this->notfound($exception->getMessage());
 
         } catch (\Exception $exception) {
 
@@ -101,11 +82,10 @@ class ConfigurationController extends Controller
      * Soft delete a specified setting resource using id.
      * @lrd:end
      *
-     * @param string|int $id
+     * @param string $configuration
      * @return JsonResponse
-     * @throws ModelNotFoundException
      */
-    public function destroy(string|int $id)
+    public function destroy(string $configuration)
     {
         try {
 
@@ -131,5 +111,4 @@ class ConfigurationController extends Controller
             return $this->failed($exception->getMessage());
         }
     }
-
 }
