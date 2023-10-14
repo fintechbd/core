@@ -3,7 +3,6 @@
 namespace Fintech\Core\Http\Controllers;
 
 use Fintech\Core\Facades\Core;
-use Fintech\Core\Http\Requests\UpdateConfigurationRequest;
 use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -71,8 +70,9 @@ class ConfigurationController extends Controller
 
             $inputs = $request->all();
 
-            foreach ($inputs as $key => $value)
+            foreach ($inputs as $key => $value) {
                 Core::setting()->setValue($configuration, $key, $value);
+            }
 
             return $this->updated(__('core::messages.setting.saved', ['package' => config("fintech.core.packages.{$configuration}", 'System')]));
 
@@ -96,8 +96,9 @@ class ConfigurationController extends Controller
 
             $settings = Core::setting()->list(['package' => $configuration]);
 
-            foreach ($settings as $setting)
+            foreach ($settings as $setting) {
                 Core::setting()->destroy($setting->id);
+            }
 
             return $this->deleted(__('core::messages.setting.deleted', ['model' => 'Setting']));
 
