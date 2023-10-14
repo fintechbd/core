@@ -32,6 +32,7 @@ class SettingCollection extends ResourceCollection
                 'dir' => Constant::SORT_DIRECTIONS,
                 'per_page' => Constant::PAGINATE_LENGTHS,
                 'sort' => ['id', 'name', 'created_at', 'updated_at'],
+                'package' => config('fintech.core.packages')
             ],
             'query' => $request->all(),
         ];

@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->string('description');
             $table->string('key');
             $table->string('type')->default('string');
-            $table->json('value')->nullable();
+            $table->longText('value')->nullable();
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('editor_id')->nullable();
             $table->foreignId('destroyer_id')->nullable();

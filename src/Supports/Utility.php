@@ -23,20 +23,22 @@ class Utility
                     return $value == 'true';
                 }
 
-                return (bool) $value;
+                return (bool)$value;
 
             case 'float' :
-                return (float) $value;
+            case 'double' :
+                return (double)$value;
 
             case 'integer' :
-                return (int) $value;
+                return (int)$value;
 
             case 'json' :
+            case 'array' :
                 return json_decode($value, true);
 
             case 'string' :
             default:
-                return (string) $value;
+                return (string)$value;
         }
     }
 
@@ -63,17 +65,18 @@ class Utility
                 return (is_string($value)) ? $value : json_encode($value);
 
             case 'integer':
-                return (is_numeric($value)) ? (string) filter_var($value, FILTER_SANITIZE_NUMBER_INT) : '';
+                return (is_numeric($value)) ? (string)filter_var($value, FILTER_SANITIZE_NUMBER_INT) : '';
 
             case 'float':
-                return (is_numeric($value)) ? (string) filter_var(
+            case 'double':
+                return (is_numeric($value)) ? (string)filter_var(
                     $value,
                     FILTER_SANITIZE_NUMBER_FLOAT,
                     FILTER_FLAG_ALLOW_FRACTION
                 ) : '';
 
             default:
-                return (string) $value;
+                return (string)$value;
         }
     }
 }

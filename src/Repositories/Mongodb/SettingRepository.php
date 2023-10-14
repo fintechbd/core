@@ -2,8 +2,8 @@
 
 namespace Fintech\Core\Repositories\Mongodb;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\CountryRepository as InterfacesCountryRepository;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;

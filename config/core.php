@@ -19,6 +19,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | System Packages or Modules Available
+    |--------------------------------------------------------------------------
+    |
+    | options:
+    | 1. paginate -> for length aware pagination
+    | 2. simplePaginate -> for basic prev and next pagination
+    | 3. options: cursorPaginate -> for advance memory cursor pagination
+    |
+    */
+    'packages' => [
+        'core' => 'Core',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | System Setting Model
     |--------------------------------------------------------------------------
     |

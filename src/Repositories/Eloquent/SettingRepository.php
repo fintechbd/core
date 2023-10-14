@@ -2,8 +2,8 @@
 
 namespace Fintech\Core\Repositories\Eloquent;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\SettingRepository as InterfacesSettingRepository;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -49,6 +49,10 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
             } else {
                 $query->where('name', 'like', "%{$filters['search']}%");
             }
+        }
+
+        if (isset($filters['package']) && !empty($filters['package'])) {
+            $query->where('package', '=', strtolower($filters['package']));
         }
 
         //Display Trashed
