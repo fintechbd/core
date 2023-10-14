@@ -4,14 +4,13 @@ namespace Fintech\Core\Http\Controllers;
 
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Core\Http\Requests\IndexConfigurationRequest;
 use Fintech\Core\Http\Requests\UpdateConfigurationRequest;
-use Fintech\Core\Http\Requests\UpdateSettingRequest;
-use Fintech\Core\Http\Resources\ConfigurationCollection;
+use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class ConfigurationController
@@ -27,22 +26,31 @@ class ConfigurationController extends Controller
 {
     use ApiResponseTrait;
 
+    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules'];
+
     /**
      * @lrd:start
      * Return a listing of the configurations in key and value format.
      * @lrd:end
      *
-     * @param IndexConfigurationRequest $request
-     * @return ConfigurationCollection|JsonResponse
+     * @param string $package
+     * @return ConfigurationResource|JsonResponse
      */
-    public function index(IndexConfigurationRequest $request): ConfigurationCollection|JsonResponse
+    public function show(string $package): ConfigurationResource|JsonResponse
     {
         try {
-            $inputs = $request->validated();
+            $configurations = Config::get("fintech.{$package}", []);
 
-            $configurations = \Core::setting()->list($inputs);
+            foreach ($configurations as $key => $value) {
+                foreach ($this->hiddenFields as $field) {
+                    if (preg_match("/{$field}/i", $key) === 1) {
+                        unset($configurations[$key]);
+                    }
+                }
+            }
 
-            return new ConfigurationCollection($configurations);
+
+            return new ConfigurationResource($configurations);
 
         } catch (\Exception $exception) {
 
