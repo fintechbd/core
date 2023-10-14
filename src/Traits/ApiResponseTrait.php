@@ -10,10 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait ApiResponseTrait
 {
-    private function format($data)
+    private function format($data, $statusCode = null)
     {
         if (is_string($data)) {
             $data = ['message' => $data];
+            if ($statusCode != null) {
+                $data['code'] = $statusCode;
+            }
+        }
+
+        if (is_array($data) && !isset($data['code'])) {
+            if ($statusCode != null) {
+                $data['code'] = $statusCode;
+            }
         }
 
         return $data;
@@ -23,6 +32,7 @@ trait ApiResponseTrait
      * return response with http 200 as deleted
      * resource
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function deleted($data)
@@ -34,6 +44,7 @@ trait ApiResponseTrait
      * return response with http 200 as soft deleted
      * resource restored
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function restored($data)
@@ -45,6 +56,7 @@ trait ApiResponseTrait
      * return response with http 201 resource
      * created on server
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function created($data)
@@ -56,6 +68,7 @@ trait ApiResponseTrait
      * return response with http 200 update
      * request accepted
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function updated($data)
@@ -67,6 +80,7 @@ trait ApiResponseTrait
      * return response with http 202 export
      * request accepted
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function exported($data)
@@ -78,6 +92,7 @@ trait ApiResponseTrait
      * return response with http 400 if business
      * logic exception
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function failed($data)
@@ -93,6 +108,7 @@ trait ApiResponseTrait
      * return response with http 401 if request
      * token or ip banned
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function banned($data)
@@ -108,6 +124,7 @@ trait ApiResponseTrait
      * return response with http 403 if access forbidden
      * to that request
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function forbidden($data)
@@ -122,6 +139,7 @@ trait ApiResponseTrait
     /**
      * return response with http 404 not found
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function notfound($data)
@@ -132,6 +150,7 @@ trait ApiResponseTrait
     /**
      * return response with http 423 attempt locked
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function locked($data)
@@ -142,6 +161,7 @@ trait ApiResponseTrait
     /**
      * return response with http 429 too many requests code
      *
+     * @param $data
      * @return JsonResponse
      */
     protected function overflow($data)

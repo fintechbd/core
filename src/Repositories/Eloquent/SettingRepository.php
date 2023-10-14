@@ -55,6 +55,14 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
             $query->where('package', '=', strtolower($filters['package']));
         }
 
+        if (isset($filters['key']) && !empty($filters['key'])) {
+            $query->where('key', '=', $filters['key']);
+        }
+
+        if (isset($filters['type']) && !empty($filters['type'])) {
+            $query->where('type', '=', $filters['type']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && !empty($filters['trashed'])) {
             $query->onlyTrashed();

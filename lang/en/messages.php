@@ -32,4 +32,9 @@ return [
         'destroy' => 'Delete',
         'restore' => 'Restore',
     ],
+    'setting' => [
+        'saved' => ':package configurations saved successfully.',
+        'deleted' => ':package configurations restored to defaults.',
+        'failed' => ':package configurations failed to update.'
+    ]
 ];

@@ -2,12 +2,12 @@
 
 namespace Fintech\Core\Http\Controllers;
 
-use Fintech\Core\Exceptions\DeleteOperationException;
+use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Requests\UpdateConfigurationRequest;
 use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Config;
 
@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Config;
  * @package Fintech\Core\Http\Controllers
  *
  * @lrd:start
- * This class handle create, display, update, delete & restore
- * operation related to setting
+ * This class handle system setting related to all individual packages
  * @lrd:end
  *
  */
@@ -30,6 +29,7 @@ class ConfigurationController extends Controller
     /**
      * @lrd:start
      * Return a listing of the configurations in key and value format.
+     * *`configuration`* value depends on  number of package configured to system
      * @lrd:end
      *
      * @param string $configuration
@@ -48,7 +48,6 @@ class ConfigurationController extends Controller
                 }
             }
 
-
             return new ConfigurationResource($configurations);
 
         } catch (\Exception $exception) {
@@ -59,16 +58,23 @@ class ConfigurationController extends Controller
 
     /**
      * @lrd:start
-     * Update a specified setting resource using id.
+     * Update a specified package configurations using configuration
      * @lrd:end
      *
-     * @param UpdateConfigurationRequest $request
+     * @param Request $request
      * @param string $configuration
      * @return JsonResponse
      */
-    public function update(UpdateConfigurationRequest $request, string $configuration): JsonResponse
+    public function update(string $configuration, Request $request): JsonResponse
     {
         try {
+
+            $inputs = $request->all();
+
+            foreach ($inputs as $key => $value)
+                Core::setting()->setValue($configuration, $key, $value);
+
+            return $this->updated(__('core::messages.setting.saved', ['package' => config("fintech.core.packages.{$configuration}", 'System')]));
 
         } catch (\Exception $exception) {
 
@@ -88,22 +94,12 @@ class ConfigurationController extends Controller
     {
         try {
 
-            $setting = \Core::setting()->read($id);
+            $settings = Core::setting()->list(['package' => $configuration]);
 
-            if (!$setting) {
-                throw (new ModelNotFoundException())->setModel(config('fintech.core.setting_model'), $id);
-            }
+            foreach ($settings as $setting)
+                Core::setting()->destroy($setting->id);
 
-            if (!\Core::setting()->destroy($id)) {
-
-                throw (new DeleteOperationException())->setModel(config('fintech.core.setting_model'), $id);
-            }
-
-            return $this->deleted(__('core::messages.resource.deleted', ['model' => 'Setting']));
-
-        } catch (ModelNotFoundException $exception) {
-
-            return $this->notfound($exception->getMessage());
+            return $this->deleted(__('core::messages.setting.deleted', ['model' => 'Setting']));
 
         } catch (\Exception $exception) {
 
