@@ -27,7 +27,7 @@ class Utility
 
             case 'float' :
             case 'double' :
-                return (double)$value;
+                return (float)$value;
 
             case 'integer' :
                 return (int)$value;
