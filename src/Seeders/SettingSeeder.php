@@ -70,7 +70,7 @@ class SettingSeeder extends Seeder
                 'description' => 'What typo of pagination will display in list view',
                 'key' => 'pagination_type',
                 'type' => 'string',
-                'value' => 'simplePaginate'
+                'value' => 'paginate'
             ],
         ];
     }
