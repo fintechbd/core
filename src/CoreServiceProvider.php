@@ -5,6 +5,7 @@ namespace Fintech\Core;
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -62,10 +63,12 @@ class CoreServiceProvider extends ServiceProvider
 
     private function loadSettings()
     {
-        if (Schema::hasTable('settings')) {
-            Core::setting()->list()->each(function ($setting) {
-                Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
-            });
+        if(!App::environment('testing')) {
+            if (Schema::hasTable('settings')) {
+                Core::setting()->list()->each(function ($setting) {
+                    Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
+                });
+            }
         }
     }
 }
