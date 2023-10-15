@@ -97,11 +97,18 @@ trait ApiResponseTrait
      */
     protected function failed($data)
     {
-        if (is_string($data)) {
-            $data = ['message' => $data];
-        }
-
         return response()->json($this->format($data), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * return response with http 200 for all success status
+     *
+     * @param $data
+     * @return JsonResponse
+     */
+    protected function success($data)
+    {
+        return response()->json($this->format($data), Response::HTTP_OK);
     }
 
     /**
