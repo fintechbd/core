@@ -72,6 +72,22 @@ class SettingSeeder extends Seeder
                 'type' => 'string',
                 'value' => 'paginate'
             ],
+            [
+                'package' => 'auth',
+                'label' => 'How User will reset their password',
+                'description' => 'When a user forgot password. he have follow this configured option to reset password.',
+                'key' => 'password_reset_method',
+                'type' => 'string',
+                'value' => 'temporary_password'
+            ],
+            [
+                'package' => 'auth',
+                'label' => 'Length of Temporary Password',
+                'description' => 'Number of Alpha-numeric characters in Temporary Password when generated',
+                'key' => 'temporary_password_length',
+                'type' => 'integer',
+                'value' => '8'
+            ],
         ];
     }
 }
