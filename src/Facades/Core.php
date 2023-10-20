@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * Class Core
  * @method static SettingService setting()
+ * @method static bool packageExists(string $name)
  * @see \Fintech\Core\Core
  */
 class Core extends Facade

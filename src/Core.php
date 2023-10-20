@@ -22,6 +22,7 @@ class Core
      */
     public function packageExists(string $name): bool
     {
-        return class_exists("\Fintech\{$name}\Facades\{$name}::class");
+
+        return class_exists("\Fintech\\{$name}\Facades\\{$name}::class");
     }
 }
