@@ -2,6 +2,21 @@
 
 // config for Fintech/Core
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable Module APIs
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
+    'enabled' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable Module APIs
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
     'blameable_model' => \Fintech\Auth\Models\User::class,
     'blameable_guard' => 'web',
     /*

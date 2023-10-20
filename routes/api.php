@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+if (Config::get('fintech.core.enabled')) {
 
-Route::prefix('core')->name('core.')->group(function () {
-    Route::apiResource('settings', \Fintech\Core\Http\Controllers\SettingController::class);
-    Route::post('settings/{id}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
-    Route::apiResource('configurations', \Fintech\Core\Http\Controllers\ConfigurationController::class)->only(['show', 'update', 'destroy']);
+    Route::prefix('core')->name('core.')->group(function () {
+        Route::apiResource('settings', \Fintech\Core\Http\Controllers\SettingController::class);
+        Route::post('settings/{id}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
+        Route::apiResource('configurations', \Fintech\Core\Http\Controllers\ConfigurationController::class)->only(['show', 'update', 'destroy']);
 
-    //DO NOT REMOVE THIS LINE//
-});
+        //DO NOT REMOVE THIS LINE//
+    });
+}
