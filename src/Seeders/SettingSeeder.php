@@ -24,21 +24,25 @@ class SettingSeeder extends Seeder
                 'package' => 'auth',
                 'label' => 'User Authentication Field',
                 'description' => 'Unique field that can be used to authenticated a end user to system',
-                'key' => 'auth_field', 'type' => 'string', 'value' => 'login_id'
+                'key' => 'auth_field',
+                'type' => 'string',
+                'value' => 'login_id'
             ],
             [
                 'package' => 'auth',
                 'label' => 'OTP Key Length',
                 'description' => 'Number of digits that otp key will have',
                 'key' => 'otp_length',
-                'type' => 'integer', 'value' => '6'
+                'type' => 'integer',
+                'value' => '6'
             ],
             [
                 'package' => 'auth',
                 'label' => 'Password',
                 'description' => 'Which field in user table will maintain the password field value',
                 'key' => 'password_field',
-                'type' => 'string', 'value' => 'password'
+                'type' => 'string',
+                'value' => 'password'
             ],
             [
                 'package' => 'auth',
@@ -63,6 +67,14 @@ class SettingSeeder extends Seeder
                 'key' => 'threshold_notification',
                 'type' => 'boolean',
                 'value' => 'false'
+            ],
+            [
+                'package' => 'auth',
+                'label' => 'Frontend Register Default Role',
+                'description' => 'Set the Default Role(s) for the Registration Customer',
+                'key' => 'customer_roles',
+                'type' => 'array',
+                'value' => '[4]'
             ],
             [
                 'package' => 'core',
