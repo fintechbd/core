@@ -3,6 +3,7 @@
 namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Supports\Constant;
+use Fintech\Core\Traits\HasUploadFiles;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use InvalidArgumentException;
@@ -16,6 +17,8 @@ use Throwable;
  */
 abstract class MongodbRepository
 {
+    use HasUploadFiles;
+
     protected Model $model;
 
     /**

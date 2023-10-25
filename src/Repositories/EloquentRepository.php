@@ -4,6 +4,7 @@ namespace Fintech\Core\Repositories;
 
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
+use Fintech\Core\Traits\HasUploadFiles;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,14 +23,18 @@ use Throwable;
  */
 abstract class EloquentRepository
 {
+    use HasUploadFiles;
+
     protected ?Model $model;
 
-    protected string $paginateFunction;
+    protected array $fields = [];
+
+    protected array $relations = [];
 
     /**
      * split the direct model fields and relational fields
      *
-     * @return array[]
+     * @return void
      *
      * @throws RelationReturnMissingException
      * @throws \ReflectionException
@@ -37,10 +42,6 @@ abstract class EloquentRepository
     protected function splitDirectAndRelationFields(array $inputs)
     {
         $reflection = new ReflectionClass($this->model);
-
-        $directFields = [];
-
-        $relationFields = [];
 
         foreach ($inputs as $field => $value) {
 
@@ -53,15 +54,20 @@ abstract class EloquentRepository
                         ->setModel($reflectionMethod->class, $reflectionMethod->name);
                 }
 
-                $relationFields[$field] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
+                $this->relations[$field] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
 
                 continue;
             }
 
-            $directFields[$field] = $value;
-        }
+            if (property_exists($this->model, 'files') && in_array($field, $this->model->files)) {
 
-        return [$directFields, $relationFields];
+                $this->files[$field] = $value;
+
+                continue;
+            }
+
+            $this->fields[$field] = $value;
+        }
     }
 
     /**
@@ -74,13 +80,15 @@ abstract class EloquentRepository
     {
         return DB::transaction(function () use (&$attributes) {
 
-            [$directFields, $relationFields] = $this->splitDirectAndRelationFields($attributes);
+            $this->splitDirectAndRelationFields($attributes);
 
-            $this->model->fill($directFields);
+            $this->model->fill($this->fields);
 
             if ($this->model->save()) {
 
-                $this->relationCreateOperation($relationFields);
+                $this->relationCreateOperation();
+
+                $this->uploadModelFiles();
 
                 return $this->model;
             }
@@ -129,11 +137,13 @@ abstract class EloquentRepository
 
         return DB::transaction(function () use (&$attributes) {
 
-            [$directFields, $relationFields] = $this->splitDirectAndRelationFields($attributes);
+            $this->splitDirectAndRelationFields($attributes);
 
-            if ($this->model->update($directFields)) {
+            if ($this->model->update($this->fields)) {
 
-                $this->relationUpdateOperation($relationFields);
+                $this->relationUpdateOperation();
+
+                $this->uploadModelFiles();
 
                 return $this->model;
             }
@@ -192,13 +202,13 @@ abstract class EloquentRepository
      * @return void
      *
      */
-    private function relationCreateOperation(array $relations = [])
+    private function relationCreateOperation()
     {
-        if (empty($relations)) {
+        if (empty($this->relations)) {
             return;
         }
 
-        foreach ($relations as $relation => $params) {
+        foreach ($this->relations as $relation => $params) {
             switch ($params['type']) {
                 case BelongsToMany::class:
 
@@ -227,28 +237,28 @@ abstract class EloquentRepository
      * @return void
      *
      */
-    private function relationUpdateOperation(array $relations = [])
+    private function relationUpdateOperation()
     {
-        if (empty($relations)) {
+        if (empty($this->relations)) {
             return;
         }
 
-        foreach ($relations as $relation => $params) {
+        foreach ($this->relations as $relation => $params) {
             switch ($params['type']) {
                 case BelongsToMany::class:
 
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
