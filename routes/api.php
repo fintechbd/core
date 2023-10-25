@@ -20,6 +20,8 @@ if (Config::get('fintech.core.enabled')) {
         Route::post('settings/{id}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
         Route::apiResource('configurations', \Fintech\Core\Http\Controllers\ConfigurationController::class)->only(['show', 'update', 'destroy']);
 
-        //DO NOT REMOVE THIS LINE//
+        Route::apiResource('jobs', \Fintech\Core\Http\Controllers\JobController::class);
+
+    //DO NOT REMOVE THIS LINE//
     });
 }

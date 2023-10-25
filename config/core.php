@@ -56,6 +56,16 @@ return [
     */
     'setting_model' => \Fintech\Core\Models\Setting::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Job Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'job_model' => \Fintech\Core\Models\Job::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -67,6 +77,8 @@ return [
     */
     'repositories' => [
         \Fintech\Core\Interfaces\SettingRepository::class => \Fintech\Core\Repositories\Eloquent\SettingRepository::class,
+
+        \Fintech\Core\Interfaces\JobRepository::class => \Fintech\Core\Repositories\Eloquent\JobRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

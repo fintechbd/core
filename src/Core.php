@@ -25,4 +25,9 @@ class Core
 
         return class_exists("\Fintech\\{$name}\Facades\\{$name}::class");
     }
+
+    public function extFromMime(string $mime)
+    {
+
+    }
 }
