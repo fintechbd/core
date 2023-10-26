@@ -39,9 +39,11 @@ abstract class EloquentRepository
      * @throws RelationReturnMissingException
      * @throws \ReflectionException
      */
-    protected function splitDirectAndRelationFields(array $inputs)
+    protected function splitFieldRelationFilesFromInput(array $inputs)
     {
         $reflection = new ReflectionClass($this->model);
+
+        $this->stripMediaCollections();
 
         foreach ($inputs as $field => $value) {
 
@@ -59,7 +61,7 @@ abstract class EloquentRepository
                 continue;
             }
 
-            if (property_exists($this->model, 'files') && in_array($field, $this->model->files)) {
+            if (in_array($field, $this->mediaCollections)) {
 
                 $this->files[$field] = $value;
 
@@ -80,7 +82,7 @@ abstract class EloquentRepository
     {
         return DB::transaction(function () use (&$attributes) {
 
-            $this->splitDirectAndRelationFields($attributes);
+            $this->splitFieldRelationFilesFromInput($attributes);
 
             $this->model->fill($this->fields);
 
@@ -88,7 +90,7 @@ abstract class EloquentRepository
 
                 $this->relationCreateOperation();
 
-                $this->uploadModelFiles();
+                $this->uploadMediaFiles();
 
                 return $this->model;
             }
@@ -137,13 +139,13 @@ abstract class EloquentRepository
 
         return DB::transaction(function () use (&$attributes) {
 
-            $this->splitDirectAndRelationFields($attributes);
+            $this->splitFieldRelationFilesFromInput($attributes);
 
             if ($this->model->update($this->fields)) {
 
                 $this->relationUpdateOperation();
 
-                $this->uploadModelFiles();
+                $this->uploadMediaFiles();
 
                 return $this->model;
             }
