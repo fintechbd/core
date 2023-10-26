@@ -74,7 +74,7 @@ class JobController extends Controller
             $job = \Core::job()->create($inputs);
 
             if (!$job) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.job_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.job_model'));
             }
 
             return $this->created([
@@ -104,7 +104,7 @@ class JobController extends Controller
             $job = \Core::job()->find($id);
 
             if (!$job) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
             }
 
             return new JobResource($job);
@@ -137,14 +137,14 @@ class JobController extends Controller
             $job = \Core::job()->read($id);
 
             if (!$job) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (!\Core::job()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.job_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.job_model'), $id);
             }
 
             return $this->updated(__('core::messages.resource.updated', ['model' => 'Job']));
@@ -176,7 +176,7 @@ class JobController extends Controller
             $job = \Core::job()->read($id);
 
             if (!$job) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
             }
 
             if (!\Core::job()->destroy($id)) {
@@ -212,7 +212,7 @@ class JobController extends Controller
             $job = \Core::job()->find($id, true);
 
             if (!$job) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
             }
 
             if (!\Core::job()->restore($id)) {

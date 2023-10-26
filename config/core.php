@@ -56,7 +56,7 @@ return [
     */
     'setting_model' => \Fintech\Core\Models\Setting::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | Job Model

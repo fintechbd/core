@@ -22,6 +22,6 @@ if (Config::get('fintech.core.enabled')) {
 
         Route::apiResource('jobs', \Fintech\Core\Http\Controllers\JobController::class);
 
-    //DO NOT REMOVE THIS LINE//
+        //DO NOT REMOVE THIS LINE//
     });
 }

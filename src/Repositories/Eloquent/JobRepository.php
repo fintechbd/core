@@ -17,13 +17,13 @@ class JobRepository extends EloquentRepository implements InterfacesJobRepositor
 {
     public function __construct()
     {
-       $model = app(config('fintech.core.job_model', \Fintech\Core\Models\Job::class));
+        $model = app(config('fintech.core.job_model', \Fintech\Core\Models\Job::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-       }
+        if (!$model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**

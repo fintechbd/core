@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\JobRepository;
 
 /**
@@ -16,7 +15,8 @@ class JobService
      * JobService constructor.
      * @param JobRepository $jobRepository
      */
-    public function __construct(JobRepository $jobRepository) {
+    public function __construct(JobRepository $jobRepository)
+    {
         $this->jobRepository = $jobRepository;
     }
 
