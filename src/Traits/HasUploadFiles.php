@@ -19,12 +19,12 @@ trait HasUploadFiles
                 }
 
                 if (is_array($file)) {
-//                    /**
-//                     * @var FileAdder $fileAdder
-//                     */
-//                    $fileAdder = $this->model->addMediaFromBase64($file);
-//                    $fileAdder->setFileName()
-//                        ->toMediaCollection($group);
+                    //                    /**
+                    //                     * @var FileAdder $fileAdder
+                    //                     */
+                    //                    $fileAdder = $this->model->addMediaFromBase64($file);
+                    //                    $fileAdder->setFileName()
+                    //                        ->toMediaCollection($group);
                 } else {
                     $this->addMedia($group, $file);
                 }
