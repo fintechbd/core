@@ -3,44 +3,38 @@
 namespace Fintech\Core\Traits;
 
 use Fintech\Core\Supports\Mimes;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 trait HasUploadFiles
 {
-    protected array $files = [];
 
-    protected array $mediaCollections = [];
+    use InteractsWithMedia;
 
-    protected function uploadMediaFiles()
+    public array $files = [];
+
+    public array $fileGroups = [];
+
+    public function uploadMediaFiles()
     {
-        if (!empty($this->mediaCollections)) {
-            foreach ($this->files as $group => $file) {
-                if (!method_exists($this->model, 'addMediaFromBase64')) {
-                    throw new \BadMethodCallException(get_class($this->model) . " model is missing `use InteractsWithMedia` trait call");
-                }
-
-                if (is_array($file)) {
-                    //                    /**
-                    //                     * @var FileAdder $fileAdder
-                    //                     */
-                    //                    $fileAdder = $this->model->addMediaFromBase64($file);
-                    //                    $fileAdder->setFileName()
-                    //                        ->toMediaCollection($group);
+        if (!empty($this->fileGroups)) {
+            foreach ($this->files as $group => $files) {
+                if (is_array($files)) {
+                    foreach ($files as $file) {
+                        if (is_array($file)) {
+                            $resolver = "{$group}MediaResolver";
+                            $this->$resolver($group, $file);
+                            continue;
+                        }
+                        $this->loadMediaFile($group, $file);
+                    }
                 } else {
-                    $this->addMedia($group, $file);
+                    $this->loadMediaFile($group, $files);
                 }
             }
         }
     }
 
-
-    protected function stripMediaCollections()
-    {
-        if (method_exists($this->model, 'getRegisteredMediaCollections')) {
-            $this->mediaCollections = $this->model->getRegisteredMediaCollections()->pluck('name')->toArray();
-        }
-    }
-
-    private function addMedia($file, $group)
+    private function loadMediaFile($file, $group)
     {
         $matches = [];
 

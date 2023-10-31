@@ -23,13 +23,13 @@ use Throwable;
  */
 abstract class EloquentRepository
 {
-    use HasUploadFiles;
-
     protected ?Model $model;
 
     protected array $fields = [];
 
     protected array $relations = [];
+
+    protected bool $hasFileUpdates;
 
     /**
      * split the direct model fields and relational fields
@@ -43,7 +43,11 @@ abstract class EloquentRepository
     {
         $reflection = new ReflectionClass($this->model);
 
-        $this->stripMediaCollections();
+        $this->hasFileUpdates = method_exists($this->model, "getRegisteredMediaCollections");
+
+        if ($this->hasFileUpdates) {
+            $this->model->fileGroups = $this->model->getRegisteredMediaCollections()->pluck('name')->toArray();
+        }
 
         foreach ($inputs as $field => $value) {
 
@@ -61,11 +65,11 @@ abstract class EloquentRepository
                 continue;
             }
 
-            if (in_array($field, $this->mediaCollections)) {
-
-                $this->files[$field] = $value;
-
-                continue;
+            if ($this->hasFileUpdates) {
+                if (in_array($field, $this->model->fileGroups)) {
+                    $this->model->files[$field] = $value;
+                    continue;
+                }
             }
 
             $this->fields[$field] = $value;
@@ -90,8 +94,9 @@ abstract class EloquentRepository
 
                 $this->relationCreateOperation();
 
-                $this->uploadMediaFiles();
-
+                if ($this->hasFileUpdates) {
+                    $this->model->uploadMediaFiles();
+                }
                 return $this->model;
             }
 
@@ -145,7 +150,9 @@ abstract class EloquentRepository
 
                 $this->relationUpdateOperation();
 
-                $this->uploadMediaFiles();
+                if ($this->hasFileUpdates) {
+                    $this->model->uploadMediaFiles();
+                }
 
                 return $this->model;
             }
@@ -199,10 +206,7 @@ abstract class EloquentRepository
     }
 
     /**
-     * @param array $relations
-     *
      * @return void
-     *
      */
     private function relationCreateOperation()
     {
@@ -252,15 +256,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
