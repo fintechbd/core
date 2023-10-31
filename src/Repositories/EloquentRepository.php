@@ -272,11 +272,11 @@ abstract class EloquentRepository
      * @param Builder $query
      * @return Builder[]|Paginator|Collection
      */
-    public function executeQuery(Builder $query)
+    public function executeQuery(Builder $query, array $options = [])
     {
-        $asPagination = request()->boolean('paginate');
+        $asPagination = $options['paginate'] ?? request()->boolean('paginate');
 
-        $perPageCount = request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
