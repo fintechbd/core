@@ -79,7 +79,7 @@ class JobController extends Controller
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Job']),
-                'id' => $job->id
+                'id' => $job->getKey()
              ]);
 
         } catch (\Exception $exception) {

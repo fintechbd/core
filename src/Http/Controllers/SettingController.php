@@ -79,7 +79,7 @@ class SettingController extends Controller
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Setting']),
-                'id' => $setting->id
+                'id' => $setting->getKey()
              ]);
 
         } catch (\Exception $exception) {
