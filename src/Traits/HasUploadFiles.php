@@ -3,6 +3,7 @@
 namespace Fintech\Core\Traits;
 
 use Fintech\Core\Supports\Mimes;
+use Illuminate\Support\Str;
 
 trait HasUploadFiles
 {
@@ -17,7 +18,7 @@ trait HasUploadFiles
             if (is_array($files)) {
                 foreach ($files as $file) {
                     if (is_array($file)) {
-                        $resolver = "{$group}MediaResolve";
+                        $resolver = Str::camel("{$group}MediaResolve");
                         [$resolvedFile, $attributes] = $this->model->$resolver($file);
                         $this->uploadTargetFile($resolvedFile, $group, $attributes);
                     } else {
