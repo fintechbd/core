@@ -23,13 +23,15 @@ use Throwable;
  */
 abstract class EloquentRepository
 {
+    use HasUploadFiles;
+
     protected ?Model $model;
 
     protected array $fields = [];
 
     protected array $relations = [];
 
-    protected bool $hasFileUpdates;
+    protected bool $hasFileUploads;
 
     /**
      * split the direct model fields and relational fields
@@ -41,36 +43,34 @@ abstract class EloquentRepository
      */
     protected function splitFieldRelationFilesFromInput(array $inputs)
     {
+        $fileGroups = [];
+
         $reflection = new ReflectionClass($this->model);
 
-        $this->hasFileUpdates = method_exists($this->model, "getRegisteredMediaCollections");
+        $this->hasFileUploads = method_exists($this->model, "getRegisteredMediaCollections");
 
-        if ($this->hasFileUpdates) {
-            $this->model->fileGroups = $this->model->getRegisteredMediaCollections()->pluck('name')->toArray();
+        if ($this->hasFileUploads) {
+            $fileGroups = $this->model->getRegisteredMediaCollections()->pluck('name')->toArray();
         }
 
         foreach ($inputs as $field => $value) {
-
+            //Relation
             if ($reflection->hasMethod($field)) {
-
                 $reflectionMethod = $reflection->getMethod($field);
-
                 if (!$reflectionMethod->hasReturnType()) {
                     throw (new RelationReturnMissingException())
                         ->setModel($reflectionMethod->class, $reflectionMethod->name);
                 }
 
                 $this->relations[$field] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
-
                 continue;
             }
+            //File
+            if ($this->hasFileUploads && in_array($field, $fileGroups)) {
+                $this->files[$field] = $value;
+                continue;
 
-            if ($this->hasFileUpdates) {
-                if (in_array($field, $this->model->fileGroups)) {
-                    $this->model->files[$field] = $value;
-                    continue;
-                }
-            }
+            }//Direct Field
 
             $this->fields[$field] = $value;
         }
@@ -94,8 +94,8 @@ abstract class EloquentRepository
 
                 $this->relationCreateOperation();
 
-                if ($this->hasFileUpdates) {
-                    $this->model->uploadMediaFiles();
+                if ($this->hasFileUploads) {
+                    $this->uploadMediaFiles();
                 }
                 return $this->model;
             }
@@ -150,8 +150,8 @@ abstract class EloquentRepository
 
                 $this->relationUpdateOperation();
 
-                if ($this->hasFileUpdates) {
-                    $this->model->uploadMediaFiles();
+                if ($this->hasFileUploads) {
+                    $this->uploadMediaFiles();
                 }
 
                 return $this->model;

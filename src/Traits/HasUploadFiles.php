@@ -3,53 +3,45 @@
 namespace Fintech\Core\Traits;
 
 use Fintech\Core\Supports\Mimes;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 trait HasUploadFiles
 {
-
-    use InteractsWithMedia;
-
     public array $files = [];
 
-    public array $fileGroups = [];
-
+    /**
+     * @throws \Exception
+     */
     public function uploadMediaFiles()
     {
-        if (!empty($this->fileGroups)) {
-            foreach ($this->files as $group => $files) {
-                if (is_array($files)) {
-                    foreach ($files as $file) {
-                        if (is_array($file)) {
-                            $resolver = "{$group}MediaResolver";
-                            $this->$resolver($group, $file);
-                            continue;
-                        }
-                        $this->loadMediaFile($group, $file);
+        foreach ($this->files as $group => $files) {
+            if (is_array($files)) {
+                foreach ($files as $file) {
+                    if (is_array($file)) {
+                        $resolver = "{$group}MediaResolve";
+                        [$resolvedFile, $attributes] = $this->$resolver($file);
+                        $this->uploadTargetFile($resolvedFile, $group, $attributes);
+                    } else {
+                        $this->uploadTargetFile($file, $group);
                     }
-                } else {
-                    $this->loadMediaFile($group, $files);
                 }
+                continue;
             }
+
+            $this->uploadTargetFile($files, $group);
         }
     }
 
-    private function loadMediaFile($file, $group)
+    private function uploadTargetFile($file, string $group, array $attributes = [])
     {
-        $matches = [];
+        logger("File Group:" . $group);
 
-        preg_match('/^data:(.+);base64,/i', $file, $matches);
+        $ext = Mimes::guessExtFromB64($file);
 
-        if (isset($matches[1])) {
-
-            $ext = Mimes::guessExtFromType($matches[1]);
-
-            $this->model
-                ->addMediaFromBase64($file)
-                ->usingFileName($this->mediaNameFormatter($ext, $group))
-                ->usingName($this->mediaNameFormatter($ext, $group))
-                ->toMediaCollection($group);
-        }
+        $this->model->addMediaFromBase64($file)
+            ->usingFileName($this->mediaNameFormatter($ext, $group))
+            ->usingName($this->mediaNameFormatter($ext, $group))
+            ->withCustomProperties($attributes)
+            ->toMediaCollection($group);
     }
 
     private function mediaNameFormatter(string $ext, $group = 'default')

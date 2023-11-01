@@ -515,4 +515,25 @@ class Mimes
 
         return null;
     }
+
+    /**
+     * Attempts to determine the best file extension for a given mime type.
+     *
+     * @param string|null $file - default extension (in case there is more than one with the same mime type)
+     *
+     * @return string|null The extension determined, or null if unable to match.
+     */
+    public static function guessExtFromB64(?string $file)
+    {
+        $matches = [];
+
+        preg_match('/^data:(.+);base64,/i', $file, $matches);
+
+        if (isset($matches[1])) {
+
+            return self::guessExtFromType($matches[1]);
+        }
+
+        return null;
+    }
 }
