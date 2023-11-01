@@ -18,7 +18,7 @@ trait HasUploadFiles
                 foreach ($files as $file) {
                     if (is_array($file)) {
                         $resolver = "{$group}MediaResolve";
-                        [$resolvedFile, $attributes] = $this->$resolver($file);
+                        [$resolvedFile, $attributes] = $this->model->$resolver($file);
                         $this->uploadTargetFile($resolvedFile, $group, $attributes);
                     } else {
                         $this->uploadTargetFile($file, $group);
