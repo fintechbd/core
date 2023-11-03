@@ -14,10 +14,13 @@ class ModelPathGenerator extends DefaultPathGenerator
     {
         $prefix = config('media-library.prefix', '');
 
-        return rtrim($prefix, '/')
-            . '/' . strtolower(class_basename($media->model_type))
-            . '/' . $media->collection_name
-            . '/' . $media->getKey();
+        return strtolower(
+            rtrim($prefix, '/')
+            . '/' . class_basename($media->model_type) . '_' . $media->collection_name
+            . '/' . date('Y')
+            . '/' . date('F')
+            . '/' . $media->getKey()
+        );
 
     }
 }
