@@ -6,9 +6,10 @@ use Fintech\Core\Services\SettingService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Core
  * @method static SettingService setting()
  * @method static bool packageExists(string $name)
+ * // Crud Service Method Point Do not Remove //
+ *
  * @see \Fintech\Core\Core
  */
 class Core extends Facade
