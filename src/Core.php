@@ -14,6 +14,8 @@ class Core
         return app(SettingService::class);
     }
 
+    //** Crud Service Method Point Do not Remove **//
+
     /**
      * verify if a available addon or package is installed
      *
@@ -22,12 +24,6 @@ class Core
      */
     public function packageExists(string $name): bool
     {
-
         return class_exists("\Fintech\\{$name}\Facades\\{$name}");
-    }
-
-    public function extFromMime(string $mime)
-    {
-
     }
 }
