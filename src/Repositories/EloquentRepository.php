@@ -67,7 +67,9 @@ abstract class EloquentRepository
             }
             //File
             if ($this->hasFileUploads && in_array($field, $fileGroups)) {
-                $this->files[$field] = $value;
+                if (!empty($value)) {
+                    $this->files[$field] = $value;
+                }
                 continue;
 
             }//Direct Field
@@ -256,15 +258,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
