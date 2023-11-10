@@ -100,7 +100,7 @@ class ConfigurationController extends Controller
                 Core::setting()->destroy($setting->getKey());
             }
 
-            return $this->deleted(__('core::messages.setting.deleted', ['model' => 'Setting']));
+            return $this->deleted(__('core::messages.setting.deleted', ['model' => ucwords($configuration)]));
 
         } catch (\Exception $exception) {
 
