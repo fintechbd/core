@@ -59,37 +59,6 @@ class JobController extends Controller
 
     /**
      * @lrd:start
-     * Create a new *Job* resource in storage.
-     * @lrd:end
-     *
-     * @param StoreJobRequest $request
-     * @return JsonResponse
-     * @throws StoreOperationException
-     */
-    public function store(StoreJobRequest $request): JsonResponse
-    {
-        try {
-            $inputs = $request->validated();
-
-            $job = \Core::job()->create($inputs);
-
-            if (!$job) {
-                throw (new StoreOperationException())->setModel(config('fintech.core.job_model'));
-            }
-
-            return $this->created([
-                'message' => __('core::messages.resource.created', ['model' => 'Job']),
-                'id' => $job->getKey()
-             ]);
-
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
-
-    /**
-     * @lrd:start
      * Return a specified *Job* resource found by id.
      * @lrd:end
      *
@@ -108,46 +77,6 @@ class JobController extends Controller
             }
 
             return new JobResource($job);
-
-        } catch (ModelNotFoundException $exception) {
-
-            return $this->notfound($exception->getMessage());
-
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Update a specified *Job* resource using id.
-     * @lrd:end
-     *
-     * @param UpdateJobRequest $request
-     * @param string|int $id
-     * @return JsonResponse
-     * @throws ModelNotFoundException
-     * @throws UpdateOperationException
-     */
-    public function update(UpdateJobRequest $request, string|int $id): JsonResponse
-    {
-        try {
-
-            $job = \Core::job()->read($id);
-
-            if (!$job) {
-                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
-            }
-
-            $inputs = $request->validated();
-
-            if (!\Core::job()->update($id, $inputs)) {
-
-                throw (new UpdateOperationException())->setModel(config('fintech.core.job_model'), $id);
-            }
-
-            return $this->updated(__('core::messages.resource.updated', ['model' => 'Job']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -196,89 +125,4 @@ class JobController extends Controller
         }
     }
 
-    /**
-     * @lrd:start
-     * Restore the specified *Job* resource from trash.
-     * ** ```Soft Delete``` needs to enabled to use this feature**
-     * @lrd:end
-     *
-     * @param string|int $id
-     * @return JsonResponse
-     */
-    public function restore(string|int $id)
-    {
-        try {
-
-            $job = \Core::job()->find($id, true);
-
-            if (!$job) {
-                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
-            }
-
-            if (!\Core::job()->restore($id)) {
-
-                throw (new RestoreOperationException())->setModel(config('fintech.core.job_model'), $id);
-            }
-
-            return $this->restored(__('core::messages.resource.restored', ['model' => 'Job']));
-
-        } catch (ModelNotFoundException $exception) {
-
-            return $this->notfound($exception->getMessage());
-
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Create a exportable list of the *Job* resource as document.
-     * After export job is done system will fire  export completed event
-     *
-     * @lrd:end
-     *
-     * @param IndexJobRequest $request
-     * @return JsonResponse
-     */
-    public function export(IndexJobRequest $request): JsonResponse
-    {
-        try {
-            $inputs = $request->validated();
-
-            $jobPaginate = \Core::job()->export($inputs);
-
-            return $this->exported(__('core::messages.resource.exported', ['model' => 'Job']));
-
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Create a exportable list of the *Job* resource as document.
-     * After export job is done system will fire  export completed event
-     *
-     * @lrd:end
-     *
-     * @param ImportJobRequest $request
-     * @return JobCollection|JsonResponse
-     */
-    public function import(ImportJobRequest $request): JsonResponse
-    {
-        try {
-            $inputs = $request->validated();
-
-            $jobPaginate = \Core::job()->list($inputs);
-
-            return new JobCollection($jobPaginate);
-
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
 }

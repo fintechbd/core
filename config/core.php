@@ -66,6 +66,26 @@ return [
     */
     'job_model' => \Fintech\Core\Models\Job::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | ApiLog Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'api_log_model' => \Fintech\Core\Models\ApiLog::class,
+
+    
+    /*
+    |--------------------------------------------------------------------------
+    | FailedJob Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'failed_job_model' => \Fintech\Core\Models\FailedJob::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -79,6 +99,10 @@ return [
         \Fintech\Core\Interfaces\SettingRepository::class => \Fintech\Core\Repositories\Eloquent\SettingRepository::class,
 
         \Fintech\Core\Interfaces\JobRepository::class => \Fintech\Core\Repositories\Eloquent\JobRepository::class,
+
+        \Fintech\Core\Interfaces\ApiLogRepository::class => \Fintech\Core\Repositories\Eloquent\ApiLogRepository::class,
+
+        \Fintech\Core\Interfaces\FailedJobRepository::class => \Fintech\Core\Repositories\Eloquent\FailedJobRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

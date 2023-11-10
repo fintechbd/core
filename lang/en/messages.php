@@ -36,5 +36,5 @@ return [
         'saved' => ':package configurations saved successfully.',
         'deleted' => ':package configurations restored to defaults.',
         'failed' => ':package configurations failed to update.'
-    ]
+    ],
 ];

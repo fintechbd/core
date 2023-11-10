@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static SettingService setting()
  * @method static bool packageExists(string $name)
+ * @method static \Fintech\Core\Services\ApiLogService apiLog()
+ * @method static \Fintech\Core\Services\FailedJobService failedJob()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

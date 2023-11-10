@@ -14,7 +14,25 @@ class Core
         return app(SettingService::class);
     }
 
+    /**
+     * @return \Fintech\Core\Services\ApiLogService
+     */
+    public function apiLog()
+    {
+        return app(\Fintech\Core\Services\ApiLogService::class);
+    }
+
+    /**
+     * @return \Fintech\Core\Services\FailedJobService
+     */
+    public function failedJob()
+    {
+        return app(\Fintech\Core\Services\FailedJobService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
+
 
     /**
      * verify if a available addon or package is installed
