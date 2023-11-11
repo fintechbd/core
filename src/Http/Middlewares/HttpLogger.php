@@ -30,12 +30,10 @@ class HttpLogger
                 'request' => [
                     'headers' => collect($request->headers->all())->map(fn ($item) => ($item[0] ?? null))->toArray(),
                     'payload' => ($request->method() == 'GET') ? $request->query() : $request->all(),
-                    'files' => $request->allFiles()
                 ],
                 'response' => [
                     'headers' => [],
-                    'body' => [],
-                    'files' => []
+                    'body' => []
                 ],
                 'user_agent' => $request->userAgent()
 

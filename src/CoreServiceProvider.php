@@ -26,6 +26,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -64,7 +65,7 @@ class CoreServiceProvider extends ServiceProvider
 
     private function loadSettings()
     {
-        if(!App::environment('testing')) {
+        if (!App::environment('testing')) {
             if (Schema::hasTable('settings')) {
                 Core::setting()->list()->each(function ($setting) {
                     Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
