@@ -5,6 +5,7 @@ namespace Fintech\Core;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -25,10 +26,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () use (&$root_prefix) {
             Route::prefix("{$root_prefix}api")
                 ->middleware('api')
-                ->group(__DIR__.'/../routes/api.php');
+                ->group(__DIR__ . '/../routes/api.php');
         });
 
-        Route::middlewareGroup('http-log', [
+        ($this->app->make(Router::class))
+            ->middlewareGroup('http-log', [
             \Fintech\Core\Http\Middlewares\HttpLogger::class
         ]);
 
