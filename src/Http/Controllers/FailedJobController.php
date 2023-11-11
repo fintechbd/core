@@ -3,17 +3,11 @@
 namespace Fintech\Core\Http\Controllers;
 
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Resources\FailedJobResource;
 use Fintech\Core\Http\Resources\FailedJobCollection;
-use Fintech\Core\Http\Requests\ImportFailedJobRequest;
-use Fintech\Core\Http\Requests\StoreFailedJobRequest;
-use Fintech\Core\Http\Requests\UpdateFailedJobRequest;
 use Fintech\Core\Http\Requests\IndexFailedJobRequest;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -77,7 +71,7 @@ class FailedJobController extends Controller
             $failedJob = Core::failedJob()->find($id);
 
             if (!$failedJob) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.failed_job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.failed_job_model'), $id);
             }
 
             return new FailedJobResource($failedJob);
@@ -108,7 +102,7 @@ class FailedJobController extends Controller
             $failedJob = Core::failedJob()->find($id);
 
             if (!$failedJob) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.failed_job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.failed_job_model'), $id);
             }
 
             if (!Core::failedJob()->destroy($id)) {
@@ -144,7 +138,7 @@ class FailedJobController extends Controller
             $failedJob = Core::failedJob()->find($id);
 
             if (!$failedJob) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.failed_job_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.failed_job_model'), $id);
             }
 
             if (Artisan::call('queue:retry', ['id' => [$id]])) {

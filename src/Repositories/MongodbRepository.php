@@ -53,7 +53,7 @@ abstract class MongodbRepository
     public function find(int|string $id, $onlyTrashed = false)
     {
         if ($onlyTrashed) {
-            if (! method_exists($this->model, 'restore')) {
+            if (!method_exists($this->model, 'restore')) {
                 throw new InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
             }
 
@@ -74,7 +74,7 @@ abstract class MongodbRepository
     {
         $model = $this->find($id);
 
-        if (! $model) {
+        if (!$model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())
@@ -102,7 +102,7 @@ abstract class MongodbRepository
     {
         $model = $this->find($id);
 
-        if (! $model) {
+        if (!$model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())
@@ -123,7 +123,7 @@ abstract class MongodbRepository
     {
         $model = $this->find($id, true);
 
-        if (! $model) {
+        if (!$model) {
             throw (new ModelNotFoundException())->setModel(
                 get_class($model),
                 array_diff([$id], $this->model->modelKeys())

@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('permission_format')) {
+if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
     {
         $name = strtolower($name);
@@ -12,7 +12,7 @@ if (! function_exists('permission_format')) {
     }
 }
 
-if (! function_exists('action_link')) {
+if (!function_exists('action_link')) {
 
     function action_link($url, $label, $method = 'get')
     {
@@ -24,7 +24,7 @@ if (! function_exists('action_link')) {
     }
 }
 
-if (! function_exists('currency')) {
+if (!function_exists('currency')) {
 
     /**
      * @param string $code
