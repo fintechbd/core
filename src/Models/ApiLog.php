@@ -2,15 +2,13 @@
 
 namespace Fintech\Core\Models;
 
+use Fintech\Auth\Models\User;
 use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApiLog extends Model
 {
-   use AuditableTrait;
-   use SoftDeletes;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -23,9 +21,7 @@ class ApiLog extends Model
 
     protected $appends = ['links'];
 
-    protected $casts = ['api_log_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
-
-    protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
+    protected $casts = ['request' => 'array', 'response' => 'array', 'user_agent' => 'array'];
 
     /*
     |--------------------------------------------------------------------------
@@ -38,6 +34,10 @@ class ApiLog extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(config('fintech.auth.user_model', User::class));
+    }
 
     /*
     |--------------------------------------------------------------------------

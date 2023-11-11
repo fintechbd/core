@@ -13,6 +13,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | APIs Outbound Request Logger
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
+    'api_logger_enabled' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Http Inbound Request Logger
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
+    'http_logger_enabled' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable Module APIs
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
@@ -66,7 +82,7 @@ return [
     */
     'job_model' => \Fintech\Core\Models\Job::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | ApiLog Model
@@ -76,7 +92,7 @@ return [
     */
     'api_log_model' => \Fintech\Core\Models\ApiLog::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | FailedJob Model

@@ -97,7 +97,6 @@ class ApiLogController extends Controller
      * @param string|int $id
      * @return JsonResponse
      * @throws ModelNotFoundException
-     * @throws DeleteOperationException
      */
     public function destroy(string|int $id)
     {
