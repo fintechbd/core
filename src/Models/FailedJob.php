@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FailedJob extends Model
 {
-   use AuditableTrait;
-   use SoftDeletes;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -22,10 +19,6 @@ class FailedJob extends Model
     protected $guarded = ['id'];
 
     protected $appends = ['links'];
-
-    protected $casts = ['failed_job_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
-
-    protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
     /*
     |--------------------------------------------------------------------------
