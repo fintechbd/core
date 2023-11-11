@@ -28,6 +28,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(__DIR__.'/../routes/api.php');
         });
 
+        Route::middlewareGroup('http-log', [
+            \Fintech\Core\Http\Middlewares\HttpLogger::class
+        ]);
+
     }
 
     /**
