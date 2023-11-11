@@ -12,17 +12,18 @@ return new class extends Migration {
     {
         Schema::create('api_logs', function (Blueprint $table) {
             $table->id();
+            $table->string('request_id')->nullable();
             $table->string('direction')->default(\Fintech\Core\Enums\ApiDirectionEnum::InBound->value);
             $table->foreignId('user_id')->nullable();
             $table->string('method')->nullable();
             $table->string('host');
             $table->text('url');
-            $table->string('type')->nullable();
+            $table->string('ip_address')->nullable();
             $table->mediumInteger('status_code')->nullable();
             $table->string('status_text')->nullable();
             $table->longText('request')->nullable();
             $table->longText('response')->nullable();
-            $table->longText('user_agent')->nullable();
+            $table->text('user_agent')->nullable();
             $table->timestamps();
         });
     }

@@ -12,9 +12,17 @@ class HttpLogger
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(Request): (Response)  $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
+    {
+        return $next($request);
+    }
+
+    /**
+     * Handle tasks after the response has been sent to the browser.
+     */
+    public function terminate(Request $request, Response $response): void
     {
         if (config('fintech.core.http_logger_enabled', false)) {
 
@@ -24,24 +32,26 @@ class HttpLogger
                 'method' => $request->method(),
                 'host' => $request->getHttpHost(),
                 'url' => $request->url(),
-                'type' => $request->getContentTypeFormat(),
-                'status_code' => null,
-                'status_text' => null,
+                'status_code' => $response->getStatusCode(),
+                'status_text' => Response::$statusTexts[$response->getStatusCode()] ?? null,
+                'ip_address' => $request->ip(),
                 'request' => [
-                    'headers' => collect($request->headers->all())->map(fn ($item) => ($item[0] ?? null))->toArray(),
+                    'timestamp' => $_SERVER['REQUEST_TIME'],
+                    'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
+                    'headers' => collect($request->headers->all())->map(fn($item) => ($item[0] ?? null))->toArray(),
                     'payload' => ($request->method() == 'GET') ? $request->query() : $request->all(),
                 ],
                 'response' => [
-                    'headers' => [],
-                    'body' => []
+                    'type' => 'application/json',
+                    'timestamp' => time(),
+                    'duration' => (time() - $_SERVER['REQUEST_TIME']),
+                    'headers' => collect($response->headers->all())->map(fn($item) => ($item[0] ?? null))->toArray(),
+                    'body' => $response->getContent()
                 ],
                 'user_agent' => $request->userAgent()
-
             ];
 
             Core::apiLog()->create($data);
         }
-
-        return $next($request);
     }
 }

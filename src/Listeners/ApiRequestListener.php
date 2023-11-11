@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Listeners;
 
+use Illuminate\Http\Client\Response;
+
 class ApiRequestListener
 {
     /**
@@ -18,6 +20,9 @@ class ApiRequestListener
 
         $request = $event->request;
 
+        /**
+         * @var Response $response
+         */
         $response = $event->response ?? null;
 
         $data = [
@@ -26,15 +31,21 @@ class ApiRequestListener
             'method' => $request->method(),
             'host' => $request->toPsrRequest()->getUri()->getHost(),
             'url' => $request->url(),
-            'type' => ($request->isMultipart() || $request->isForm()) ? 'form' : 'json',
+            'status_code' => null,
+            'status_text' => null,
+            'ip_address' => $_SERVER['SERVER_ADDR'] ?? null,
             'request' => [
+                'timestamp' => time(),
+                'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
                 'headers' => collect($request->headers())->map(fn($item) => ($item[0] ?? null))->toArray(),
                 'payload' => $request->data(),
             ],
             'response' => [
-                'time' => 0,
+                'type' => 'application/json',
+                'timestamp' => time(),
+                'duration' => 0,
                 'headers' => [],
-                'body' => []
+                'body' => ''
             ],
             'user_agent' => null
         ];
@@ -48,17 +59,18 @@ class ApiRequestListener
                 $response_time = $response_time / 1000000.0;
             }
 
-            $data['response']['time'] = $response_time . ' seconds';
-            $data['response']['headers'] = $response->headers();
+            $data['response']['duration'] = $response_time;
+            $data['response']['headers'] = collect($response->headers())->map(fn($item) => ($item[0] ?? null))->toArray();
             $data['response']['body'] = $response->body();
         }
 
         if ($event instanceof \Illuminate\Http\Client\Events\ConnectionFailed) {
             $data['status_code'] = 503;
             $data['status_text'] = 'Connection Failed';
-            $data['response']['time'] = 0;
+            $data['response']['timestamp'] = time();
+            $data['response']['duration'] = 0;
             $data['response']['headers'] = [];
-            $data['response']['body'] = [];
+            $data['response']['body'] = '';
         }
 
         \Fintech\Core\Facades\Core::apiLog()->create($data);

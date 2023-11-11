@@ -17,7 +17,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'api_logger_enabled' => false,
+    'api_logger_enabled' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'http_logger_enabled' => false,
+    'http_logger_enabled' => true,
 
     /*
     |--------------------------------------------------------------------------
