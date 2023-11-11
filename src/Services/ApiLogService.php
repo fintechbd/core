@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\ApiLogRepository;
 
 /**
@@ -16,7 +15,8 @@ class ApiLogService
      * ApiLogService constructor.
      * @param ApiLogRepository $apiLogRepository
      */
-    public function __construct(ApiLogRepository $apiLogRepository) {
+    public function __construct(ApiLogRepository $apiLogRepository)
+    {
         $this->apiLogRepository = $apiLogRepository;
     }
 

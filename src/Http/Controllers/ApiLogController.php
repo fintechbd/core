@@ -1,18 +1,13 @@
 <?php
 
 namespace Fintech\Core\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Resources\ApiLogResource;
 use Fintech\Core\Http\Resources\ApiLogCollection;
-use Fintech\Core\Http\Requests\ImportApiLogRequest;
-use Fintech\Core\Http\Requests\StoreApiLogRequest;
-use Fintech\Core\Http\Requests\UpdateApiLogRequest;
 use Fintech\Core\Http\Requests\IndexApiLogRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -74,7 +69,7 @@ class ApiLogController extends Controller
             $apiLog = Core::apiLog()->find($id);
 
             if (!$apiLog) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.api_log_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.api_log_model'), $id);
             }
 
             return new ApiLogResource($apiLog);
@@ -105,7 +100,7 @@ class ApiLogController extends Controller
             $apiLog = Core::apiLog()->find($id);
 
             if (!$apiLog) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.api_log_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.api_log_model'), $id);
             }
 
             if (!Core::apiLog()->destroy($id)) {

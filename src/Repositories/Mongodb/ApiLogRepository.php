@@ -17,13 +17,13 @@ class ApiLogRepository extends MongodbRepository implements InterfacesApiLogRepo
 {
     public function __construct()
     {
-       $model = app(config('fintech.core.api_log_model', \Fintech\Core\Models\ApiLog::class));
+        $model = app(config('fintech.core.api_log_model', \Fintech\Core\Models\ApiLog::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (!$model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -37,7 +37,7 @@ class ApiLogRepository extends MongodbRepository implements InterfacesApiLogRepo
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (isset($filters['search']) && !empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

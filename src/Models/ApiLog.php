@@ -3,9 +3,7 @@
 namespace Fintech\Core\Models;
 
 use Fintech\Auth\Models\User;
-use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ApiLog extends Model
 {
@@ -34,7 +32,7 @@ class ApiLog extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(config('fintech.auth.user_model', User::class));
     }

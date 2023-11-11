@@ -2,9 +2,7 @@
 
 namespace Fintech\Core\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Job extends Model
 {

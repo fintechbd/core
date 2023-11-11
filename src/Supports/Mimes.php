@@ -476,7 +476,7 @@ class Mimes
     {
         $extension = trim(strtolower($extension), '. ');
 
-        if (! array_key_exists($extension, static::$mimes)) {
+        if (!array_key_exists($extension, static::$mimes)) {
             return null;
         }
 

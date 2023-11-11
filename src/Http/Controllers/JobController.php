@@ -2,16 +2,10 @@
 
 namespace Fintech\Core\Http\Controllers;
 
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Core\Http\Resources\JobResource;
 use Fintech\Core\Http\Resources\JobCollection;
-use Fintech\Core\Http\Requests\ImportJobRequest;
-use Fintech\Core\Http\Requests\StoreJobRequest;
-use Fintech\Core\Http\Requests\UpdateJobRequest;
 use Fintech\Core\Http\Requests\IndexJobRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;

@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFailedJobRequest extends FormRequest
 {
-    
     /**
      * Determine if the user is authorized to make this request.
      */
