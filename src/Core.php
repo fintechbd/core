@@ -2,6 +2,7 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Services\JobService;
 use Fintech\Core\Services\SettingService;
 
 class Core
@@ -28,6 +29,14 @@ class Core
     public function failedJob()
     {
         return app(\Fintech\Core\Services\FailedJobService::class);
+    }
+
+    /**
+     * @return JobService
+     */
+    public function job()
+    {
+        return app(JobService::class);
     }
 
     //** Crud Service Method Point Do not Remove **//
