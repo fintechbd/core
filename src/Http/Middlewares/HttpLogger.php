@@ -23,17 +23,17 @@ class HttpLogger
                 'user_id' => ($request->user() != null) ? $request->user()->id : null,
                 'method' => $request->method(),
                 'host' => $request->getHttpHost(),
-                'url' => $request->fullUrl(),
+                'url' => $request->url(),
                 'type' => $request->getContentTypeFormat(),
                 'status_code' => null,
                 'status_text' => null,
                 'request' => [
-                    'header' => $request->headers,
-                    'body' => $request->all(),
+                    'headers' => collect($request->headers->all())->map(fn ($item) => ($item[0] ?? null))->toArray(),
+                    'payload' => ($request->method() == 'GET') ? $request->query() : $request->all(),
                     'files' => $request->allFiles()
                 ],
                 'response' => [
-                    'header' => null,
+                    'headers' => [],
                     'body' => [],
                     'files' => []
                 ],

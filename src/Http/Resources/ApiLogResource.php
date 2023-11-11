@@ -9,11 +9,27 @@ class ApiLogResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request
      * @return array
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->getKey(),
+            'direction' => $this->direction,
+            'user_id' => $this->user_id,
+            'user_name' => ($this->user) ? $this->user->name : null,
+            'method' => $this->method,
+            'host' => $this->host,
+            'url' => $this->url,
+            'type' => $this->type,
+            'status_code' => $this->status_code,
+            'status_text' => $this->status_text,
+            'request' => $this->request,
+            'response' => $this->response,
+            'user_agent' => $this->user_agent,
+            'created_at' => $this->created_at,
+            'links' => $this->links
+        ];
     }
 }

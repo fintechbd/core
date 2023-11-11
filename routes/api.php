@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 if (Config::get('fintech.core.enabled')) {
 
     Route::prefix('core')->name('core.')
-        ->middleware('http-logger')
+        ->middleware(config('fintech.auth.middleware'))
         ->group(function () {
             Route::apiResource('settings', \Fintech\Core\Http\Controllers\SettingController::class);
             Route::post('settings/{setting}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
