@@ -53,10 +53,10 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-                (string)$serial,
-                $length,
-                config('fintech.core.entry_number_fill', '0'),
-                STR_PAD_LEFT);
+            (string)$serial,
+            $length,
+            config('fintech.core.entry_number_fill', '0'),
+            STR_PAD_LEFT
+        );
     }
 }
-
