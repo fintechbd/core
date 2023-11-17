@@ -65,6 +65,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | System Packages Entry Number Generate Rules
+    |--------------------------------------------------------------------------
+    |
+    | options:
+    | 1. paginate -> for length aware pagination
+    | 2. simplePaginate -> for basic prev and next pagination
+    | 3. options: cursorPaginate -> for advance memory cursor pagination
+    |
+    */
+
+    'entry_number_length' => 20,
+    'entry_number_fill' => '0',
+    'purchase_number_prefix' => 'PM',
+    'reject_number_prefix' => 'R',
+    'cancel_number_prefix' => 'C',
+    'accept_number_prefix' => 'A',
+
+    /*
+    |--------------------------------------------------------------------------
     | System Setting Model
     |--------------------------------------------------------------------------
     |
