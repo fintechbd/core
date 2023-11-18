@@ -15,8 +15,12 @@ class Base64File implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (preg_match('/^data:([a-z0-9]+\/[a-z0-9\+]+);base64,/iu', $value) !== 1) {
-            $fail('The :attribute is not a valid Base64 file encode.');
+        $matches = [];
+
+        preg_match('/^data:([a-z0-9]+\/[a-z0-9\+]+);base64,/i', $value, $matches);
+
+        if (empty($matches)) {
+            $fail('The :attribute is not a valid Base64 file content.');
         }
     }
 }
