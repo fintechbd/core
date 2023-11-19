@@ -2,8 +2,12 @@
 
 namespace Fintech\Core\Enums\Transaction;
 
+use Fintech\Core\Traits\HasSerialization;
+
 enum OrderStatus: string
 {
+    use HasSerialization;
+
     case Processing = 'processing';
     case Accepted = 'accepted';
     case Rejected = 'rejected';
