@@ -35,7 +35,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function deleted($data)
+    protected function deleted($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_OK);
     }
@@ -47,7 +47,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function restored($data)
+    protected function restored($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_OK);
     }
@@ -59,7 +59,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function created($data)
+    protected function created($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_CREATED);
     }
@@ -71,7 +71,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function updated($data)
+    protected function updated($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_OK);
     }
@@ -83,7 +83,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function exported($data)
+    protected function exported($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_ACCEPTED);
     }
@@ -95,7 +95,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function failed($data)
+    protected function failed($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_BAD_REQUEST);
     }
@@ -106,7 +106,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function success($data)
+    protected function success($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_OK);
     }
@@ -118,7 +118,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function banned($data)
+    protected function banned($data): JsonResponse
     {
         if (is_string($data)) {
             $data = ['message' => $data];
@@ -134,7 +134,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function forbidden($data)
+    protected function forbidden($data): JsonResponse
     {
         if (is_string($data)) {
             $data = ['message' => $data];
@@ -149,7 +149,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function notfound($data)
+    protected function notfound($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_NOT_FOUND);
     }
@@ -160,7 +160,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function locked($data)
+    protected function locked($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_LOCKED);
     }
@@ -171,7 +171,7 @@ trait ApiResponseTrait
      * @param $data
      * @return JsonResponse
      */
-    protected function overflow($data)
+    protected function overflow($data): JsonResponse
     {
         return response()->json($this->format($data), Response::HTTP_TOO_MANY_REQUESTS);
     }
