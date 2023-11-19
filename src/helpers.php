@@ -53,10 +53,38 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            (string)$serial,
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                (string)$serial,
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
+    }
+}
+
+if (!function_exists('get_table')) {
+
+    /**
+     * Return a model class table or collection name for mongodb
+     * for given model class path on configuration
+     * @param string $model_path
+     * @return mixed
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    function get_table(string $model_path): mixed
+    {
+        $model_namespace = config("fintech.{$model_path}_model");
+
+        if ($model_namespace == null) {
+            throw new InvalidArgumentException("Invalid Model path (fintech.{$model_path}_model) given.");
+        }
+
+        $model = app()->make($model_namespace);
+
+        $table = $model->getTable();
+
+        unset($model);
+
+        return $table;
+
     }
 }
