@@ -53,11 +53,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            (string)$serial,
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                (string)$serial,
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
@@ -86,5 +86,27 @@ if (!function_exists('get_table')) {
 
         return $table;
 
+    }
+}
+
+if (function_exists('calculate_flat_percent')) {
+    /**
+     * Return a numerical value for a amount given
+     *
+     * @param float|int $amount base compound value
+     * @param string|int|float $value percent or flat value to reduce
+     * @return float|int
+     */
+    function calculate_flat_percent(int|float $amount, string|int|float $value): float|int
+    {
+        $targetNumber = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+        if (!$targetNumber) {
+            throw new InvalidArgumentException("Invalid value ($value) is given");
+        }
+
+        return (str_contains($value, '%'))
+            ? (float)(($amount * $targetNumber) / 100)
+            : (float)$targetNumber;
     }
 }

@@ -1824,7 +1824,7 @@ class Currency
      * @param string $code
      * @return self
      */
-    public function parse($amount, string $code = 'USD')
+    public function parse($amount, string $code = 'USD'): self
     {
         if (!is_numeric($amount)) {
             throw new \InvalidArgumentException("Invalid amount ($amount) cannot be parsed.");
@@ -1842,7 +1842,7 @@ class Currency
      * @param string $code
      * @return array
      */
-    public function get(string $code)
+    public function get(string $code): array
     {
         if (!self::$items[$code]) {
             throw new \InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
@@ -1858,7 +1858,7 @@ class Currency
      * @param bool $withSymbol
      * @return string
      */
-    public function format($amount, bool $withSymbol = false)
+    public function format($amount, bool $withSymbol = false): string
     {
         if ($this->amount == null || $this->amount == '') {
             throw new \InvalidArgumentException("Amount value is missing or empty. Use parse to set first");

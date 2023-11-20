@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Supports;
 
+use InvalidArgumentException;
+
 class Utility
 {
     /**
@@ -46,10 +48,10 @@ class Utility
      * Convert All Datatype to string equivalent value
      *
      * @param string $type
-     * @param mixed $value
+     * @param mixed|null $value
      * @return false|string
      */
-    public static function stringify(string $type, $value = null)
+    public static function stringify(string $type, mixed $value = null): bool|string
     {
         if ($value === null) {
             return '';
@@ -79,4 +81,5 @@ class Utility
                 return (string)$value;
         }
     }
+
 }
