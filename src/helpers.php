@@ -89,7 +89,7 @@ if (!function_exists('get_table')) {
     }
 }
 
-if (function_exists('calculate_flat_percent')) {
+if (!function_exists('calculate_flat_percent')) {
     /**
      * Return a numerical value for a amount given
      *
