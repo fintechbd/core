@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Auth;
 
 use Fintech\Core\Traits\HasSerialization;
 
-enum SystemRole:string
+enum SystemRole: string
 {
     use HasSerialization;
 
