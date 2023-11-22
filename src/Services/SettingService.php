@@ -13,17 +13,11 @@ use Fintech\Core\Supports\Utility;
 class SettingService
 {
     /**
-     * @var SettingRepository
-     */
-    private SettingRepository $settingRepository;
-
-    /**
      * SettingService constructor.
      * @param SettingRepository $settingRepository
      */
-    public function __construct(SettingRepository $settingRepository)
+    public function __construct(private readonly SettingRepository $settingRepository)
     {
-        $this->settingRepository = $settingRepository;
     }
 
     /**

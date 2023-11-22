@@ -15,9 +15,8 @@ class ApiLogService
      * ApiLogService constructor.
      * @param ApiLogRepository $apiLogRepository
      */
-    public function __construct(ApiLogRepository $apiLogRepository)
+    public function __construct(private readonly ApiLogRepository $apiLogRepository)
     {
-        $this->apiLogRepository = $apiLogRepository;
     }
 
     /**

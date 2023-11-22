@@ -15,9 +15,8 @@ class FailedJobService
      * FailedJobService constructor.
      * @param FailedJobRepository $failedJobRepository
      */
-    public function __construct(FailedJobRepository $failedJobRepository)
+    public function __construct(private readonly FailedJobRepository $failedJobRepository)
     {
-        $this->failedJobRepository = $failedJobRepository;
     }
 
     /**

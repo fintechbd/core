@@ -4,11 +4,11 @@ namespace Fintech\Core\Http\Controllers;
 
 use Exception;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Core\Facades\Core;
-use Fintech\Core\Http\Resources\FailedJobResource;
-use Fintech\Core\Http\Resources\FailedJobCollection;
 use Fintech\Core\Http\Requests\IndexFailedJobRequest;
+use Fintech\Core\Http\Resources\FailedJobCollection;
+use Fintech\Core\Http\Resources\FailedJobResource;
+use Fintech\Core\Traits\ApiResponseTrait;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;

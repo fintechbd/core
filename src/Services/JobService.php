@@ -15,9 +15,8 @@ class JobService
      * JobService constructor.
      * @param JobRepository $jobRepository
      */
-    public function __construct(JobRepository $jobRepository)
+    public function __construct(private readonly JobRepository $jobRepository)
     {
-        $this->jobRepository = $jobRepository;
     }
 
     /**
