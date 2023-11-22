@@ -74,7 +74,7 @@ class SettingSeeder extends Seeder
                 'description' => 'Set the Default Role(s) for the Registration Customer',
                 'key' => 'customer_roles',
                 'type' => 'array',
-                'value' => '[4]'
+                'value' => '[7]'
             ],
             [
                 'package' => 'core',
@@ -99,14 +99,6 @@ class SettingSeeder extends Seeder
                 'key' => 'temporary_password_length',
                 'type' => 'integer',
                 'value' => '8'
-            ],
-            [
-                'package' => 'auth',
-                'label' => 'Default Role(s)',
-                'description' => 'Assign these roles to any user which one not created using role parameters.',
-                'key' => 'default_roles_customer',
-                'type' => 'array',
-                'value' => '[]'
             ],
         ];
     }
