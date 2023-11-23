@@ -27,7 +27,7 @@ class UpdateSettingRequest extends FormRequest
             'label' => ['string', 'required', 'min:5', 'max:255'],
             'description' => ['string', 'required', 'min:5', 'max:255'],
             'key' => ['string', 'required', 'min:3', 'max:255'],
-            'type' => ['string', 'required', 'in:null,string,boolean,integer,double'],
+            'type' => ['string', 'required', 'in:null,string,boolean,integer,double,array,json,object'],
             'value' => ['nullable'],
         ];
     }
