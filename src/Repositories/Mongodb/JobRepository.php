@@ -46,7 +46,7 @@ class JobRepository extends MongodbRepository implements InterfacesJobRepository
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 

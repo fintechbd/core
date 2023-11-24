@@ -47,7 +47,7 @@ class FailedJobRepository extends MongodbRepository implements InterfacesFailedJ
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 
