@@ -36,14 +36,14 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
     {
         $query = $this->model->newQuery();
 
-        if (isset($filters['user_id']) && !empty($filters['user_id'])) {
+        if (!empty($filters['user_id'])) {
             $query->where('user_id', $filters['user_id']);
         } else {
             $query->whereNull('user_id');
         }
 
         //Searching
-        if (isset($filters['search']) && !empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -51,15 +51,15 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
             }
         }
 
-        if (isset($filters['package']) && !empty($filters['package'])) {
+        if (!empty($filters['package'])) {
             $query->where('package', '=', strtolower($filters['package']));
         }
 
-        if (isset($filters['key']) && !empty($filters['key'])) {
+        if (!empty($filters['key'])) {
             $query->where('key', '=', $filters['key']);
         }
 
-        if (isset($filters['type']) && !empty($filters['type'])) {
+        if (!empty($filters['type'])) {
             $query->where('type', '=', $filters['type']);
         }
 

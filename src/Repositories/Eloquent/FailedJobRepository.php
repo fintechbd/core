@@ -37,7 +37,7 @@ class FailedJobRepository extends EloquentRepository implements InterfacesFailed
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && !empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
