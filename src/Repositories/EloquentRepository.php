@@ -106,17 +106,16 @@ abstract class EloquentRepository
     {
         $this->splitFieldRelationFilesFromInput($attributes);
 
+        $this->model = app()->make(get_class($this->model));
+
         return ($this->useTransaction) ? DB::transaction(fn() => $this->executeCreate()) : $this->executeCreate();
     }
 
     /**
-     * @throws BindingResolutionException
      * @throws \Exception
      */
     private function executeCreate(): ?Model
     {
-        $this->model = app()->make(get_class($this->model));
-
         $this->model->fill($this->fields);
 
         if ($this->model->save()) {
