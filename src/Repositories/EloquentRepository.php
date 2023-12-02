@@ -101,6 +101,7 @@ abstract class EloquentRepository
      * @throws RelationReturnMissingException
      * @throws \ReflectionException
      * @throws BindingResolutionException
+     * @throws \Exception
      */
     public function create(array $attributes = []): mixed
     {
