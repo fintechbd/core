@@ -5,6 +5,7 @@ namespace Fintech\Core\Repositories;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
 use Fintech\Core\Traits\HasUploadFiles;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,21 +28,35 @@ abstract class EloquentRepository
 
     protected ?Model $model;
 
+    /**
+     * @var array $fields model direct assignable fields
+     */
     protected array $fields = [];
 
+    /**
+     * @var array $relations model relation fields
+     */
     protected array $relations = [];
 
+    /**
+     * @var bool $hasFileUploads if this model has file upload
+     */
     protected bool $hasFileUploads;
+    /**
+     * @var bool $useTransaction if this model has file upload
+     */
+    protected bool $useTransaction = false;
 
     /**
      * split the direct model fields and relational fields
      *
+     * @param array $inputs
      * @return void
      *
      * @throws RelationReturnMissingException
      * @throws \ReflectionException
      */
-    protected function splitFieldRelationFilesFromInput(array $inputs)
+    protected function splitFieldRelationFilesFromInput(array $inputs): void
     {
         $fileGroups = [];
 
@@ -79,31 +94,42 @@ abstract class EloquentRepository
     }
 
     /**
-     * Create a new entry resource
+     * create a new resource
      *
      * @param array $attributes
-     * @return Model|null
+     * @return Model|mixed|null
+     * @throws RelationReturnMissingException
+     * @throws \ReflectionException
+     * @throws BindingResolutionException
      */
-    public function create(array $attributes = [])
+    public function create(array $attributes = []): mixed
     {
-        return DB::transaction(function () use (&$attributes) {
+        $this->splitFieldRelationFilesFromInput($attributes);
 
-            $this->splitFieldRelationFilesFromInput($attributes);
+        return ($this->useTransaction) ? DB::transaction(fn() => $this->executeCreate()) : $this->executeCreate();
+    }
 
-            $this->model->fill($this->fields);
+    /**
+     * @throws BindingResolutionException
+     * @throws \Exception
+     */
+    private function executeCreate(): ?Model
+    {
+        $this->model = app()->make(get_class($this->model));
 
-            if ($this->model->save()) {
+        $this->model->fill($this->fields);
 
-                $this->relationCreateOperation();
+        if ($this->model->save()) {
 
-                if ($this->hasFileUploads) {
-                    $this->uploadMediaFiles();
-                }
-                return $this->model;
+            $this->relationCreateOperation();
+
+            if ($this->hasFileUploads) {
+                $this->uploadMediaFiles();
             }
+            return $this->model;
+        }
 
-            return null;
-        });
+        return null;
     }
 
     /**
@@ -113,7 +139,7 @@ abstract class EloquentRepository
      * @param bool $onlyTrashed
      * @return Model|null
      */
-    public function find(int|string $id, $onlyTrashed = false)
+    public function find(int|string $id, bool $onlyTrashed = false): ?Model
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
@@ -132,8 +158,9 @@ abstract class EloquentRepository
      * @param int|string $id
      * @param array $attributes
      * @return Model|null
+     * @throws \Exception
      */
-    public function update(int|string $id, array $attributes = [])
+    public function update(int|string $id, array $attributes = []): ?Model
     {
         $this->model = $this->find($id);
 
@@ -144,24 +171,29 @@ abstract class EloquentRepository
             );
         }
 
-        return DB::transaction(function () use (&$attributes) {
+        $this->splitFieldRelationFilesFromInput($attributes);
 
-            $this->splitFieldRelationFilesFromInput($attributes);
+        return ($this->useTransaction) ? DB::transaction(fn() => $this->executeUpdate()) : $this->executeUpdate();
 
-            if ($this->model->update($this->fields)) {
+    }
 
-                $this->relationUpdateOperation();
+    /**
+     * @throws \Exception
+     */
+    private function executeUpdate(): ?Model
+    {
+        if ($this->model->update($this->fields)) {
 
-                if ($this->hasFileUploads) {
-                    $this->uploadMediaFiles();
-                }
+            $this->relationUpdateOperation();
 
-                return $this->model;
+            if ($this->hasFileUploads) {
+                $this->uploadMediaFiles();
             }
 
-            return null;
-        });
+            return $this->model;
+        }
 
+        return null;
     }
 
     /**
@@ -258,15 +290,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
