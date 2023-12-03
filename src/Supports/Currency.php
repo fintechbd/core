@@ -1854,17 +1854,16 @@ class Currency
     /**
      * return currency value as currency formatted string
      *
-     * @param $amount
      * @param bool $withSymbol
      * @return string
      */
-    public function format($amount, bool $withSymbol = false): string
+    public function format(bool $withSymbol = false): string
     {
         if ($this->amount == null || $this->amount == '') {
             throw new \InvalidArgumentException("Amount value is missing or empty. Use parse to set first");
         }
 
-        $strAmount = number_format($amount, $this->current['precision'], $this->current['decimal_mark'], $this->current['thousands_separator']);
+        $strAmount = number_format($this->amount, $this->current['precision'], $this->current['decimal_mark'], $this->current['thousands_separator']);
 
         if ($withSymbol) {
             return ($this->current['symbol_first'])
