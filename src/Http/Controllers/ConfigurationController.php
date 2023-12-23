@@ -66,20 +66,20 @@ class ConfigurationController extends Controller
      */
     public function update(string $configuration, Request $request): JsonResponse
     {
-        try {
+//        try {
 
             $inputs = $request->all();
 
             foreach ($inputs as $key => $value) {
-                Core::setting()->setValue($configuration, $key, $value);
+                Core::setting()->setValue($configuration, $key, $value, gettype($value));
             }
 
             return $this->updated(__('core::messages.setting.saved', ['package' => config("fintech.core.packages.{$configuration}", 'System')]));
 
-        } catch (\Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
+//        } catch (\Exception $exception) {
+//
+//            return $this->failed($exception->getMessage());
+//        }
     }
 
     /**

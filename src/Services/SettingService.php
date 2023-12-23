@@ -66,19 +66,23 @@ class SettingService
      * @return void
      * @throws \Exception
      */
-    public function setValue(string $package, string $key, $value = null, string $type = null, $user_id = null)
+    public function setValue(string $package, string $key, $value = null, string $type = null, $user_id = null): void
     {
         $entry = $this->list(['package' => $package, 'key' => $key, 'type' => $type, 'user_id' => $user_id])->first();
 
         if (!$entry) {
             try {
-
-                $this->create([
+                $attributes = [
                     'package' => $package,
                     'key' => $key,
+                    'label' => ucwords(str_replace('_', ' ', $package . '_' . $key)),
+                    'description' => ucwords(str_replace('_', ' ', $package . '_' . $key)),
                     'type' => $this->checkType($value, $type),
-                    'value' => (string)Utility::stringify($entry->type, $value)
-                ]);
+                ];
+
+                $attributes['value'] = (string)Utility::stringify($attributes['type'], $value);
+
+                $this->create($attributes);
 
                 return;
 
@@ -96,7 +100,7 @@ class SettingService
      * @param string|null $type
      * @return bool|string
      */
-    private function checkType($value, ?string $type)
+    private function checkType(mixed $value, ?string $type): bool|string
     {
         if ($type != null) {
             return $type;
@@ -104,20 +108,11 @@ class SettingService
 
         $valueType = strtolower((gettype($value) ?? ''));
 
-        switch ($valueType) {
-            case 'array' :
-            case 'object' :
-                return 'json';
-
-            case 'boolean' :
-                return 'bool';
-
-            case 'string' :
-            case 'null':
-                return 'string';
-
-            default:
-                return $valueType;
-        }
+        return match ($valueType) {
+            'array', 'object' => 'json',
+            'boolean' => 'bool',
+            'string', 'null' => 'string',
+            default => $valueType,
+        };
     }
 }
