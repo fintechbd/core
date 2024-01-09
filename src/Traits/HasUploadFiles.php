@@ -34,7 +34,7 @@ trait HasUploadFiles
 
     private function uploadTargetFile($file, string $group, array $attributes = [])
     {
-        $ext = Mimes::guessExtFromB64($file);
+        $ext = Mimes::guessExtFromB64(substr($file, 0, 100));
 
         $this->model->addMediaFromBase64($file)
             ->usingFileName($this->mediaNameFormatter($ext, $group))
