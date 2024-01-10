@@ -14,12 +14,14 @@ class ModelPathGenerator extends DefaultPathGenerator
     {
         $prefix = config('media-library.prefix', '');
 
+        $month = $media->getCustomProperty('month', date('F'));
+
+        $year = $media->getCustomProperty('year', date('Y'));
+
+        $collection_name = class_basename($media->model_type) . '_' . $media->collection_name;
+
         return strtolower(
-            rtrim($prefix, '/')
-            . '/' . class_basename($media->model_type) . '_' . $media->collection_name
-            . '/' . date('Y')
-            . '/' . date('F')
-            . '/' . $media->getKey()
+            rtrim($prefix, '/') . "{$collection_name}/{$year}/{$month}/{$media->getKey()}"
         );
 
     }

@@ -36,6 +36,9 @@ trait HasUploadFiles
     {
         $ext = Mimes::guessExtFromB64(substr($file, 0, 100));
 
+        $attributes['month'] = date('F');
+        $attributes['year'] = strtolower(date('Y'));
+
         $this->model->addMediaFromBase64($file)
             ->usingFileName($this->mediaNameFormatter($ext, $group))
             ->usingName($this->mediaNameFormatter($ext, $group))
