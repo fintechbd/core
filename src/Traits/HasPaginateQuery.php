@@ -24,8 +24,8 @@ trait HasPaginateQuery
     {
         $options['sort'] = $this->input('sort') ?? 'id';
         $options['dir'] = $this->input('dir') ?? 'asc';
-        $options['per_page'] = $this->input('per_page') ?? array_key_first(Constant::PAGINATE_LENGTHS);
-        $options['page'] = $this->input('page') ?? 1;
+        $options['per_page'] = intval($this->input('per_page') ?? array_key_first(Constant::PAGINATE_LENGTHS));
+        $options['page'] = intval($this->input('page') ?? 1);
         $options['paginate'] = true;
         $options['trashed'] = false;
 

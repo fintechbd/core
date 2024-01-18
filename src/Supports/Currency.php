@@ -4,7 +4,7 @@ namespace Fintech\Core\Supports;
 
 class Currency
 {
-    private static $items = [
+    private static array $items = [
         'AED' => [
             'code' => 'AED',
             'name' => 'UAE Dirham',
@@ -14,8 +14,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#96b6b3',
         ],
-
         'AFN' => [
             'code' => 'AFN',
             'name' => 'Afghani',
@@ -25,8 +25,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#74bd4e',
         ],
-
         'ALL' => [
             'code' => 'ALL',
             'name' => 'Lek',
@@ -36,8 +36,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ed8be3',
         ],
-
         'AMD' => [
             'code' => 'AMD',
             'name' => 'Armenian Dram',
@@ -47,8 +47,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#843736',
         ],
-
         'ANG' => [
             'code' => 'ANG',
             'name' => 'Netherlands Antillean Guilder',
@@ -58,8 +58,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#4e8535',
         ],
-
         'AOA' => [
             'code' => 'AOA',
             'name' => 'Kwanza',
@@ -69,8 +69,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#96b6d5',
         ],
-
         'ARS' => [
             'code' => 'ARS',
             'name' => 'Argentine Peso',
@@ -80,8 +80,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#8f095c',
         ],
-
         'AUD' => [
             'code' => 'AUD',
             'name' => 'Australian Dollar',
@@ -91,8 +91,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ' ',
+            'color' => '#1050cc',
         ],
-
         'AWG' => [
             'code' => 'AWG',
             'name' => 'Aruban Florin',
@@ -102,8 +102,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#54a0bd',
         ],
-
         'AZN' => [
             'code' => 'AZN',
             'name' => 'Azerbaijanian Manat',
@@ -113,8 +113,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#da38f1',
         ],
-
         'BAM' => [
             'code' => 'BAM',
             'name' => 'Convertible Mark',
@@ -124,8 +124,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#1759d1',
         ],
-
         'BBD' => [
             'code' => 'BBD',
             'name' => 'Barbados Dollar',
@@ -135,8 +135,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2e7789',
         ],
-
         'BDT' => [
             'code' => 'BDT',
             'name' => 'Taka',
@@ -146,8 +146,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#91fcb2',
         ],
-
         'BGN' => [
             'code' => 'BGN',
             'name' => 'Bulgarian Lev',
@@ -157,8 +157,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => ' ',
+            'color' => '#7e261d',
         ],
-
         'BHD' => [
             'code' => 'BHD',
             'name' => 'Bahraini Dinar',
@@ -168,8 +168,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#a3954b',
         ],
-
         'BIF' => [
             'code' => 'BIF',
             'name' => 'Burundi Franc',
@@ -179,8 +179,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#fad6b5',
         ],
-
         'BMD' => [
             'code' => 'BMD',
             'name' => 'Bermudian Dollar',
@@ -190,8 +190,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9d109e',
         ],
-
         'BND' => [
             'code' => 'BND',
             'name' => 'Brunei Dollar',
@@ -201,8 +201,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#1bb34f',
         ],
-
         'BOB' => [
             'code' => 'BOB',
             'name' => 'Boliviano',
@@ -212,8 +212,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#769104',
         ],
-
         'BOV' => [
             'code' => 'BOV',
             'name' => 'Mvdol',
@@ -223,8 +223,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3f98e3',
         ],
-
         'BRL' => [
             'code' => 'BRL',
             'name' => 'Brazilian Real',
@@ -234,8 +234,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#397efb',
         ],
-
         'BSD' => [
             'code' => 'BSD',
             'name' => 'Bahamian Dollar',
@@ -245,8 +245,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#873967',
         ],
-
         'BTN' => [
             'code' => 'BTN',
             'name' => 'Ngultrum',
@@ -256,8 +256,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#1f1b0f',
         ],
-
         'BWP' => [
             'code' => 'BWP',
             'name' => 'Pula',
@@ -267,8 +267,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3a5715',
         ],
-
         'BYN' => [
             'code' => 'BYN',
             'name' => 'Belarussian Ruble',
@@ -278,8 +278,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => ' ',
+            'color' => '#a2ed13',
         ],
-
         'BZD' => [
             'code' => 'BZD',
             'name' => 'Belize Dollar',
@@ -289,8 +289,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#db98a5',
         ],
-
         'CAD' => [
             'code' => 'CAD',
             'name' => 'Canadian Dollar',
@@ -300,8 +300,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#cc9961',
         ],
-
         'CDF' => [
             'code' => 'CDF',
             'name' => 'Congolese Franc',
@@ -311,8 +311,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3cc950',
         ],
-
         'CHF' => [
             'code' => 'CHF',
             'name' => 'Swiss Franc',
@@ -322,8 +322,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#47217f',
         ],
-
         'CLF' => [
             'code' => 'CLF',
             'name' => 'Unidades de fomento',
@@ -333,8 +333,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#868dbf',
         ],
-
         'CLP' => [
             'code' => 'CLP',
             'name' => 'Chilean Peso',
@@ -344,8 +344,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#f5b0c3',
         ],
-
         'CNY' => [
             'code' => 'CNY',
             'name' => 'Yuan Renminbi',
@@ -355,8 +355,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#059253',
         ],
-
         'COP' => [
             'code' => 'COP',
             'name' => 'Colombian Peso',
@@ -366,8 +366,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#864427',
         ],
-
         'CRC' => [
             'code' => 'CRC',
             'name' => 'Costa Rican Colon',
@@ -377,8 +377,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#ce19a8',
         ],
-
         'CUC' => [
             'code' => 'CUC',
             'name' => 'Peso Convertible',
@@ -388,8 +388,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#aa4100',
         ],
-
         'CUP' => [
             'code' => 'CUP',
             'name' => 'Cuban Peso',
@@ -399,8 +399,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#677c1e',
         ],
-
         'CVE' => [
             'code' => 'CVE',
             'name' => 'Cape Verde Escudo',
@@ -410,8 +410,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#d62c54',
         ],
-
         'CZK' => [
             'code' => 'CZK',
             'name' => 'Czech Koruna',
@@ -421,8 +421,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#01a0de',
         ],
-
         'DJF' => [
             'code' => 'DJF',
             'name' => 'Djibouti Franc',
@@ -432,8 +432,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#396d89',
         ],
-
         'DKK' => [
             'code' => 'DKK',
             'name' => 'Danish Krone',
@@ -443,8 +443,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#d42966',
         ],
-
         'DOP' => [
             'code' => 'DOP',
             'name' => 'Dominican Peso',
@@ -454,8 +454,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#e50a78',
         ],
-
         'DZD' => [
             'code' => 'DZD',
             'name' => 'Algerian Dinar',
@@ -465,8 +465,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#976cb9',
         ],
-
         'EGP' => [
             'code' => 'EGP',
             'name' => 'Egyptian Pound',
@@ -476,8 +476,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#d585fb',
         ],
-
         'ERN' => [
             'code' => 'ERN',
             'name' => 'Nakfa',
@@ -487,8 +487,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#373590',
         ],
-
         'ETB' => [
             'code' => 'ETB',
             'name' => 'Ethiopian Birr',
@@ -498,8 +498,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#d6d6e0',
         ],
-
         'EUR' => [
             'code' => 'EUR',
             'name' => 'Euro',
@@ -509,8 +509,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#432eed',
         ],
-
         'FJD' => [
             'code' => 'FJD',
             'name' => 'Fiji Dollar',
@@ -520,8 +520,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b683bb',
         ],
-
         'FKP' => [
             'code' => 'FKP',
             'name' => 'Falkland Islands Pound',
@@ -531,8 +531,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2710b4',
         ],
-
         'GBP' => [
             'code' => 'GBP',
             'name' => 'Pound Sterling',
@@ -542,8 +542,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#bcc4c3',
         ],
-
         'GEL' => [
             'code' => 'GEL',
             'name' => 'Lari',
@@ -553,8 +553,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#016a42',
         ],
-
         'GHS' => [
             'code' => 'GHS',
             'name' => 'Ghana Cedi',
@@ -564,8 +564,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9090dd',
         ],
-
         'GIP' => [
             'code' => 'GIP',
             'name' => 'Gibraltar Pound',
@@ -575,8 +575,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#a06b9c',
         ],
-
         'GMD' => [
             'code' => 'GMD',
             'name' => 'Dalasi',
@@ -586,8 +586,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#82ac98',
         ],
-
         'GNF' => [
             'code' => 'GNF',
             'name' => 'Guinea Franc',
@@ -597,8 +597,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#41558e',
         ],
-
         'GTQ' => [
             'code' => 'GTQ',
             'name' => 'Quetzal',
@@ -608,8 +608,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#336f18',
         ],
-
         'GYD' => [
             'code' => 'GYD',
             'name' => 'Guyana Dollar',
@@ -619,8 +619,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#0c5980',
         ],
-
         'HKD' => [
             'code' => 'HKD',
             'name' => 'Hong Kong Dollar',
@@ -630,8 +630,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9f7657',
         ],
-
         'HNL' => [
             'code' => 'HNL',
             'name' => 'Lempira',
@@ -641,8 +641,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#fd1950',
         ],
-
         'HRK' => [
             'code' => 'HRK',
             'name' => 'Croatian Kuna',
@@ -652,8 +652,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#e0cf04',
         ],
-
         'HTG' => [
             'code' => 'HTG',
             'name' => 'Gourde',
@@ -663,8 +663,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#783183',
         ],
-
         'HUF' => [
             'code' => 'HUF',
             'name' => 'Forint',
@@ -674,8 +674,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#9fa2ea',
         ],
-
         'IDR' => [
             'code' => 'IDR',
             'name' => 'Rupiah',
@@ -685,8 +685,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#2f4441',
         ],
-
         'ILS' => [
             'code' => 'ILS',
             'name' => 'New Israeli Sheqel',
@@ -696,8 +696,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ca9b16',
         ],
-
         'INR' => [
             'code' => 'INR',
             'name' => 'Indian Rupee',
@@ -707,8 +707,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#350644',
         ],
-
         'IQD' => [
             'code' => 'IQD',
             'name' => 'Iraqi Dinar',
@@ -718,8 +718,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#57150f',
         ],
-
         'IRR' => [
             'code' => 'IRR',
             'name' => 'Iranian Rial',
@@ -729,8 +729,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2e89f7',
         ],
-
         'ISK' => [
             'code' => 'ISK',
             'name' => 'Iceland Krona',
@@ -740,8 +740,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#5ab626',
         ],
-
         'JMD' => [
             'code' => 'JMD',
             'name' => 'Jamaican Dollar',
@@ -751,8 +751,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#1f4260',
         ],
-
         'JOD' => [
             'code' => 'JOD',
             'name' => 'Jordanian Dinar',
@@ -762,8 +762,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#6a9222',
         ],
-
         'JPY' => [
             'code' => 'JPY',
             'name' => 'Yen',
@@ -773,8 +773,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#98fda0',
         ],
-
         'KES' => [
             'code' => 'KES',
             'name' => 'Kenyan Shilling',
@@ -784,8 +784,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#d160d0',
         ],
-
         'KGS' => [
             'code' => 'KGS',
             'name' => 'Som',
@@ -795,8 +795,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b84128',
         ],
-
         'KHR' => [
             'code' => 'KHR',
             'name' => 'Riel',
@@ -806,8 +806,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#000a0e',
         ],
-
         'KMF' => [
             'code' => 'KMF',
             'name' => 'Comoro Franc',
@@ -817,8 +817,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#af7063',
         ],
-
         'KPW' => [
             'code' => 'KPW',
             'name' => 'North Korean Won',
@@ -828,8 +828,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b76596',
         ],
-
         'KRW' => [
             'code' => 'KRW',
             'name' => 'Won',
@@ -839,8 +839,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#945b99',
         ],
-
         'KWD' => [
             'code' => 'KWD',
             'name' => 'Kuwaiti Dinar',
@@ -850,8 +850,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#09fcb7',
         ],
-
         'KYD' => [
             'code' => 'KYD',
             'name' => 'Cayman Islands Dollar',
@@ -861,8 +861,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ab97ef',
         ],
-
         'KZT' => [
             'code' => 'KZT',
             'name' => 'Tenge',
@@ -872,8 +872,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#09577f',
         ],
-
         'LAK' => [
             'code' => 'LAK',
             'name' => 'Kip',
@@ -883,8 +883,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#bee4ed',
         ],
-
         'LBP' => [
             'code' => 'LBP',
             'name' => 'Lebanese Pound',
@@ -894,8 +894,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2c2f95',
         ],
-
         'LKR' => [
             'code' => 'LKR',
             'name' => 'Sri Lanka Rupee',
@@ -905,8 +905,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#6a8eaf',
         ],
-
         'LRD' => [
             'code' => 'LRD',
             'name' => 'Liberian Dollar',
@@ -916,8 +916,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2b2e61',
         ],
-
         'LSL' => [
             'code' => 'LSL',
             'name' => 'Loti',
@@ -927,8 +927,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ffd6ea',
         ],
-
         'LTL' => [
             'code' => 'LTL',
             'name' => 'Lithuanian Litas',
@@ -938,8 +938,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#be5402',
         ],
-
         'LVL' => [
             'code' => 'LVL',
             'name' => 'Latvian Lats',
@@ -949,8 +949,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#a7c459',
         ],
-
         'LYD' => [
             'code' => 'LYD',
             'name' => 'Libyan Dinar',
@@ -960,8 +960,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#7e5bbd',
         ],
-
         'MAD' => [
             'code' => 'MAD',
             'name' => 'Moroccan Dirham',
@@ -971,8 +971,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ce165c',
         ],
-
         'MDL' => [
             'code' => 'MDL',
             'name' => 'Moldovan Leu',
@@ -982,8 +982,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#1cf3b4',
         ],
-
         'MGA' => [
             'code' => 'MGA',
             'name' => 'Malagasy Ariary',
@@ -993,8 +993,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2a5f56',
         ],
-
         'MKD' => [
             'code' => 'MKD',
             'name' => 'Denar',
@@ -1004,8 +1004,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ab30f8',
         ],
-
         'MMK' => [
             'code' => 'MMK',
             'name' => 'Kyat',
@@ -1015,8 +1015,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#e31030',
         ],
-
         'MNT' => [
             'code' => 'MNT',
             'name' => 'Tugrik',
@@ -1026,8 +1026,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#feed86',
         ],
-
         'MOP' => [
             'code' => 'MOP',
             'name' => 'Pataca',
@@ -1037,8 +1037,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b66dcf',
         ],
-
         'MRO' => [
             'code' => 'MRO',
             'name' => 'Ouguiya',
@@ -1048,8 +1048,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#558d54',
         ],
-
         'MUR' => [
             'code' => 'MUR',
             'name' => 'Mauritius Rupee',
@@ -1059,8 +1059,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#fe9c62',
         ],
-
         'MVR' => [
             'code' => 'MVR',
             'name' => 'Rufiyaa',
@@ -1070,8 +1070,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#882d16',
         ],
-
         'MWK' => [
             'code' => 'MWK',
             'name' => 'Kwacha',
@@ -1081,8 +1081,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b280b4',
         ],
-
         'MXN' => [
             'code' => 'MXN',
             'name' => 'Mexican Peso',
@@ -1092,8 +1092,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#aac121',
         ],
-
         'MYR' => [
             'code' => 'MYR',
             'name' => 'Malaysian Ringgit',
@@ -1103,8 +1103,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#e11fcd',
         ],
-
         'MZN' => [
             'code' => 'MZN',
             'name' => 'Mozambique Metical',
@@ -1114,8 +1114,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#22eb46',
         ],
-
         'NAD' => [
             'code' => 'NAD',
             'name' => 'Namibia Dollar',
@@ -1125,8 +1125,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#83142d',
         ],
-
         'NGN' => [
             'code' => 'NGN',
             'name' => 'Naira',
@@ -1136,8 +1136,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#f7c45e',
         ],
-
         'NIO' => [
             'code' => 'NIO',
             'name' => 'Cordoba Oro',
@@ -1147,8 +1147,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#978452',
         ],
-
         'NOK' => [
             'code' => 'NOK',
             'name' => 'Norwegian Krone',
@@ -1158,8 +1158,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#39fdae',
         ],
-
         'NPR' => [
             'code' => 'NPR',
             'name' => 'Nepalese Rupee',
@@ -1169,8 +1169,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#819068',
         ],
-
         'NZD' => [
             'code' => 'NZD',
             'name' => 'New Zealand Dollar',
@@ -1180,8 +1180,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#64d480',
         ],
-
         'OMR' => [
             'code' => 'OMR',
             'name' => 'Rial Omani',
@@ -1191,8 +1191,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9d9edb',
         ],
-
         'PAB' => [
             'code' => 'PAB',
             'name' => 'Balboa',
@@ -1202,8 +1202,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#fb8deb',
         ],
-
         'PEN' => [
             'code' => 'PEN',
             'name' => 'Sol',
@@ -1213,8 +1213,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#cc0e74',
         ],
-
         'PGK' => [
             'code' => 'PGK',
             'name' => 'Kina',
@@ -1224,8 +1224,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#72a2c3',
         ],
-
         'PHP' => [
             'code' => 'PHP',
             'name' => 'Philippine Peso',
@@ -1235,8 +1235,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#32c2e0',
         ],
-
         'PKR' => [
             'code' => 'PKR',
             'name' => 'Pakistan Rupee',
@@ -1246,8 +1246,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#47eb4f',
         ],
-
         'PLN' => [
             'code' => 'PLN',
             'name' => 'Zloty',
@@ -1257,8 +1257,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => ' ',
+            'color' => '#e39aaf',
         ],
-
         'PYG' => [
             'code' => 'PYG',
             'name' => 'Guarani',
@@ -1268,8 +1268,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#f38040',
         ],
-
         'QAR' => [
             'code' => 'QAR',
             'name' => 'Qatari Rial',
@@ -1279,8 +1279,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9a5a55',
         ],
-
         'RON' => [
             'code' => 'RON',
             'name' => 'New Romanian Leu',
@@ -1290,8 +1290,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#259dd0',
         ],
-
         'RSD' => [
             'code' => 'RSD',
             'name' => 'Serbian Dinar',
@@ -1301,8 +1301,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#61df23',
         ],
-
         'RUB' => [
             'code' => 'RUB',
             'name' => 'Russian Ruble',
@@ -1312,8 +1312,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#0e466e',
         ],
-
         'RWF' => [
             'code' => 'RWF',
             'name' => 'Rwanda Franc',
@@ -1323,8 +1323,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#cbfc3d',
         ],
-
         'SAR' => [
             'code' => 'SAR',
             'name' => 'Saudi Riyal',
@@ -1334,8 +1334,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#576ec7',
         ],
-
         'SBD' => [
             'code' => 'SBD',
             'name' => 'Solomon Islands Dollar',
@@ -1345,8 +1345,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#01baed',
         ],
-
         'SCR' => [
             'code' => 'SCR',
             'name' => 'Seychelles Rupee',
@@ -1356,8 +1356,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#006c5b',
         ],
-
         'SDG' => [
             'code' => 'SDG',
             'name' => 'Sudanese Pound',
@@ -1367,8 +1367,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#688bb8',
         ],
-
         'SEK' => [
             'code' => 'SEK',
             'name' => 'Swedish Krona',
@@ -1378,8 +1378,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => ',',
             'thousands_separator' => ' ',
+            'color' => '#07486c',
         ],
-
         'SGD' => [
             'code' => 'SGD',
             'name' => 'Singapore Dollar',
@@ -1389,8 +1389,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#4985df',
         ],
-
         'SHP' => [
             'code' => 'SHP',
             'name' => 'Saint Helena Pound',
@@ -1400,8 +1400,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2b269e',
         ],
-
         'SLL' => [
             'code' => 'SLL',
             'name' => 'Leone',
@@ -1411,8 +1411,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#7dc211',
         ],
-
         'SOS' => [
             'code' => 'SOS',
             'name' => 'Somali Shilling',
@@ -1422,8 +1422,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#b5fe2a',
         ],
-
         'SRD' => [
             'code' => 'SRD',
             'name' => 'Surinam Dollar',
@@ -1433,8 +1433,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#9df3c5',
         ],
-
         'SSP' => [
             'code' => 'SSP',
             'name' => 'South Sudanese Pound',
@@ -1444,8 +1444,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#648680',
         ],
-
         'STD' => [
             'code' => 'STD',
             'name' => 'Dobra',
@@ -1455,8 +1455,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#356059',
         ],
-
         'SVC' => [
             'code' => 'SVC',
             'name' => 'El Salvador Colon',
@@ -1466,8 +1466,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2a3588',
         ],
-
         'SYP' => [
             'code' => 'SYP',
             'name' => 'Syrian Pound',
@@ -1477,8 +1477,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3eb3bd',
         ],
-
         'SZL' => [
             'code' => 'SZL',
             'name' => 'Lilangeni',
@@ -1488,8 +1488,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#a45728',
         ],
-
         'THB' => [
             'code' => 'THB',
             'name' => 'Baht',
@@ -1499,8 +1499,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3035b6',
         ],
-
         'TJS' => [
             'code' => 'TJS',
             'name' => 'Somoni',
@@ -1510,8 +1510,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#ccb61c',
         ],
-
         'TMT' => [
             'code' => 'TMT',
             'name' => 'Turkmenistan New Manat',
@@ -1521,8 +1521,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#4dba4f',
         ],
-
         'TND' => [
             'code' => 'TND',
             'name' => 'Tunisian Dinar',
@@ -1532,8 +1532,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#bd83a1',
         ],
-
         'TOP' => [
             'code' => 'TOP',
             'name' => 'Pa’anga',
@@ -1543,8 +1543,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#39b84d',
         ],
-
         'TRY' => [
             'code' => 'TRY',
             'name' => 'Turkish Lira',
@@ -1554,8 +1554,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#d190cf',
         ],
-
         'TTD' => [
             'code' => 'TTD',
             'name' => 'Trinidad and Tobago Dollar',
@@ -1565,8 +1565,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#487fb0',
         ],
-
         'TWD' => [
             'code' => 'TWD',
             'name' => 'New Taiwan Dollar',
@@ -1576,8 +1576,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#4f00a4',
         ],
-
         'TZS' => [
             'code' => 'TZS',
             'name' => 'Tanzanian Shilling',
@@ -1587,8 +1587,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#5f611e',
         ],
-
         'UAH' => [
             'code' => 'UAH',
             'name' => 'Hryvnia',
@@ -1598,8 +1598,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#2aef3d',
         ],
-
         'UGX' => [
             'code' => 'UGX',
             'name' => 'Uganda Shilling',
@@ -1609,8 +1609,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#50cfc9',
         ],
-
         'USD' => [
             'code' => 'USD',
             'name' => 'US Dollar',
@@ -1620,8 +1620,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#6185ee',
         ],
-
         'UYU' => [
             'code' => 'UYU',
             'name' => 'Peso Uruguayo',
@@ -1631,8 +1631,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#43a4e5',
         ],
-
         'UZS' => [
             'code' => 'UZS',
             'name' => 'Uzbekistan Sum',
@@ -1642,8 +1642,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#8f5f2f',
         ],
-
         'VEF' => [
             'code' => 'VEF',
             'name' => 'Bolivar',
@@ -1653,8 +1653,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#f53418',
         ],
-
         'VND' => [
             'code' => 'VND',
             'name' => 'Dong',
@@ -1664,8 +1664,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => ',',
             'thousands_separator' => '.',
+            'color' => '#13f8b9',
         ],
-
         'VUV' => [
             'code' => 'VUV',
             'name' => 'Vatu',
@@ -1675,8 +1675,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#c31700',
         ],
-
         'WST' => [
             'code' => 'WST',
             'name' => 'Tala',
@@ -1686,8 +1686,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#034616',
         ],
-
         'XAF' => [
             'code' => 'XAF',
             'name' => 'CFA Franc BEAC',
@@ -1697,8 +1697,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#da5658',
         ],
-
         'XAG' => [
             'code' => 'XAG',
             'name' => 'Silver',
@@ -1708,8 +1708,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#6fca73',
         ],
-
         'XAU' => [
             'code' => 'XAU',
             'name' => 'Gold',
@@ -1719,8 +1719,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#96ab9c',
         ],
-
         'XCD' => [
             'code' => 'XCD',
             'name' => 'East Caribbean Dollar',
@@ -1730,8 +1730,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#58a9c8',
         ],
-
         'XDR' => [
             'code' => 'XDR',
             'name' => 'SDR (Special Drawing Right)',
@@ -1741,8 +1741,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#403156',
         ],
-
         'XOF' => [
             'code' => 'XOF',
             'name' => 'CFA Franc BCEAO',
@@ -1752,8 +1752,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#94d2a4',
         ],
-
         'XPF' => [
             'code' => 'XPF',
             'name' => 'CFP Franc',
@@ -1763,8 +1763,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#c6c767',
         ],
-
         'YER' => [
             'code' => 'YER',
             'name' => 'Yemeni Rial',
@@ -1774,8 +1774,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#8cd260',
         ],
-
         'ZAR' => [
             'code' => 'ZAR',
             'name' => 'Rand',
@@ -1785,8 +1785,8 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#3e5fec',
         ],
-
         'ZMW' => [
             'code' => 'ZMW',
             'name' => 'Zambian Kwacha',
@@ -1796,8 +1796,8 @@ class Currency
             'symbol_first' => false,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#5dfbd7',
         ],
-
         'ZWL' => [
             'code' => 'ZWL',
             'name' => 'Zimbabwe Dollar',
@@ -1807,6 +1807,7 @@ class Currency
             'symbol_first' => true,
             'decimal_mark' => '.',
             'thousands_separator' => ',',
+            'color' => '#4a6863',
         ],
     ];
 
@@ -1816,7 +1817,7 @@ class Currency
 
     public function __construct(string $code = 'USD')
     {
-        $this->current = $this->get($code);
+        $this->current = self::get($code);
     }
 
     /**
@@ -1832,7 +1833,7 @@ class Currency
 
         $this->amount = floatval($amount);
 
-        $this->current = $this->get($code);
+        $this->current = self::get($code);
 
         return $this;
     }
@@ -1842,7 +1843,7 @@ class Currency
      * @param string $code
      * @return array
      */
-    public function get(string $code): array
+    public static function get(string $code): array
     {
         if (!self::$items[$code]) {
             throw new \InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
