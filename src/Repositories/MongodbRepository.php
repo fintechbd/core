@@ -150,7 +150,7 @@ abstract class MongodbRepository
         }
 
         return ($asPagination)
-            ? $query->{$paginateMethod}($perPageCount)
+            ? $query->{$paginateMethod}($perPageCount)->withQueryString()
             : $query->get();
     }
 }

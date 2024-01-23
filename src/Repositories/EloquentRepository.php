@@ -326,7 +326,7 @@ abstract class EloquentRepository
         }
 
         return ($asPagination)
-            ? $query->{$paginateMethod}($perPageCount)
+            ? $query->{$paginateMethod}($perPageCount)->withQueryString()
             : $query->get();
     }
 }
