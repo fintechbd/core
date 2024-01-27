@@ -5,6 +5,7 @@ namespace Fintech\Core;
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
@@ -34,6 +35,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadMacros();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
@@ -63,7 +65,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadSettings();
     }
 
-    private function loadSettings()
+    private function loadSettings(): void
     {
         if (!App::environment('testing')) {
             if (Schema::hasTable('settings')) {
@@ -72,5 +74,12 @@ class CoreServiceProvider extends ServiceProvider
                 });
             }
         }
+    }
+
+    private function loadMacros(): void
+    {
+        Request::macro('platform', function () {
+            return request()->header('Platform', null);
+        });
     }
 }
