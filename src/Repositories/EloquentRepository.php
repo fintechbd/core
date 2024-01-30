@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 use ReflectionClass;
 use Throwable;
@@ -70,14 +71,15 @@ abstract class EloquentRepository
 
         foreach ($inputs as $field => $value) {
             //Relation
-            if ($reflection->hasMethod($field)) {
-                $reflectionMethod = $reflection->getMethod($field);
+            $relationName = Str::camel($field);
+            if ($reflection->hasMethod($relationName)) {
+                $reflectionMethod = $reflection->getMethod($relationName);
                 if (!$reflectionMethod->hasReturnType()) {
                     throw (new RelationReturnMissingException())
                         ->setModel($reflectionMethod->class, $reflectionMethod->name);
                 }
 
-                $this->relations[$field] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
+                $this->relations[$relationName] = ['type' => (string)$reflectionMethod->getReturnType(), 'value' => $value];
                 continue;
             }
             //File
