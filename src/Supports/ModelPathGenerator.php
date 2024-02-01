@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Supports;
 
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator;
 
@@ -18,7 +19,7 @@ class ModelPathGenerator extends DefaultPathGenerator
 
         $year = $media->getCustomProperty('year', date('Y'));
 
-        $collection_name = class_basename($media->model_type) . '_' . $media->collection_name;
+        $collection_name = Str::snake(class_basename($media->model_type) . '_' . $media->collection_name);
 
         return strtolower(
             rtrim($prefix, '/') . "{$collection_name}/{$year}/{$month}/{$media->getKey()}"
