@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Http\Requests;
 
+use Fintech\Core\Supports\Utility;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DropDownRequest extends FormRequest
@@ -30,12 +31,19 @@ class DropDownRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $options['paginate'] = false;
+        $options = [];
 
-        $paginateInput = $this->input('paginate', '');
+        foreach ($this->all() as $query => $value) {
 
-        if ($paginateInput != null && strlen($paginateInput) != 0) {
-            $options['paginate'] = $this->boolean('paginate');
+            if ($value == 'true' || $value == 'false')
+                $options[$query] = Utility::typeCast($value, 'bool');
+
+            elseif (filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION))
+                $options[$query] = Utility::typeCast($value, 'float');
+
+            elseif (filter_var($value, FILTER_SANITIZE_NUMBER_INT))
+                $options[$query] = Utility::typeCast($value, 'integer');
+
         }
 
         $this->merge($options);
