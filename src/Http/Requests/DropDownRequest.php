@@ -35,14 +35,13 @@ class DropDownRequest extends FormRequest
 
         foreach ($this->all() as $query => $value) {
 
-            if ($value == 'true' || $value == 'false')
+            if ($value == 'true' || $value == 'false') {
                 $options[$query] = Utility::typeCast($value, 'bool');
-
-            elseif (filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION))
+            } elseif (filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)) {
                 $options[$query] = Utility::typeCast($value, 'float');
-
-            elseif (filter_var($value, FILTER_SANITIZE_NUMBER_INT))
+            } elseif (filter_var($value, FILTER_SANITIZE_NUMBER_INT)) {
                 $options[$query] = Utility::typeCast($value, 'integer');
+            }
 
         }
 
