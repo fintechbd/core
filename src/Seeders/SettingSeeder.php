@@ -100,6 +100,22 @@ class SettingSeeder extends Seeder
                 'type' => 'integer',
                 'value' => '8'
             ],
+            [
+                'package' => 'transaction',
+                'label' => 'Transaction Delay Time',
+                'description' => 'Transaction Delay Time',
+                'key' => 'delay_time',
+                'type' => 'integer',
+                'value' => '15'
+            ],
+            [
+                'package' => 'transaction',
+                'label' => 'Transaction Minimum Balance',
+                'description' => 'Transaction Minimum Balance',
+                'key' => 'minimum_balance',
+                'type' => 'float',
+                'value' => '0.00'
+            ],
         ];
     }
 }
