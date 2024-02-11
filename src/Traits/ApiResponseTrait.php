@@ -33,11 +33,12 @@ trait ApiResponseTrait
      * resource
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function deleted($data): JsonResponse
+    protected function deleted($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_OK);
+        return response()->json($this->format($data), Response::HTTP_OK, $headers);
     }
 
     /**
@@ -45,11 +46,12 @@ trait ApiResponseTrait
      * resource restored
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function restored($data): JsonResponse
+    protected function restored($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_OK);
+        return response()->json($this->format($data), Response::HTTP_OK, $headers);
     }
 
     /**
@@ -57,11 +59,12 @@ trait ApiResponseTrait
      * created on server
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function created($data): JsonResponse
+    protected function created($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_CREATED);
+        return response()->json($this->format($data), Response::HTTP_CREATED, $headers);
     }
 
     /**
@@ -69,11 +72,12 @@ trait ApiResponseTrait
      * request accepted
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function updated($data): JsonResponse
+    protected function updated($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_OK);
+        return response()->json($this->format($data), Response::HTTP_OK, $headers);
     }
 
     /**
@@ -81,11 +85,12 @@ trait ApiResponseTrait
      * request accepted
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function exported($data): JsonResponse
+    protected function exported($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_ACCEPTED);
+        return response()->json($this->format($data), Response::HTTP_ACCEPTED, $headers);
     }
 
     /**
@@ -93,22 +98,24 @@ trait ApiResponseTrait
      * logic exception
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function failed($data): JsonResponse
+    protected function failed($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_BAD_REQUEST);
+        return response()->json($this->format($data), Response::HTTP_BAD_REQUEST, $headers);
     }
 
     /**
      * return response with http 200 for all success status
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function success($data): JsonResponse
+    protected function success($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_OK);
+        return response()->json($this->format($data), Response::HTTP_OK, $headers);
     }
 
     /**
@@ -116,15 +123,16 @@ trait ApiResponseTrait
      * token or ip banned
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function banned($data): JsonResponse
+    protected function banned($data, array $headers = []): JsonResponse
     {
         if (is_string($data)) {
             $data = ['message' => $data];
         }
 
-        return response()->json($this->format($data), Response::HTTP_UNAUTHORIZED);
+        return response()->json($this->format($data), Response::HTTP_UNAUTHORIZED, $headers);
     }
 
     /**
@@ -132,47 +140,51 @@ trait ApiResponseTrait
      * to that request
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function forbidden($data): JsonResponse
+    protected function forbidden($data, array $headers = []): JsonResponse
     {
         if (is_string($data)) {
             $data = ['message' => $data];
         }
 
-        return response()->json($this->format($data), Response::HTTP_FORBIDDEN);
+        return response()->json($this->format($data), Response::HTTP_FORBIDDEN, $headers);
     }
 
     /**
      * return response with http 404 not found
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function notfound($data): JsonResponse
+    protected function notfound($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_NOT_FOUND);
+        return response()->json($this->format($data), Response::HTTP_NOT_FOUND, $headers);
     }
 
     /**
      * return response with http 423 attempt locked
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function locked($data): JsonResponse
+    protected function locked($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_LOCKED);
+        return response()->json($this->format($data), Response::HTTP_LOCKED, $headers);
     }
 
     /**
      * return response with http 429 too many requests code
      *
      * @param $data
+     * @param array $headers
      * @return JsonResponse
      */
-    protected function overflow($data): JsonResponse
+    protected function overflow($data, array $headers = []): JsonResponse
     {
-        return response()->json($this->format($data), Response::HTTP_TOO_MANY_REQUESTS);
+        return response()->json($this->format($data), Response::HTTP_TOO_MANY_REQUESTS, $headers);
     }
 }
