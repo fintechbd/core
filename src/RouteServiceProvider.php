@@ -3,6 +3,7 @@
 namespace Fintech\Core;
 
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -16,6 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
+     * @throws BindingResolutionException
      */
     public function boot()
     {
@@ -31,8 +33,13 @@ class RouteServiceProvider extends ServiceProvider
 
         ($this->app->make(Router::class))
             ->middlewareGroup('http-log', [
-            \Fintech\Core\Http\Middlewares\HttpLogger::class
-        ]);
+                \Fintech\Core\Http\Middlewares\HttpLogger::class
+            ]);
+
+        ($this->app->make(Router::class))
+            ->middlewareGroup('encrypted', [
+                \Fintech\Core\Http\Middlewares\EncryptedRequestResponse::class
+            ]);
 
     }
 

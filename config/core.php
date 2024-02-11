@@ -84,6 +84,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Encrypted Network Communication
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'encrypt_response' => false,
+    'encryption_key' => env('PACKAGE_CORE_ENCRYPT_KEY', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | System Setting Model
     |--------------------------------------------------------------------------
     |
