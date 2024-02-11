@@ -15,6 +15,7 @@ class EncryptedKeyController extends Controller
     {
         return $this->success([
             'data' => [
+                'status' => config('fintech.core.encrypt_response'),
                 'token' => base64_encode(
                     bin2hex(
                         Encryption::key()

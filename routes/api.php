@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-if (config('fintech.core.encrypt_response')) {
-    Route::get('core/session-token', \Fintech\Core\Http\Controllers\EncryptedKeyController::class);
-}
+
+Route::get('core/session-token', \Fintech\Core\Http\Controllers\EncryptedKeyController::class);
 
 if (config('fintech.core.enabled')) {
     Route::prefix('core')->name('core.')
