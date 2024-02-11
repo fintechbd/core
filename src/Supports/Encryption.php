@@ -21,7 +21,7 @@ class Encryption
     {
         $plain = is_string($plain) ? $plain : json_encode($plain);
 
-        return (new self)->factory->encryptString($plain);
+        return (new self())->factory->encryptString($plain);
 
     }
 
@@ -33,14 +33,15 @@ class Encryption
     {
         $cipher = is_string($cipher) ? $cipher : json_encode($cipher);
 
-        return json_decode((new self)->factory->decryptString($cipher), true);
+        return json_decode((new self())->factory->decryptString($cipher), true);
     }
 
     public static function key(): bool|string
     {
         return base64_decode(
             str_replace(
-                'base64:', '',
+                'base64:',
+                '',
                 config('fintech.core.encryption_key')
             )
         );
