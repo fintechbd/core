@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EncryptedRequestResponse
 {
-
     /**
      * Handle an incoming request.
      *
