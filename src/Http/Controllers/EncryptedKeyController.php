@@ -11,15 +11,14 @@ use Illuminate\Http\Request;
 class EncryptedKeyController extends Controller
 {
     use ApiResponseTrait;
+
     public function __invoke(Request $request): JsonResponse
     {
         return $this->success([
             'data' => [
                 'status' => config('fintech.core.encrypt_response'),
                 'token' => base64_encode(
-                    bin2hex(
-                        Encryption::key()
-                    )
+                    Encryption::key()
                 )
             ]
         ]);

@@ -89,7 +89,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'encrypt_response' => false,
+    'encrypt_response' => true,
     'encryption_key' => env('PACKAGE_CORE_ENCRYPT_KEY', ''),
 
     /*
@@ -100,7 +100,6 @@ return [
     | This value will be used to across system where model is needed
     */
     'setting_model' => \Fintech\Core\Models\Setting::class,
-
 
     /*
     |--------------------------------------------------------------------------
