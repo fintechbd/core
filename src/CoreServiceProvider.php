@@ -8,7 +8,6 @@ use Fintech\Core\Supports\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
@@ -68,11 +67,9 @@ class CoreServiceProvider extends ServiceProvider
     private function loadSettings(): void
     {
         if (!App::environment('testing')) {
-            if (Schema::hasTable('settings')) {
-                Core::setting()->list()->each(function ($setting) {
-                    Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
-                });
-            }
+            Core::setting()->list()->each(function ($setting) {
+                Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
+            });
         }
     }
 
