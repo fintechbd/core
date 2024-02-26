@@ -7,7 +7,6 @@ use Fintech\Core\Models\Job;
 use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use InvalidArgumentException;
 
 /**
  * Class JobRepository
@@ -17,13 +16,7 @@ class JobRepository extends EloquentRepository implements InterfacesJobRepositor
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.job_model', Job::class));
-
-        if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct(config('fintech.core.job_model', Job::class));
     }
 
     /**

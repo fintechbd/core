@@ -7,7 +7,6 @@ use Fintech\Core\Models\Setting;
 use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use InvalidArgumentException;
 
 /**
  * Class SettingRepository
@@ -17,13 +16,7 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.setting_model', Setting::class));
-
-        if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct(config('fintech.core.setting_model', Setting::class));
     }
 
     /**

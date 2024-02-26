@@ -4,6 +4,7 @@ namespace Fintech\Core\Repositories;
 
 use Exception;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
+use Fintech\Core\Models\ApiLog;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,16 @@ use ReflectionException;
 abstract class EloquentRepository
 {
     use \Fintech\Core\Traits\HasUploadFiles;
+    public function __construct(string $className)
+    {
+        $model = app($className);
+
+        if (!$model instanceof Model) {
+            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
+
+        $this->model = $model;
+    }
 
     protected ?Model $model;
 
