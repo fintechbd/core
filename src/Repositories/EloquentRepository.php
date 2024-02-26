@@ -4,7 +4,6 @@ namespace Fintech\Core\Repositories;
 
 use Exception;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
-use Fintech\Core\Models\ApiLog;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;

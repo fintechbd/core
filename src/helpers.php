@@ -112,15 +112,13 @@ if (!function_exists('calculate_flat_percent')) {
 }
 
 if (!function_exists('determine_base_model')) {
-    /**
-     * @throws ErrorException
-     */
+
     function determine_base_model(): string
     {
         $connection = config('database.default');
 
         if ($connection == 'mongodb' && !class_exists(\MongoDB\Laravel\Eloquent\Model::class)) {
-            throw new ErrorException('Mongo DB Package missing. Please install `mongodb/laravel-mongodb` package.');
+            throw new \ErrorException('Mongo DB Package missing. Please install `mongodb/laravel-mongodb` package.');
         }
 
         return match ($connection) {
