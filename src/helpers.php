@@ -1,9 +1,5 @@
 <?php
 
-use Fintech\Core\Supports\Currency;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Model;
-
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
     {
@@ -18,7 +14,7 @@ if (!function_exists('permission_format')) {
 
 if (!function_exists('action_link')) {
 
-    function action_link($url, $label, $method = 'get')
+    function action_link($url, $label, $method = 'get'): array
     {
         return [
             'url' => $url,
@@ -32,11 +28,11 @@ if (!function_exists('currency')) {
 
     /**
      * @param string $code
-     * @return Currency
+     * @return \Fintech\Core\Supports\Currency
      */
-    function currency($code = 'USD')
+    function currency(string $code = 'USD'): \Fintech\Core\Supports\Currency
     {
-        return new Currency($code);
+        return new \Fintech\Core\Supports\Currency($code);
     }
 }
 
@@ -72,7 +68,7 @@ if (!function_exists('get_table')) {
      * for given model class path on configuration
      * @param string $model_path
      * @return mixed
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function get_table(string $model_path): mixed
     {
@@ -129,7 +125,7 @@ if (!function_exists('determine_base_model')) {
 
         return match ($connection) {
             'mongodb' => \MongoDB\Laravel\Eloquent\Model::class,
-            default => Model::class
+            default => \Illuminate\Database\Eloquent\Model::class
         };
     }
 }

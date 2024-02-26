@@ -19,7 +19,7 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
     {
         $model = app(config('fintech.core.setting_model', Setting::class));
 
-        if (!$model instanceof Model) {
+        if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 

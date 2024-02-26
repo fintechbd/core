@@ -2,32 +2,23 @@
 
 namespace Fintech\Core\Repositories;
 
-use BadMethodCallException;
 use Exception;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
-use Fintech\Core\Supports\Constant;
-use Fintech\Core\Traits\HasUploadFiles;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
-use ReflectionClass;
 use ReflectionException;
-use Throwable;
 
 /**
  * Class EloquentRepository
  */
 abstract class EloquentRepository
 {
-    use HasUploadFiles;
+    use \Fintech\Core\Traits\HasUploadFiles;
 
     protected ?Model $model;
 
@@ -57,7 +48,7 @@ abstract class EloquentRepository
      * @return Model|mixed|null
      * @throws RelationReturnMissingException
      * @throws ReflectionException
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @throws Exception
      */
     public function create(array $attributes = []): mixed
@@ -67,7 +58,7 @@ abstract class EloquentRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? DB::transaction(fn() => $this->executeCreate())
+            ? \DB::transaction(fn() => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -84,7 +75,7 @@ abstract class EloquentRepository
     {
         $fileGroups = [];
 
-        $reflection = new ReflectionClass($this->model);
+        $reflection = new \ReflectionClass($this->model);
 
         $this->hasFileUploads = method_exists($this->model, "getRegisteredMediaCollections");
 
@@ -94,7 +85,7 @@ abstract class EloquentRepository
 
         foreach ($inputs as $field => $value) {
             //Relation
-            $relationName = Str::camel($field);
+            $relationName = \Illuminate\Support\Str::camel($field);
             if ($reflection->hasMethod($relationName)) {
                 $reflectionMethod = $reflection->getMethod($relationName);
                 if (!$reflectionMethod->hasReturnType()) {
@@ -192,7 +183,7 @@ abstract class EloquentRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? DB::transaction(fn() => $this->executeUpdate())
+            ? \DB::transaction(fn() => $this->executeUpdate())
             : $this->executeUpdate();
     }
 
@@ -207,7 +198,7 @@ abstract class EloquentRepository
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
-                throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
+                throw new \InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
             }
 
             return $this->model->onlyTrashed()->find($id);
@@ -276,7 +267,7 @@ abstract class EloquentRepository
      * @param int|string $id
      * @return bool|null
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function delete(int|string $id)
     {
@@ -315,18 +306,19 @@ abstract class EloquentRepository
 
     /**
      * @param Builder $query
-     * @return Builder[]|Paginator|Collection
+     * @param array $options
+     * @return Builder[]|Paginator|\Illuminate\Support\Collection
      */
     public function executeQuery(Builder $query, array $options = [])
     {
         $asPagination = $options['paginate'] ?? request()->boolean('paginate');
 
-        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(\Fintech\Core\Supports\Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)

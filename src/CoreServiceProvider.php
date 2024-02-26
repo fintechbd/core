@@ -23,6 +23,12 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../config/core.php',
             'fintech.core'
         );
+
+        Config::set('database.connections.mongodb', [
+            'driver' => 'mongodb',
+            'dsn' => env('DATABASE_URL', 'mongodb+srv://forge:forge@localhost/myappdb?retryWrites=true&w=majority'),
+            'database' => env('DB_DATABASE', 'mongodb'),
+        ]);
     }
 
     /**

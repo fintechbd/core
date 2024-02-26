@@ -2,32 +2,23 @@
 
 namespace Fintech\Core\Repositories;
 
-use BadMethodCallException;
-use Fintech\Core\Supports\Constant;
-use Fintech\Core\Traits\HasUploadFiles;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use InvalidArgumentException;
-use MongoDB\Laravel\Collection;
-use MongoDB\Laravel\Eloquent\Builder;
-use MongoDB\Laravel\Eloquent\Model;
-use Throwable;
 
 /**
  * Class MongodbRepository
  */
 abstract class MongodbRepository
 {
-    use HasUploadFiles;
+    use \Fintech\Core\Traits\HasUploadFiles;
 
-    protected Model $model;
+    protected ?\MongoDB\Laravel\Eloquent\Model $model;
 
     /**
      * Create a new entry resource
      *
-     * @return Model|null
+     * @return \MongoDB\Laravel\Eloquent\Model|null
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function create(array $attributes = [])
     {
@@ -46,9 +37,9 @@ abstract class MongodbRepository
     /**
      * find and update a resource attributes
      *
-     * @return Model|null
+     * @return \MongoDB\Laravel\Eloquent\Model|null
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function update(int|string $id, array $attributes = [])
     {
@@ -75,15 +66,15 @@ abstract class MongodbRepository
      * find and delete a entry from records
      *
      * @param bool $onlyTrashed
-     * @return Model|null
+     * @return \MongoDB\Laravel\Eloquent\Model|null
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function find(int|string $id, $onlyTrashed = false)
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
-                throw new InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
+                throw new \InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
             }
 
             return $this->model->onlyTrashed()->find($id);
@@ -97,7 +88,7 @@ abstract class MongodbRepository
      *
      * @return bool|null
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function delete(int|string $id)
     {
@@ -118,7 +109,7 @@ abstract class MongodbRepository
      *
      * @return bool
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function restore(int|string $id)
     {
@@ -135,19 +126,19 @@ abstract class MongodbRepository
     }
 
     /**
-     * @param Builder $query
-     * @return Builder[]|Paginator|Collection
+     * @param \MongoDB\Laravel\Eloquent\Builder $query
+     * @return \MongoDB\Laravel\Eloquent\Builder[]|\Illuminate\Contracts\Pagination\Paginator|\MongoDB\Laravel\Collection
      */
-    public function executeQuery(Builder $query)
+    public function executeQuery(\MongoDB\Laravel\Eloquent\Builder $query)
     {
         $asPagination = request('paginate', false);
 
-        $perPageCount = request('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
+        $perPageCount = request('per_page', array_key_first(\Fintech\Core\Supports\Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)
