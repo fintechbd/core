@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Http\Controllers;
 
+use Exception;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
@@ -49,7 +50,7 @@ class ConfigurationController extends Controller
 
             return new ConfigurationResource($configurations);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -76,7 +77,7 @@ class ConfigurationController extends Controller
 
             return $this->updated(__('core::messages.setting.saved', ['package' => config("fintech.core.packages.{$configuration}", 'System')]));
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -102,7 +103,7 @@ class ConfigurationController extends Controller
 
             return $this->deleted(__('core::messages.setting.deleted', ['model' => ucwords($configuration)]));
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }

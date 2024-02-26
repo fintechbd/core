@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Repositories;
 
+use BadMethodCallException;
 use Fintech\Core\Supports\Constant;
 use Fintech\Core\Traits\HasUploadFiles;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -43,27 +44,6 @@ abstract class MongodbRepository
     }
 
     /**
-     * find and delete a entry from records
-     *
-     * @param  bool  $onlyTrashed
-     * @return Model|null
-     *
-     * @throws Throwable
-     */
-    public function find(int|string $id, $onlyTrashed = false)
-    {
-        if ($onlyTrashed) {
-            if (!method_exists($this->model, 'restore')) {
-                throw new InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
-            }
-
-            return $this->model->onlyTrashed()->find($id);
-        }
-
-        return $this->model->find($id);
-    }
-
-    /**
      * find and update a resource attributes
      *
      * @return Model|null
@@ -89,6 +69,27 @@ abstract class MongodbRepository
         }
 
         return null;
+    }
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param bool $onlyTrashed
+     * @return Model|null
+     *
+     * @throws Throwable
+     */
+    public function find(int|string $id, $onlyTrashed = false)
+    {
+        if ($onlyTrashed) {
+            if (!method_exists($this->model, 'restore')) {
+                throw new InvalidArgumentException('This model does not have `MongoDB\Laravel\Eloquent\SoftDeletes` trait to perform trash check.');
+            }
+
+            return $this->model->onlyTrashed()->find($id);
+        }
+
+        return $this->model->find($id);
     }
 
     /**
@@ -146,7 +147,7 @@ abstract class MongodbRepository
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)

@@ -3,6 +3,7 @@
 namespace Fintech\Core\Repositories\Mongodb;
 
 use Fintech\Core\Interfaces\ApiLogRepository as InterfacesApiLogRepository;
+use Fintech\Core\Models\ApiLog;
 use Fintech\Core\Repositories\MongodbRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,7 @@ class ApiLogRepository extends MongodbRepository implements InterfacesApiLogRepo
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.api_log_model', \Fintech\Core\Models\ApiLog::class));
+        $model = app(config('fintech.core.api_log_model', ApiLog::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");

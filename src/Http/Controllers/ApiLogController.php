@@ -23,7 +23,6 @@ use Illuminate\Routing\Controller;
  * @lrd:end
  *
  */
-
 class ApiLogController extends Controller
 {
     use ApiResponseTrait;

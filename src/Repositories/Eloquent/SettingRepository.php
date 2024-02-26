@@ -3,10 +3,10 @@
 namespace Fintech\Core\Repositories\Eloquent;
 
 use Fintech\Core\Interfaces\SettingRepository as InterfacesSettingRepository;
+use Fintech\Core\Models\Setting;
 use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -17,7 +17,7 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.setting_model', \Fintech\Core\Models\Setting::class));
+        $model = app(config('fintech.core.setting_model', Setting::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");

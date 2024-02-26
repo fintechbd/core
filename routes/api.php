@@ -1,5 +1,11 @@
 <?php
 
+use Fintech\Core\Http\Controllers\ApiLogController;
+use Fintech\Core\Http\Controllers\ConfigurationController;
+use Fintech\Core\Http\Controllers\EncryptedKeyController;
+use Fintech\Core\Http\Controllers\FailedJobController;
+use Fintech\Core\Http\Controllers\JobController;
+use Fintech\Core\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,24 +19,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('core/session-token', \Fintech\Core\Http\Controllers\EncryptedKeyController::class);
+Route::get('core/session-token', EncryptedKeyController::class);
 
 if (config('fintech.core.enabled')) {
     Route::prefix('core')->name('core.')
         ->middleware(config('fintech.auth.middleware'))
         ->group(function () {
-            Route::apiResource('settings', \Fintech\Core\Http\Controllers\SettingController::class);
-            Route::post('settings/{setting}/restore', [\Fintech\Core\Http\Controllers\SettingController::class, 'restore'])->name('settings.restore');
+            Route::apiResource('settings', SettingController::class);
+            Route::post('settings/{setting}/restore', [SettingController::class, 'restore'])->name('settings.restore');
 
-            Route::apiResource('configurations', \Fintech\Core\Http\Controllers\ConfigurationController::class)->only(['show', 'update', 'destroy']);
+            Route::apiResource('configurations', ConfigurationController::class)->only(['show', 'update', 'destroy']);
 
-            Route::apiResource('jobs', \Fintech\Core\Http\Controllers\JobController::class)->only(['index', 'show', 'destroy']);
+            Route::apiResource('jobs', JobController::class)->only(['index', 'show', 'destroy']);
 
-            Route::apiResource('api-logs', \Fintech\Core\Http\Controllers\ApiLogController::class)->only(['index', 'show', 'destroy']);
+            Route::apiResource('api-logs', ApiLogController::class)->only(['index', 'show', 'destroy']);
 
-            Route::post('failed-jobs/prune', [\Fintech\Core\Http\Controllers\FailedJobController::class, 'prune'])->name('failed-jobs.prune');
-            Route::apiResource('failed-jobs', \Fintech\Core\Http\Controllers\FailedJobController::class)->only(['index', 'show', 'destroy']);
-            Route::post('failed-jobs/{failed_job}/retry', [\Fintech\Core\Http\Controllers\FailedJobController::class, 'retry'])->name('failed-jobs.retry');
+            Route::post('failed-jobs/prune', [FailedJobController::class, 'prune'])->name('failed-jobs.prune');
+            Route::apiResource('failed-jobs', FailedJobController::class)->only(['index', 'show', 'destroy']);
+            Route::post('failed-jobs/{failed_job}/retry', [FailedJobController::class, 'retry'])->name('failed-jobs.retry');
 
             //DO NOT REMOVE THIS LINE//
         });

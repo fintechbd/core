@@ -19,10 +19,18 @@ trait ModelExceptionTrait
     protected $id;
 
     /**
+     * @return mixed
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
      * Set the affected Eloquent model and instance ids.
      *
-     * @param  class-string<TModel>  $model
-     * @param  null  $id
+     * @param class-string<TModel> $model
+     * @param null $id
      * @return $this
      */
     public function setModel($model, $id = null)
@@ -37,22 +45,6 @@ trait ModelExceptionTrait
     }
 
     /**
-     * @return mixed
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @return void
      */
     private function setMessage()
@@ -64,5 +56,13 @@ trait ModelExceptionTrait
             'restore' => __('core::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]),
             default => __('core::messages.exception.default')
         };
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

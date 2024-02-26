@@ -2,6 +2,10 @@
 
 namespace Fintech\Core\Listeners;
 
+use Fintech\Core\Enums\ApiDirectionEnum;
+use Fintech\Core\Facades\Core;
+use Illuminate\Http\Client\Events\ConnectionFailed;
+use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Response;
 
 class ApiRequestListener
@@ -26,7 +30,7 @@ class ApiRequestListener
         $response = $event->response ?? null;
 
         $data = [
-            'direction' => \Fintech\Core\Enums\ApiDirectionEnum::OutBound->value,
+            'direction' => ApiDirectionEnum::OutBound->value,
             'user_id' => null,
             'method' => $request->method(),
             'host' => $request->toPsrRequest()->getUri()->getHost(),
@@ -37,7 +41,7 @@ class ApiRequestListener
             'request' => [
                 'timestamp' => time(),
                 'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
-                'headers' => collect($request->headers())->map(fn ($item) => ($item[0] ?? null))->toArray(),
+                'headers' => collect($request->headers())->map(fn($item) => ($item[0] ?? null))->toArray(),
                 'payload' => $request->data(),
             ],
             'response' => [
@@ -50,7 +54,7 @@ class ApiRequestListener
             'user_agent' => null
         ];
 
-        if ($event instanceof \Illuminate\Http\Client\Events\ResponseReceived) {
+        if ($event instanceof ResponseReceived) {
             $data['status_code'] = $response->status();
             $data['status_text'] = $response->reason();
 
@@ -60,11 +64,11 @@ class ApiRequestListener
             }
 
             $data['response']['duration'] = $response_time;
-            $data['response']['headers'] = collect($response->headers())->map(fn ($item) => ($item[0] ?? null))->toArray();
+            $data['response']['headers'] = collect($response->headers())->map(fn($item) => ($item[0] ?? null))->toArray();
             $data['response']['body'] = $response->body();
         }
 
-        if ($event instanceof \Illuminate\Http\Client\Events\ConnectionFailed) {
+        if ($event instanceof ConnectionFailed) {
             $data['status_code'] = 503;
             $data['status_text'] = 'Connection Failed';
             $data['response']['timestamp'] = time();
@@ -73,6 +77,6 @@ class ApiRequestListener
             $data['response']['body'] = '';
         }
 
-        \Fintech\Core\Facades\Core::apiLog()->create($data);
+        Core::apiLog()->create($data);
     }
 }

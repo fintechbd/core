@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Supports;
 
+use InvalidArgumentException;
+
 class Currency
 {
     private static array $items = [
@@ -1821,24 +1823,6 @@ class Currency
     }
 
     /**
-     * @param $amount
-     * @param string $code
-     * @return self
-     */
-    public function parse($amount, string $code = 'USD'): self
-    {
-        if (!is_numeric($amount)) {
-            throw new \InvalidArgumentException("Invalid amount ($amount) cannot be parsed.");
-        }
-
-        $this->amount = floatval($amount);
-
-        $this->current = self::get($code);
-
-        return $this;
-    }
-
-    /**
      * return currency format value as array
      * @param string $code
      * @return array
@@ -1846,10 +1830,28 @@ class Currency
     public static function get(string $code): array
     {
         if (!self::$items[$code]) {
-            throw new \InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
+            throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
         }
 
         return self::$items[$code];
+    }
+
+    /**
+     * @param $amount
+     * @param string $code
+     * @return self
+     */
+    public function parse($amount, string $code = 'USD'): self
+    {
+        if (!is_numeric($amount)) {
+            throw new InvalidArgumentException("Invalid amount ($amount) cannot be parsed.");
+        }
+
+        $this->amount = floatval($amount);
+
+        $this->current = self::get($code);
+
+        return $this;
     }
 
     /**
@@ -1861,7 +1863,7 @@ class Currency
     public function format(bool $withSymbol = false): string
     {
         if ($this->amount == null || $this->amount == '') {
-            throw new \InvalidArgumentException("Amount value is missing or empty. Use parse to set first");
+            throw new InvalidArgumentException("Amount value is missing or empty. Use parse to set first");
         }
 
         $strAmount = number_format($this->amount, $this->current['precision'], $this->current['decimal_mark'], $this->current['thousands_separator']);

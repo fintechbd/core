@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Repositories;
 
+use BadMethodCallException;
+use Exception;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
 use Fintech\Core\Traits\HasUploadFiles;
@@ -9,7 +11,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionException;
 use Throwable;
 
 /**
@@ -49,13 +51,34 @@ abstract class EloquentRepository
     protected bool $useTransaction = false;
 
     /**
+     * create a new resource
+     *
+     * @param array $attributes
+     * @return Model|mixed|null
+     * @throws RelationReturnMissingException
+     * @throws ReflectionException
+     * @throws BindingResolutionException
+     * @throws Exception
+     */
+    public function create(array $attributes = []): mixed
+    {
+        $this->splitFieldRelationFilesFromInput($attributes);
+
+        $this->model = app()->make(get_class($this->model));
+
+        return ($this->useTransaction)
+            ? DB::transaction(fn() => $this->executeCreate())
+            : $this->executeCreate();
+    }
+
+    /**
      * split the direct model fields and relational fields
      *
      * @param array $inputs
      * @return void
      *
      * @throws RelationReturnMissingException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function splitFieldRelationFilesFromInput(array $inputs): void
     {
@@ -96,28 +119,7 @@ abstract class EloquentRepository
     }
 
     /**
-     * create a new resource
-     *
-     * @param array $attributes
-     * @return Model|mixed|null
-     * @throws RelationReturnMissingException
-     * @throws \ReflectionException
-     * @throws BindingResolutionException
-     * @throws \Exception
-     */
-    public function create(array $attributes = []): mixed
-    {
-        $this->splitFieldRelationFilesFromInput($attributes);
-
-        $this->model = app()->make(get_class($this->model));
-
-        return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeCreate())
-            : $this->executeCreate();
-    }
-
-    /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function executeCreate(): ?Model
     {
@@ -134,6 +136,64 @@ abstract class EloquentRepository
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    private function relationCreateOperation()
+    {
+        if (empty($this->relations)) {
+            return;
+        }
+
+        foreach ($this->relations as $relation => $params) {
+            switch ($params['type']) {
+                case BelongsToMany::class:
+
+                    $this->model->{$relation}()->sync($params['value']);
+                    break;
+
+                case HasOne::class:
+
+                    $this->model->{$relation}()->create($params['value']);
+                    break;
+
+                case HasMany::class:
+
+                    $this->model->{$relation}()->createMany($params['value']);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * find and update a resource attributes
+     *
+     * @param int|string $id
+     * @param array $attributes
+     * @return Model|null
+     * @throws Exception
+     */
+    public function update(int|string $id, array $attributes = []): ?Model
+    {
+        $this->model = $this->find($id);
+
+        if (!$this->model) {
+            throw (new ModelNotFoundException())->setModel(
+                get_class($this->model),
+                array_diff([$id], $this->model->modelKeys())
+            );
+        }
+
+        $this->splitFieldRelationFilesFromInput($attributes);
+
+        return ($this->useTransaction)
+            ? DB::transaction(fn() => $this->executeUpdate())
+            : $this->executeUpdate();
     }
 
     /**
@@ -157,33 +217,7 @@ abstract class EloquentRepository
     }
 
     /**
-     * find and update a resource attributes
-     *
-     * @param int|string $id
-     * @param array $attributes
-     * @return Model|null
-     * @throws \Exception
-     */
-    public function update(int|string $id, array $attributes = []): ?Model
-    {
-        $this->model = $this->find($id);
-
-        if (!$this->model) {
-            throw (new ModelNotFoundException())->setModel(
-                get_class($this->model),
-                array_diff([$id], $this->model->modelKeys())
-            );
-        }
-
-        $this->splitFieldRelationFilesFromInput($attributes);
-
-        return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeUpdate())
-            : $this->executeUpdate();
-    }
-
-    /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function executeUpdate(): ?Model
     {
@@ -199,6 +233,41 @@ abstract class EloquentRepository
         }
 
         return null;
+    }
+
+    /**
+     * @param array $relations
+     *
+     * @return void
+     *
+     */
+    private function relationUpdateOperation()
+    {
+        if (empty($this->relations)) {
+            return;
+        }
+
+        foreach ($this->relations as $relation => $params) {
+            switch ($params['type']) {
+                case BelongsToMany::class:
+
+                    $this->model->{$relation}()->sync($params['value']);
+                    break;
+
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     /**
@@ -245,73 +314,6 @@ abstract class EloquentRepository
     }
 
     /**
-     * @return void
-     */
-    private function relationCreateOperation()
-    {
-        if (empty($this->relations)) {
-            return;
-        }
-
-        foreach ($this->relations as $relation => $params) {
-            switch ($params['type']) {
-                case BelongsToMany::class:
-
-                    $this->model->{$relation}()->sync($params['value']);
-                    break;
-
-                case HasOne::class:
-
-                    $this->model->{$relation}()->create($params['value']);
-                    break;
-
-                case HasMany::class:
-
-                    $this->model->{$relation}()->createMany($params['value']);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    /**
-     * @param array $relations
-     *
-     * @return void
-     *
-     */
-    private function relationUpdateOperation()
-    {
-        if (empty($this->relations)) {
-            return;
-        }
-
-        foreach ($this->relations as $relation => $params) {
-            switch ($params['type']) {
-                case BelongsToMany::class:
-
-                    $this->model->{$relation}()->sync($params['value']);
-                    break;
-
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
-
-                default:
-                    break;
-            }
-        }
-    }
-
-    /**
      * @param Builder $query
      * @return Builder[]|Paginator|Collection
      */
@@ -324,7 +326,7 @@ abstract class EloquentRepository
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)

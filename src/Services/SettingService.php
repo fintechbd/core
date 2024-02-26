@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Services;
 
+use Exception;
 use Fintech\Core\Interfaces\SettingRepository;
 use Fintech\Core\Supports\Utility;
 
@@ -20,29 +21,9 @@ class SettingService
     {
     }
 
-    /**
-     * @param array $filters
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->settingRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->settingRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->settingRepository->find($id, $onlyTrashed);
-    }
-
-    public function update($id, array $inputs = [])
-    {
-        return $this->settingRepository->update($id, $inputs);
     }
 
     public function destroy($id)
@@ -64,7 +45,7 @@ class SettingService
      * @param string|null $type
      * @param null $user_id
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setValue(string $package, string $key, $value = null, string $type = null, $user_id = null): void
     {
@@ -86,12 +67,22 @@ class SettingService
 
                 return;
 
-            } catch (\Exception $exception) {
-                throw  new \Exception($exception->getMessage(), 0, $exception);
+            } catch (Exception $exception) {
+                throw  new Exception($exception->getMessage(), 0, $exception);
             }
         }
 
         $this->update($entry->getKey(), ['value' => (string)Utility::stringify($entry->type, $value)]);
+
+    }
+
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->settingRepository->list($filters);
 
     }
 
@@ -114,5 +105,15 @@ class SettingService
             'string', 'null' => 'string',
             default => $valueType,
         };
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->settingRepository->create($inputs);
+    }
+
+    public function update($id, array $inputs = [])
+    {
+        return $this->settingRepository->update($id, $inputs);
     }
 }

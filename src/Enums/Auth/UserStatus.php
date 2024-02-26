@@ -7,6 +7,7 @@ use Fintech\Core\Traits\HasSerialization;
 enum UserStatus: string
 {
     use HasSerialization;
+
     case
     Registered = 'REGISTERED';
     case

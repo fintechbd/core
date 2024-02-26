@@ -3,10 +3,10 @@
 namespace Fintech\Core\Repositories\Eloquent;
 
 use Fintech\Core\Interfaces\FailedJobRepository as InterfacesFailedJobRepository;
+use Fintech\Core\Models\FailedJob;
 use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -17,7 +17,7 @@ class FailedJobRepository extends EloquentRepository implements InterfacesFailed
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.failed_job_model', \Fintech\Core\Models\FailedJob::class));
+        $model = app(config('fintech.core.failed_job_model', FailedJob::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");

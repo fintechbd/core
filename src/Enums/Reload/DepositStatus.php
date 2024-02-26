@@ -10,6 +10,7 @@ use Fintech\Core\Traits\HasSerialization;
 enum DepositStatus: string
 {
     use HasSerialization;
+
     case Processing = 'processing';
     case Accepted = 'accepted';
     case Rejected = 'rejected';

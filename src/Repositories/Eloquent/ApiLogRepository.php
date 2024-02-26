@@ -3,10 +3,10 @@
 namespace Fintech\Core\Repositories\Eloquent;
 
 use Fintech\Core\Interfaces\ApiLogRepository as InterfacesApiLogRepository;
+use Fintech\Core\Models\ApiLog;
 use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -17,7 +17,7 @@ class ApiLogRepository extends EloquentRepository implements InterfacesApiLogRep
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.api_log_model', \Fintech\Core\Models\ApiLog::class));
+        $model = app(config('fintech.core.api_log_model', ApiLog::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");

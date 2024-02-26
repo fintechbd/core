@@ -10,6 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait ApiResponseTrait
 {
+    /**
+     * return response with http 200 as deleted
+     * resource
+     *
+     * @param $data
+     * @param array $headers
+     * @return JsonResponse
+     */
+    protected function deleted($data, array $headers = []): JsonResponse
+    {
+        return response()->json($this->format($data), Response::HTTP_OK, $headers);
+    }
+
     private function format($data, $statusCode = null)
     {
         if (is_string($data)) {
@@ -26,19 +39,6 @@ trait ApiResponseTrait
         }
 
         return $data;
-    }
-
-    /**
-     * return response with http 200 as deleted
-     * resource
-     *
-     * @param $data
-     * @param array $headers
-     * @return JsonResponse
-     */
-    protected function deleted($data, array $headers = []): JsonResponse
-    {
-        return response()->json($this->format($data), Response::HTTP_OK, $headers);
     }
 
     /**

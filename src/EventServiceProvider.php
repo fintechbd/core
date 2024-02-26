@@ -2,7 +2,10 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Listeners\ApiRequestListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Http\Client\Events\ConnectionFailed;
+use Illuminate\Http\Client\Events\ResponseReceived;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -12,11 +15,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        \Illuminate\Http\Client\Events\ResponseReceived::class => [
-            \Fintech\Core\Listeners\ApiRequestListener::class,
+        ResponseReceived::class => [
+            ApiRequestListener::class,
         ],
-        \Illuminate\Http\Client\Events\ConnectionFailed::class => [
-            \Fintech\Core\Listeners\ApiRequestListener::class,
+        ConnectionFailed::class => [
+            ApiRequestListener::class,
         ],
     ];
 }

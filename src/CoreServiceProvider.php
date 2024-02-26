@@ -23,10 +23,6 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../config/core.php',
             'fintech.core'
         );
-
-        $this->app->register(RepositoryServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
-        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -64,6 +60,13 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadSettings();
     }
 
+    private function loadMacros(): void
+    {
+        Request::macro('platform', function () {
+            return request()->header('Platform', null);
+        });
+    }
+
     private function loadSettings(): void
     {
         if (!App::environment('testing')) {
@@ -71,12 +74,5 @@ class CoreServiceProvider extends ServiceProvider
                 Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
             });
         }
-    }
-
-    private function loadMacros(): void
-    {
-        Request::macro('platform', function () {
-            return request()->header('Platform', null);
-        });
     }
 }

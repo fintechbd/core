@@ -3,6 +3,7 @@
 namespace Fintech\Core\Repositories\Mongodb;
 
 use Fintech\Core\Interfaces\JobRepository as InterfacesJobRepository;
+use Fintech\Core\Models\Job;
 use Fintech\Core\Repositories\MongodbRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,7 @@ class JobRepository extends MongodbRepository implements InterfacesJobRepository
 {
     public function __construct()
     {
-        $model = app(config('fintech.core.job_model', \Fintech\Core\Models\Job::class));
+        $model = app(config('fintech.core.job_model', Job::class));
 
         if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");

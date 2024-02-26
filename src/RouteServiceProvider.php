@@ -2,6 +2,8 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
+use Fintech\Core\Http\Middlewares\HttpLogger;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -33,12 +35,12 @@ class RouteServiceProvider extends ServiceProvider
 
         ($this->app->make(Router::class))
             ->middlewareGroup('http-log', [
-                \Fintech\Core\Http\Middlewares\HttpLogger::class
+                HttpLogger::class
             ]);
 
         ($this->app->make(Router::class))
             ->middlewareGroup('encrypted', [
-                \Fintech\Core\Http\Middlewares\EncryptedRequestResponse::class
+                EncryptedRequestResponse::class
             ]);
 
     }

@@ -5,21 +5,13 @@ namespace Fintech\Core\Traits;
 trait HasSerialization
 {
     /**
-     * Return a enum cases as array
-     * @return array<string>
+     * Return enum entries as a json encoded string
+     *
+     * @return string
      */
-    public static function names(): array
+    public static function toJson(): string
     {
-        return array_column(self::cases(), 'name');
-    }
-
-    /**
-     * Return enum all items values as list or array
-     * @return array<mixed>
-     */
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
+        return json_encode(self::toArray());
     }
 
     /**
@@ -32,13 +24,21 @@ trait HasSerialization
     }
 
     /**
-     * Return enum entries as a json encoded string
-     *
-     * @return string
+     * Return enum all items values as list or array
+     * @return array<mixed>
      */
-    public static function toJson(): string
+    public static function values(): array
     {
-        return json_encode(self::toArray());
+        return array_column(self::cases(), 'value');
+    }
+
+    /**
+     * Return a enum cases as array
+     * @return array<string>
+     */
+    public static function names(): array
+    {
+        return array_column(self::cases(), 'name');
     }
 
 }

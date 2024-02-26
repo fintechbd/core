@@ -3,9 +3,10 @@
 namespace Fintech\Core\Models;
 
 use Fintech\Auth\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use Fintech\Core\Abstracts\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ApiLog extends Model
+class ApiLog extends BaseModel
 {
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ class ApiLog extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(config('fintech.auth.user_model', User::class));
     }

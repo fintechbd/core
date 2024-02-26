@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Traits;
 
+use Fintech\Auth\Models\User;
 use Fintech\Core\Observers\BlameableObserver;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -35,7 +36,7 @@ trait BlameableTrait
      */
     public function creator(): MorphTo
     {
-        return $this->belongsTo(config('fintech.core.blameable_model', \Fintech\Auth\Models\User::class), 'creator_id', 'id');
+        return $this->belongsTo(config('fintech.core.blameable_model', User::class), 'creator_id', 'id');
     }
 
     /**
@@ -43,7 +44,7 @@ trait BlameableTrait
      */
     public function editor(): MorphTo
     {
-        return $this->belongsTo(config('fintech.core.blameable_model', \Fintech\Auth\Models\User::class), 'editor_id', 'id');
+        return $this->belongsTo(config('fintech.core.blameable_model', User::class), 'editor_id', 'id');
     }
 
     /**
@@ -51,7 +52,7 @@ trait BlameableTrait
      */
     public function destroyer(): MorphTo
     {
-        return $this->belongsTo(config('fintech.core.blameable_model', \Fintech\Auth\Models\User::class), 'destroyer_id', 'id');
+        return $this->belongsTo(config('fintech.core.blameable_model', User::class), 'destroyer_id', 'id');
     }
 
     /**
@@ -59,7 +60,7 @@ trait BlameableTrait
      */
     public function restorer(): MorphTo
     {
-        return $this->belongsTo(config('fintech.core.blameable_model', \Fintech\Auth\Models\User::class), 'restorer_id', 'id');
+        return $this->belongsTo(config('fintech.core.blameable_model', User::class), 'restorer_id', 'id');
     }
 
     /**

@@ -19,21 +19,6 @@ class ApiLogService
     {
     }
 
-    /**
-     * @param array $filters
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->apiLogRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->apiLogRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->apiLogRepository->find($id, $onlyTrashed);
@@ -59,8 +44,23 @@ class ApiLogService
         return $this->apiLogRepository->list($filters);
     }
 
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->apiLogRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->apiLogRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->apiLogRepository->create($inputs);
     }
 }

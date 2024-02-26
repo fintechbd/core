@@ -2,9 +2,9 @@
 
 namespace Fintech\Core\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Fintech\Core\Abstracts\BaseModel;
 
-class FailedJob extends Model
+class FailedJob extends BaseModel
 {
     /*
     |--------------------------------------------------------------------------

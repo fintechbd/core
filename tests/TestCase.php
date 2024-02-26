@@ -8,22 +8,6 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Fintech\\Core\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            CoreServiceProvider::class,
-        ];
-    }
-
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
@@ -32,5 +16,21 @@ class TestCase extends Orchestra
         $migration = include __DIR__.'/../database/migrations/create_core_table.php.stub';
         $migration->up();
         */
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Factory::guessFactoryNamesUsing(
+            fn(string $modelName) => 'Fintech\\Core\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+        );
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            CoreServiceProvider::class,
+        ];
     }
 }

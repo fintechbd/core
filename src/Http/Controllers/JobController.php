@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Http\Controllers;
 
+use Core;
+use Exception;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Http\Requests\IndexJobRequest;
 use Fintech\Core\Http\Resources\JobCollection;
@@ -21,7 +23,6 @@ use Illuminate\Routing\Controller;
  * @lrd:end
  *
  */
-
 class JobController extends Controller
 {
     use ApiResponseTrait;
@@ -41,11 +42,11 @@ class JobController extends Controller
         try {
             $inputs = $request->validated();
 
-            $jobPaginate = \Core::job()->list($inputs);
+            $jobPaginate = Core::job()->list($inputs);
 
             return new JobCollection($jobPaginate);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -64,7 +65,7 @@ class JobController extends Controller
     {
         try {
 
-            $job = \Core::job()->find($id);
+            $job = Core::job()->find($id);
 
             if (!$job) {
                 throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
@@ -76,7 +77,7 @@ class JobController extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -96,13 +97,13 @@ class JobController extends Controller
     {
         try {
 
-            $job = \Core::job()->read($id);
+            $job = Core::job()->read($id);
 
             if (!$job) {
                 throw (new ModelNotFoundException())->setModel(config('fintech.core.job_model'), $id);
             }
 
-            if (!\Core::job()->destroy($id)) {
+            if (!Core::job()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.core.job_model'), $id);
             }
@@ -113,7 +114,7 @@ class JobController extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }

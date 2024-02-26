@@ -2,6 +2,8 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Services\ApiLogService;
+use Fintech\Core\Services\FailedJobService;
 use Fintech\Core\Services\JobService;
 use Fintech\Core\Services\SettingService;
 
@@ -16,19 +18,19 @@ class Core
     }
 
     /**
-     * @return \Fintech\Core\Services\ApiLogService
+     * @return ApiLogService
      */
     public function apiLog()
     {
-        return app(\Fintech\Core\Services\ApiLogService::class);
+        return app(ApiLogService::class);
     }
 
     /**
-     * @return \Fintech\Core\Services\FailedJobService
+     * @return FailedJobService
      */
     public function failedJob()
     {
-        return app(\Fintech\Core\Services\FailedJobService::class);
+        return app(FailedJobService::class);
     }
 
     /**
@@ -40,7 +42,6 @@ class Core
     }
 
     //** Crud Service Method Point Do not Remove **//
-
 
 
     /**

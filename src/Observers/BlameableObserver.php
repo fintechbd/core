@@ -16,6 +16,20 @@ class BlameableObserver
     }
 
     /**
+     * Set Model's attribute value for the given key.
+     *
+     * @param $model
+     * @param string $attribute
+     * @return bool
+     */
+    private function setAttribute($model, string $attribute): bool
+    {
+        $model->setAttribute($attribute, ((auth()->check()) ? auth()->id() : null));
+
+        return $model->isDirty($attribute);
+    }
+
+    /**
      * Listening to any saving events.
      *
      *
@@ -52,19 +66,5 @@ class BlameableObserver
     public function restoring($model): void
     {
         $this->setAttribute($model, 'restorer_id');
-    }
-
-    /**
-     * Set Model's attribute value for the given key.
-     *
-     * @param $model
-     * @param string $attribute
-     * @return bool
-     */
-    private function setAttribute($model, string $attribute): bool
-    {
-        $model->setAttribute($attribute, ((auth()->check()) ? auth()->id() : null));
-
-        return $model->isDirty($attribute);
     }
 }

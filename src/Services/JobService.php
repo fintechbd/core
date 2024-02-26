@@ -19,21 +19,6 @@ class JobService
     {
     }
 
-    /**
-     * @param array $filters
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->jobRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->jobRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->jobRepository->find($id, $onlyTrashed);
@@ -59,8 +44,23 @@ class JobService
         return $this->permissionRepository->list($filters);
     }
 
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->jobRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->permissionRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->jobRepository->create($inputs);
     }
 }

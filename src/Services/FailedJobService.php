@@ -19,21 +19,6 @@ class FailedJobService
     {
     }
 
-    /**
-     * @param array $filters
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->failedJobRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->failedJobRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->failedJobRepository->find($id, $onlyTrashed);
@@ -59,8 +44,23 @@ class FailedJobService
         return $this->failedJobRepository->list($filters);
     }
 
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->failedJobRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->failedJobRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->failedJobRepository->create($inputs);
     }
 }

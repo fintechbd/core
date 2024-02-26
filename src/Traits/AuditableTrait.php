@@ -3,12 +3,13 @@
 namespace Fintech\Core\Traits;
 
 use Illuminate\Support\Facades\App;
+use OwenIt\Auditing\Auditable;
 
 if (App::environment('production')) {
     trait AuditableTrait
     {
-        use \OwenIt\Auditing\Auditable;
-        use \Fintech\Core\Traits\BlameableTrait;
+        use Auditable;
+        use BlameableTrait;
     }
 } else {
     trait AuditableTrait

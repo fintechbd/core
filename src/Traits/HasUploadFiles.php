@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Traits;
 
+use Exception;
 use Fintech\Core\Supports\Mimes;
 use Illuminate\Support\Str;
 
@@ -10,7 +11,7 @@ trait HasUploadFiles
     public array $files = [];
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function uploadMediaFiles()
     {

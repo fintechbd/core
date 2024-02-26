@@ -10,6 +10,18 @@ use Fintech\Core\Supports\Constant;
 trait HasPaginateQuery
 {
     /**
+     * Manipulate the list request of index method
+     * If you need to overwrite the method use `getPaginateOptions`
+     * method to attach pagination option to request
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge($this->getPaginateOptions());
+    }
+
+    /**
      * this method return all option available for index page
      * pagination query handle before it reach controller
      *
@@ -40,17 +52,5 @@ trait HasPaginateQuery
         }
 
         return $options;
-    }
-
-    /**
-     * Manipulate the list request of index method
-     * If you need to overwrite the method use `getPaginateOptions`
-     * method to attach pagination option to request
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge($this->getPaginateOptions());
     }
 }
