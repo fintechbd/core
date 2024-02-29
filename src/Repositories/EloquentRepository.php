@@ -68,7 +68,7 @@ abstract class EloquentRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn() => $this->executeCreate())
+            ? \DB::transaction(fn () => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -193,7 +193,7 @@ abstract class EloquentRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn() => $this->executeUpdate())
+            ? \DB::transaction(fn () => $this->executeUpdate())
             : $this->executeUpdate();
     }
 
@@ -255,15 +255,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                //                case HasOne::class:
-                //
-                //                    $this->model->{$relation}()->create($params['value']);
-                //                    break;
-                //
-                //                case HasMany::class:
-                //
-                //                    $this->model->{$relation}()->createMany($params['value']);
-                //                    break;
+                    //                case HasOne::class:
+                    //
+                    //                    $this->model->{$relation}()->create($params['value']);
+                    //                    break;
+                    //
+                    //                case HasMany::class:
+                    //
+                    //                    $this->model->{$relation}()->createMany($params['value']);
+                    //                    break;
 
                 default:
                     break;
