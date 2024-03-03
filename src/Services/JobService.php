@@ -41,7 +41,7 @@ class JobService
 
     public function export(array $filters)
     {
-        return $this->permissionRepository->list($filters);
+        return $this->jobRepository->list($filters);
     }
 
     /**
@@ -56,7 +56,7 @@ class JobService
 
     public function import(array $filters)
     {
-        return $this->permissionRepository->create($filters);
+        return $this->jobRepository->create($filters);
     }
 
     public function create(array $inputs = [])

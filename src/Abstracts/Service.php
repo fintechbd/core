@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Services;
+namespace Fintech\Core\Abstracts;
 
 /**
  * Class Service
