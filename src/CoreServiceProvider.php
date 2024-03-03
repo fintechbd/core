@@ -29,6 +29,9 @@ class CoreServiceProvider extends ServiceProvider
             'dsn' => env('DATABASE_URL', 'mongodb+srv://forge:forge@localhost/myappdb?retryWrites=true&w=majority'),
             'database' => env('DB_DATABASE', 'mongodb'),
         ]);
+
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
     }
 
     /**

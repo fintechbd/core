@@ -64,9 +64,7 @@
         "laravel": {
             "providers": [
                 "Fintech\\Core\\CoreServiceProvider",
-                "Fintech\\Core\\RepositoryServiceProvider",
-                "Fintech\\Core\\EventServiceProvider",
-                "Fintech\\Core\\RouteServiceProvider"
+                "Fintech\\Core\\EventServiceProvider"
             ],
             "aliases": {
                 "Core": "Fintech\\Core\\Facades\\Core"
