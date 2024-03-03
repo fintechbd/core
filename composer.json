@@ -74,7 +74,7 @@
         }
     },
     "suggest": {
-        "jenssegers/mongodb": "A laravel integration packge for mongodb",
+        "mongodb/laravel-mongodb": "A laravel integration packge for mongodb",
         "ext-mongodb": "Needed to support MongoDB database handle"
     },
     "minimum-stability": "dev",
