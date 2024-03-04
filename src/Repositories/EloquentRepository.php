@@ -3,14 +3,16 @@
 namespace Fintech\Core\Repositories;
 
 use Exception;
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use ReflectionException;
 
 /**
@@ -19,18 +21,8 @@ use ReflectionException;
 abstract class EloquentRepository
 {
     use \Fintech\Core\Traits\HasUploadFiles;
-    public function __construct(string $className)
-    {
-        $model = app($className);
 
-        if (!$model instanceof Model) {
-            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
-    }
-
-    protected ?Model $model;
+    protected ?BaseModel $model;
 
     /**
      * @var array $fields model direct assignable fields
@@ -51,11 +43,22 @@ abstract class EloquentRepository
      */
     protected bool $useTransaction = false;
 
+    public function __construct(string $className)
+    {
+        $model = app($className);
+
+        if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
+            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
+
+        $this->model = $model;
+    }
+
     /**
      * create a new resource
      *
      * @param array $attributes
-     * @return Model|mixed|null
+     * @return \Illuminate\Database\Eloquent\Model|mixed|null
      * @throws RelationReturnMissingException
      * @throws ReflectionException
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -68,7 +71,7 @@ abstract class EloquentRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn () => $this->executeCreate())
+            ? DB::transaction(fn () => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -122,7 +125,7 @@ abstract class EloquentRepository
     /**
      * @throws Exception
      */
-    private function executeCreate(): ?Model
+    private function executeCreate(): ?BaseModel
     {
         $this->model->fill($this->fields);
 
@@ -142,7 +145,7 @@ abstract class EloquentRepository
     /**
      * @return void
      */
-    private function relationCreateOperation()
+    private function relationCreateOperation(): void
     {
         if (empty($this->relations)) {
             return;
@@ -176,10 +179,10 @@ abstract class EloquentRepository
      *
      * @param int|string $id
      * @param array $attributes
-     * @return Model|null
+     * @return BaseModel|null
      * @throws Exception
      */
-    public function update(int|string $id, array $attributes = []): ?Model
+    public function update(int|string $id, array $attributes = []): ?BaseModel
     {
         $this->model = $this->find($id);
 
@@ -193,7 +196,7 @@ abstract class EloquentRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn () => $this->executeUpdate())
+            ? DB::transaction(fn () => $this->executeUpdate())
             : $this->executeUpdate();
     }
 
@@ -202,9 +205,9 @@ abstract class EloquentRepository
      *
      * @param int|string $id
      * @param bool $onlyTrashed
-     * @return Model|null
+     * @return BaseModel|null
      */
-    public function find(int|string $id, $onlyTrashed = false): ?Model
+    public function find(int|string $id, bool $onlyTrashed = false): ?BaseModel
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
@@ -220,7 +223,7 @@ abstract class EloquentRepository
     /**
      * @throws Exception
      */
-    private function executeUpdate(): ?Model
+    private function executeUpdate(): ?BaseModel
     {
         if ($this->model->update($this->fields)) {
 
@@ -317,9 +320,9 @@ abstract class EloquentRepository
     /**
      * @param Builder $query
      * @param array $options
-     * @return Builder[]|Paginator|\Illuminate\Support\Collection
+     * @return Builder[]|Paginator|Collection
      */
-    public function executeQuery(Builder $query, array $options = [])
+    public function executeQuery(Builder $query, array $options = []): Paginator|Collection|array
     {
         $asPagination = $options['paginate'] ?? request()->boolean('paginate');
 

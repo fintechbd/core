@@ -8,6 +8,7 @@ class_alias(determine_base_model(), 'Fintech\Core\VirtualModel');
  * @method string|int getKey()
  * @method string getKeyName()
  * @method string getTable()
+ * @method array modelKeys()
  * @method mixed getAttribute(string $key)
  * @method static \MongoDB\Laravel\Query\Builder|\Illuminate\Database\Eloquent\Builder query()
  * @method \Illuminate\Database\Eloquent\Relations\BelongsTo belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null)
