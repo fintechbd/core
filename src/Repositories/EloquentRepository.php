@@ -261,7 +261,7 @@ abstract class EloquentRepository
      * @param bool $onlyTrashed
      * @return BaseModel|null
      */
-    public function find(int|string $id, bool $onlyTrashed = false)
+    public function find(int|string $id, $onlyTrashed = false)
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
