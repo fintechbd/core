@@ -19,7 +19,7 @@ abstract class MongodbRepository
 {
     use \Fintech\Core\Traits\HasUploadFiles;
 
-    protected  $model;
+    protected $model;
 
     /**
      * @var array $fields model direct assignable fields
