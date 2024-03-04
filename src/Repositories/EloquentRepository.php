@@ -182,7 +182,7 @@ abstract class EloquentRepository
      * @return BaseModel|null
      * @throws Exception
      */
-    public function update(int|string $id, array $attributes = []): ?BaseModel
+    public function update(int|string $id, array $attributes = [])
     {
         $this->model = $this->find($id);
 
@@ -198,26 +198,6 @@ abstract class EloquentRepository
         return ($this->useTransaction)
             ? DB::transaction(fn () => $this->executeUpdate())
             : $this->executeUpdate();
-    }
-
-    /**
-     * find and delete a entry from records
-     *
-     * @param int|string $id
-     * @param bool $onlyTrashed
-     * @return BaseModel|null
-     */
-    public function find(int|string $id, bool $onlyTrashed = false): ?BaseModel
-    {
-        if ($onlyTrashed) {
-            if (!method_exists($this->model, 'restore')) {
-                throw new \InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
-            }
-
-            return $this->model->onlyTrashed()->find($id);
-        }
-
-        return $this->model->find($id);
     }
 
     /**
@@ -258,20 +238,40 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
             }
         }
+    }
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param int|string $id
+     * @param bool $onlyTrashed
+     * @return BaseModel|null
+     */
+    public function find(int|string $id, bool $onlyTrashed = false)
+    {
+        if ($onlyTrashed) {
+            if (!method_exists($this->model, 'restore')) {
+                throw new \InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
+            }
+
+            return $this->model->onlyTrashed()->find($id);
+        }
+
+        return $this->model->find($id);
     }
 
     /**
