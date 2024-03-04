@@ -15,8 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * Class MongodbRepository
  */
-abstract class MongodbRepository {
-
+abstract class MongodbRepository
+{
     use \Fintech\Core\Traits\HasUploadFiles;
 
     protected  $model;
@@ -253,15 +253,15 @@ abstract class MongodbRepository {
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                //                case HasOne::class:
-                //
-                //                    $this->model->{$relation}()->create($params['value']);
-                //                    break;
-                //
-                //                case HasMany::class:
-                //
-                //                    $this->model->{$relation}()->createMany($params['value']);
-                //                    break;
+                    //                case HasOne::class:
+                    //
+                    //                    $this->model->{$relation}()->create($params['value']);
+                    //                    break;
+                    //
+                    //                case HasMany::class:
+                    //
+                    //                    $this->model->{$relation}()->createMany($params['value']);
+                    //                    break;
 
                 default:
                     break;
