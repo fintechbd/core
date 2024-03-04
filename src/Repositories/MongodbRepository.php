@@ -3,6 +3,7 @@
 namespace Fintech\Core\Repositories;
 
 use Exception;
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -17,18 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 abstract class MongodbRepository {
 
     use \Fintech\Core\Traits\HasUploadFiles;
-    public function __construct(string $className)
-    {
-        $model = app($className);
 
-        if (!$model instanceof Model) {
-            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
-    }
-
-    protected ?\MongoDB\Laravel\Eloquent\Model $model;
+    protected  $model;
 
     /**
      * @var array $fields model direct assignable fields
@@ -48,6 +39,18 @@ abstract class MongodbRepository {
      * @var bool $useTransaction if this model has file upload
      */
     protected bool $useTransaction = false;
+
+
+    public function __construct(string $className)
+    {
+        $model = app($className);
+
+        if (!$model instanceof \MongoDB\Laravel\Eloquent\Model) {
+            throw new \InvalidArgumentException("Eloquent repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
+
+        $this->model = $model;
+    }
 
     /**
      * create a new resource
@@ -120,7 +123,7 @@ abstract class MongodbRepository {
     /**
      * @throws Exception
      */
-    private function executeCreate(): ?Model
+    private function executeCreate(): ?BaseModel
     {
         $this->model->fill($this->fields);
 
@@ -177,7 +180,7 @@ abstract class MongodbRepository {
      * @return Model|null
      * @throws Exception
      */
-    public function update(int|string $id, array $attributes = []): ?Model
+    public function update(int|string $id, array $attributes = []): ?BaseModel
     {
         $this->model = $this->find($id);
 
@@ -200,9 +203,9 @@ abstract class MongodbRepository {
      *
      * @param int|string $id
      * @param bool $onlyTrashed
-     * @return Model|null
+     * @return BaseModel|null
      */
-    public function find(int|string $id, $onlyTrashed = false): ?Model
+    public function find(int|string $id, $onlyTrashed = false): ?BaseModel
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
@@ -218,7 +221,7 @@ abstract class MongodbRepository {
     /**
      * @throws Exception
      */
-    private function executeUpdate(): ?Model
+    private function executeUpdate(): ?BaseModel
     {
         if ($this->model->update($this->fields)) {
 

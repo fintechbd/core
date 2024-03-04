@@ -22,7 +22,7 @@ abstract class EloquentRepository
 {
     use \Fintech\Core\Traits\HasUploadFiles;
 
-    protected ?BaseModel $model;
+    protected $model;
 
     /**
      * @var array $fields model direct assignable fields
