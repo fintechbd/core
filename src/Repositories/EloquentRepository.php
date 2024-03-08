@@ -125,7 +125,7 @@ abstract class EloquentRepository
     /**
      * @throws Exception
      */
-    private function executeCreate(): ?BaseModel
+    private function executeCreate()
     {
         $this->model->fill($this->fields);
 
@@ -203,7 +203,7 @@ abstract class EloquentRepository
     /**
      * @throws Exception
      */
-    private function executeUpdate(): ?BaseModel
+    private function executeUpdate()
     {
         if ($this->model->update($this->fields)) {
 
