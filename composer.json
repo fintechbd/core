@@ -73,7 +73,8 @@
     },
     "suggest": {
         "mongodb/laravel-mongodb": "A laravel integration packge for mongodb",
-        "ext-mongodb": "Needed to support MongoDB database handle"
+        "ext-mongodb": "Needed to support MongoDB database handle",
+        "ext-intl": "Need to suppport Localization on currency"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

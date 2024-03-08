@@ -27,10 +27,11 @@ if (!function_exists('action_link')) {
 if (!function_exists('currency')) {
 
     /**
-     * @param string $code
+     * @param string|float|int|null $amount
+     * @param string|null $code
      * @return \Fintech\Core\Supports\Currency
      */
-    function currency(string $code = 'USD'): \Fintech\Core\Supports\Currency
+    function currency(string|float|int|null $amount = 0.0, string $code = null): \Fintech\Core\Supports\Currency
     {
         return new \Fintech\Core\Supports\Currency($code);
     }
