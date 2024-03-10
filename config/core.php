@@ -1,16 +1,6 @@
 <?php
 
 // config for Fintech/Core
-use Fintech\Auth\Models\User;
-use Fintech\Core\Models\ApiLog;
-use Fintech\Core\Models\FailedJob;
-use Fintech\Core\Models\Job;
-use Fintech\Core\Models\Setting;
-use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
-use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
-use Fintech\Core\Repositories\Eloquent\JobRepository;
-use Fintech\Core\Repositories\Eloquent\SettingRepository;
-
 return [
 
     /*
@@ -39,11 +29,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Database Query Logger
+    |--------------------------------------------------------------------------
+    | this setting enable the db query logger
+    */
+    'query_logger_enabled' => env('PACKAGE_CORE_QUERY_LOGGER_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Enable Module APIs
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'blameable_model' => User::class,
+    'blameable_model' => Fintech\Auth\Models\User::class,
     'blameable_guard' => 'web',
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +54,7 @@ return [
     | 3. options: cursorPaginate -> for advance memory cursor pagination
     |
     */
-    'pagination_type' => 'simplePaginate',
+    'pagination_type' => 'paginate',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +107,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'setting_model' => Setting::class,
+    'setting_model' => Fintech\Core\Models\Setting::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +116,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'job_model' => Job::class,
+    'job_model' => Fintech\Core\Models\Job::class,
 
 
     /*
@@ -128,7 +126,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'api_log_model' => ApiLog::class,
+    'api_log_model' => Fintech\Core\Models\ApiLog::class,
 
 
     /*
@@ -138,7 +136,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'failed_job_model' => FailedJob::class,
+    'failed_job_model' => Fintech\Core\Models\FailedJob::class,
 
     //** Model Config Point Do not Remove **//
 
@@ -150,13 +148,13 @@ return [
     | This value will be used to across system where model is needed
     */
     'repositories' => [
-        \Fintech\Core\Interfaces\SettingRepository::class => SettingRepository::class,
+        \Fintech\Core\Interfaces\SettingRepository::class => \Fintech\Core\Repositories\Eloquent\SettingRepository::class,
 
-        \Fintech\Core\Interfaces\JobRepository::class => JobRepository::class,
+        \Fintech\Core\Interfaces\JobRepository::class => \Fintech\Core\Repositories\Eloquent\JobRepository::class,
 
-        \Fintech\Core\Interfaces\ApiLogRepository::class => ApiLogRepository::class,
+        \Fintech\Core\Interfaces\ApiLogRepository::class => \Fintech\Core\Repositories\Eloquent\ApiLogRepository::class,
 
-        \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
+        \Fintech\Core\Interfaces\FailedJobRepository::class => \Fintech\Core\Repositories\Eloquent\FailedJobRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
