@@ -30,6 +30,14 @@ class CoreServiceProvider extends ServiceProvider
             'database' => env('DB_DATABASE', 'mongodb'),
         ]);
 
+        Config::set('logging.channels.query', [
+            'driver' => 'daily',
+            'path' => storage_path('logs/query.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14,
+            'replace_placeholders' => true,
+        ]);
+
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
     }
@@ -67,6 +75,8 @@ class CoreServiceProvider extends ServiceProvider
         }
 
         $this->loadSettings();
+
+        $this->loadQueryLogger();
     }
 
     private function loadMacros(): void
@@ -81,6 +91,17 @@ class CoreServiceProvider extends ServiceProvider
         if (!App::environment('testing')) {
             Core::setting()->list()->each(function ($setting) {
                 Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
+            });
+        }
+    }
+
+    private function loadQueryLogger(): void
+    {
+        if (Config::get('fintech.core.query_logger_enabled')) {
+            \Illuminate\Support\Facades\DB::listen(function (\Illuminate\Database\Events\QueryExecuted $event) {
+                $query = \Illuminate\Support\Str::replaceArray('?', $event->bindings, $event->sql);
+                \Illuminate\Support\Facades\Log::channel('query')
+                    ->debug("Duration: {$event->time}, Query: {$query}");
             });
         }
     }
