@@ -97,9 +97,7 @@ class CoreServiceProvider extends ServiceProvider
 
     private function loadQueryLogger(): void
     {
-        logger(Config::get('fintech.core.query_logger_enabled'));
-        throw new \Error("err");
-        if (Config::get('fintech.core.query_logger_enabled')) {
+        if (Config::get('fintech.core.query_logger_enabled') && Config::get('database.default') != 'mongodb') {
             \Illuminate\Support\Facades\DB::listen(function (\Illuminate\Database\Events\QueryExecuted $event) {
                 $query = \Illuminate\Support\Str::replaceArray('?', $event->bindings, $event->sql);
                 \Illuminate\Support\Facades\Log::channel('query')
