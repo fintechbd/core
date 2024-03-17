@@ -81,8 +81,9 @@ class CoreServiceProvider extends ServiceProvider
 
     private function loadMacros(): void
     {
-        Request::macro('platform', function () {
-            return request()->header('Platform', null);
+        Request::macro('platform', function (string $platform = null) {
+            $headerPlatform = request()->header('Platform', null);
+            return ($platform != null) ? strtolower($headerPlatform) == strtolower($platform) : $headerPlatform;
         });
     }
 
