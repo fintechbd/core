@@ -79,7 +79,6 @@ class Currency
      */
     public static function parse(string|float|int|null $amount, string $code = null): static
     {
-        logger("Currency parse", [$amount, $code]);
         return new static($amount, $code);
     }
 
