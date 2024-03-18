@@ -85,7 +85,6 @@ class Currency
      * return currency value as currency formatted string
      *
      * @param string|null $code
-     * @param bool $withSymbol
      * @return string
      */
     public function format(string $code = null): string
@@ -110,7 +109,6 @@ class Currency
     }
 
     /**
-     * @param bool $withSymbol
      * @return string
      */
     public function __toString(): string
