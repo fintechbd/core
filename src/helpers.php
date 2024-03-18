@@ -33,7 +33,7 @@ if (!function_exists('currency')) {
      */
     function currency(string|float|int|null $amount = 0.0, string $code = null): \Fintech\Core\Supports\Currency
     {
-        return new \Fintech\Core\Supports\Currency($code);
+        return new \Fintech\Core\Supports\Currency($amount, $code);
     }
 }
 
