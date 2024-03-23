@@ -116,6 +116,14 @@ class SettingSeeder extends Seeder
                 'type' => 'float',
                 'value' => '0.00'
             ],
+            [
+                'package' => 'ekyc',
+                'label' => 'KYC Reference Token Count',
+                'description' => 'The last token count value is assigned and the next will be increment by 1.',
+                'key' => 'reference_count',
+                'type' => 'integer',
+                'value' => '0'
+            ],
         ];
     }
 }
