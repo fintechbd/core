@@ -8,7 +8,6 @@ enum KycStatus: string
 {
     use HasSerialization;
 
-    case Received = 'received';
     case Pending = 'pending';
     case Cancelled = 'cancelled';
     case Accepted = 'accepted';
