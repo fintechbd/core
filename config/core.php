@@ -29,6 +29,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Server Pulse Checker
+    |--------------------------------------------------------------------------
+    | this setting allows frontend to check server status and server
+    | verifies frontend integrity.
+    */
+    'pulse_checker_enabled' => false,
+    'pulse_checker_interval' => 60 * SECOND,
+
+    /*
+    |--------------------------------------------------------------------------
     | Database Query Logger
     |--------------------------------------------------------------------------
     | this setting enable the db query logger

@@ -39,7 +39,8 @@
             "Fintech\\Core\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/helpers.php",
+            "src/constants.php"
         ]
     },
     "autoload-dev": {
