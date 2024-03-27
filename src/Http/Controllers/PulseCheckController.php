@@ -3,13 +3,10 @@
 namespace Fintech\Core\Http\Controllers;
 
 use Exception;
-use Fintech\Core\Facades\Core;
-use Fintech\Core\Http\Resources\ConfigurationResource;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Config;
 
 /**
  * Class PulseCheckController
