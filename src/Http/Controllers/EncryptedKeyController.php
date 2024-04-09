@@ -2,11 +2,11 @@
 
 namespace Fintech\Core\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Fintech\Core\Supports\Encryption;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class EncryptedKeyController extends Controller
 {
