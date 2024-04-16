@@ -96,8 +96,12 @@ class Utility
             $xmlObject = new \DOMDocument();
 
             $xmlObject->loadXML($content);
+            /**
+             * @var \DOMNode|null $DOMNode
+             */
+            $DOMNode = $xmlObject->firstChild;
 
-            self::convertToArray($xmlObject->firstChild, $xmlObject->firstChild->tagName, self::$xmlArray);
+            self::convertToArray($DOMNode, $DOMNode->tagName, self::$xmlArray, $DOMNode->prefix);
 
         } catch (\Exception $exception) {
 
@@ -115,18 +119,24 @@ class Utility
      * @param $DOMNode
      * @param $tagName
      * @param $constructArray
+     * @param string $namespacePrefix
      * @return void
      */
-    private static function convertToArray($DOMNode, $tagName, &$constructArray): void
+    private static function convertToArray($DOMNode, $tagName, &$constructArray, string $namespacePrefix = ''): void
     {
+        $tagName = str_replace("{$namespacePrefix}:", '', $tagName);
+
         if ($DOMNode->childNodes->length > 1) {
+
             foreach ($DOMNode->childNodes as $childNode) {
+
                 if (isset($childNode->tagName) && $childNode->tagName != 'xs:schema') {
-                    self::convertToArray($childNode, $childNode->tagName, $constructArray[$tagName]);
+                    self::convertToArray($childNode, $childNode->tagName, $constructArray[$tagName], $childNode->prefix);
                 }
             }
+
         } else {
-            $constructArray[$tagName] = $DOMNode->textContent;
+            $constructArray[$tagName] = self::typeCast($DOMNode->textContent, gettype($DOMNode->textContent));
         }
     }
 }
