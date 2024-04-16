@@ -8,13 +8,13 @@ enum CatalogType: string
 {
     use HasSerialization;
 
-    case Gender = 'gender'; //done
-    case BloodGroup = 'blood-group';
-    case MaritalStatus = 'marital-status'; //done
-    case FundSource = 'fund-source'; //done
-    case IdentityDocument = 'id-document'; //done
-    case AddressProof = 'address-proof'; //done
-    case Occupation = 'occupation'; //done
-    case Relation = 'relation';//done
-    case RemittancePurpose = 'remittance-purpose'; //done
+    case BloodGroup = 'blood-group'; //seeder
+    case FundSource = 'fund-source';
+    case Gender = 'gender';
+    case IdentityDocument = 'id-document';
+    case MaritalStatus = 'marital-status';
+    case Occupation = 'occupation';
+    case ProofOfAddress = 'proof-of-address';
+    case Relation = 'relation';
+    case RemittancePurpose = 'remittance-purpose';
 }

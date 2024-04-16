@@ -4,6 +4,8 @@ namespace Fintech\Core\Supports;
 
 class Utility
 {
+    private static array $xmlArray = [];
+
     /**
      * Convert a value to given data type from string
      *
@@ -80,4 +82,51 @@ class Utility
         }
     }
 
+    /**
+     * Parse and convert a valid xml string into array
+     *
+     * @param string $content
+     * @return array
+     */
+    public static function parseXml(string $content): array
+    {
+        self::$xmlArray = [];
+
+        try {
+            $xmlObject = new \DOMDocument();
+
+            $xmlObject->loadXML($content);
+
+            self::convertToArray($xmlObject->firstChild, $xmlObject->firstChild->tagName, self::$xmlArray);
+
+        } catch (\Exception $exception) {
+
+            \Illuminate\Support\Facades\Log::info("XML Parse Exception:" . json_encode($exception->getMessage()));
+
+        } finally {
+
+            return self::$xmlArray;
+        }
+    }
+
+    /**
+     * Iterator for the parseXML function
+     *
+     * @param $DOMNode
+     * @param $tagName
+     * @param $constructArray
+     * @return void
+     */
+    private static function convertToArray($DOMNode, $tagName, &$constructArray): void
+    {
+        if ($DOMNode->childNodes->length > 1) {
+            foreach ($DOMNode->childNodes as $childNode) {
+                if (isset($childNode->tagName) && $childNode->tagName != 'xs:schema') {
+                    self::convertToArray($childNode, $childNode->tagName, $constructArray[$tagName]);
+                }
+            }
+        } else {
+            $constructArray[$tagName] = $DOMNode->textContent;
+        }
+    }
 }
