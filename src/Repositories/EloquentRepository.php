@@ -48,7 +48,7 @@ abstract class EloquentRepository
         $model = app($className);
 
         if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
-            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance `" . get_class($model) . "` given.");
         }
 
         $this->model = $model;
