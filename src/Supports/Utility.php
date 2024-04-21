@@ -2,8 +2,6 @@
 
 namespace Fintech\Core\Supports;
 
-use Illuminate\Support\Facades\Config;
-
 class Utility
 {
     private static array $xmlArray = [];
