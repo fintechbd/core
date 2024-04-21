@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Traits;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Config;
 
 trait RegisterPackageTrait
@@ -11,7 +12,8 @@ trait RegisterPackageTrait
     private string $packageCode;
 
     /**
-     * register all package code to app
+     * register package code to core configuration
+     *
      * @param string|null $code
      * @param string|null $label
      * @return void
@@ -31,5 +33,25 @@ trait RegisterPackageTrait
         $this->packageName = $label;
 
         Config::set("fintech.core.packages.{$code}", $label);
+    }
+
+    /**
+     * register package app binding
+     *
+     * @param string $class
+     * @param string|null $alias
+     * @return void
+     */
+    public function injectOnContainer(string $class, string $alias = null): void
+    {
+        if ($alias == null && $this->packageCode == null) {
+            throw new \InvalidArgumentException("Code Argument or `packageCode` Property is missing from service provider class.");
+        }
+
+        $alias = $alias ?: $this->packageCode;
+
+        $this->app->bind($alias, function (Application $app) use ($class) {
+            return $app->make($class);
+        });
     }
 }
