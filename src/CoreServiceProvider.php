@@ -5,6 +5,7 @@ namespace Fintech\Core;
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
+use Fintech\Core\Traits\RegisterPackageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
@@ -12,6 +13,8 @@ use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
+    use RegisterPackageTrait;
+
     /**
      * Register any application services.
      *
@@ -19,6 +22,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->packageCode = 'core';
+
         $this->mergeConfigFrom(
             __DIR__ . '/../config/core.php',
             'fintech.core'
@@ -47,6 +52,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->injectOnConfig();
+
         $this->loadMacros();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');

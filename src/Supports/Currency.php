@@ -18,7 +18,6 @@ class Currency
      */
     public function __construct(string|float|int|null $amount = 0.0, string $code = null)
     {
-        logger("Currency Construct", [$amount, $code]);
         $this->loadConfig($code);
         $this->loadAmount($amount);
     }

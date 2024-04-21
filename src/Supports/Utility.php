@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Supports;
 
+use Illuminate\Support\Facades\Config;
+
 class Utility
 {
     private static array $xmlArray = [];
@@ -11,9 +13,9 @@ class Utility
      *
      * @param mixed $value
      * @param string $type
-     * @return mixed
+     * @return mixed|null
      */
-    public static function typeCast($value, string $type = 'string')
+    public static function typeCast(mixed $value, string $type = 'string'): mixed
     {
         if ($value == null) {
             return null;
