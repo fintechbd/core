@@ -5,6 +5,7 @@ use Fintech\Core\Http\Controllers\ConfigurationController;
 use Fintech\Core\Http\Controllers\EncryptedKeyController;
 use Fintech\Core\Http\Controllers\FailedJobController;
 use Fintech\Core\Http\Controllers\JobController;
+use Fintech\Core\Http\Controllers\PackageRegisteredController;
 use Fintech\Core\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::get('core/session-token', EncryptedKeyController::class);
+Route::prefix('core')->name('core.')->group(function () {
+    Route::get('session-token', EncryptedKeyController::class);
+    Route::get('packages', PackageRegisteredController::class);
+});
 
 if (config('fintech.core.enabled')) {
     Route::prefix('core')->name('core.')
