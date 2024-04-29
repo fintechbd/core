@@ -11,6 +11,7 @@ class_alias(determine_base_model(), 'Fintech\Core\VirtualModel');
  * @method array modelKeys()
  * @method mixed getAttribute(string $key)
  * @method static \MongoDB\Laravel\Query\Builder|\Illuminate\Database\Eloquent\Builder query()
+ * @method void load(string|array $relations)
  * @method \Illuminate\Database\Eloquent\Relations\BelongsTo belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null)
  * @method \Illuminate\Database\Eloquent\Relations\BelongsToMany belongsToMany($related, $table = null, $foreignPivotKey = null, $relatedPivotKey = null, $parentKey = null, $relatedKey = null, $relation = null)
  * @method \Illuminate\Database\Eloquent\Relations\HasMany hasMany($related, $foreignKey = null, $localKey = null)

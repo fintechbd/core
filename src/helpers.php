@@ -113,6 +113,9 @@ if (!function_exists('calculate_flat_percent')) {
 }
 
 if (!function_exists('determine_base_model')) {
+    /**
+     * @throws ErrorException
+     */
     function determine_base_model(): string
     {
         $connection = config('database.default');
