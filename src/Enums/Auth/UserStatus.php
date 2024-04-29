@@ -2,11 +2,11 @@
 
 namespace Fintech\Core\Enums\Auth;
 
-use Fintech\Core\Traits\HasSerialization;
+use Fintech\Core\Traits\EnumHasSerialization;
 
 enum UserStatus: string
 {
-    use HasSerialization;
+    use EnumHasSerialization;
 
     case
     Registered = 'REGISTERED';

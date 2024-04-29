@@ -2,11 +2,11 @@
 
 namespace Fintech\Core\Enums\Auth;
 
-use Fintech\Core\Traits\HasSerialization;
+use Fintech\Core\Traits\EnumHasSerialization;
 
 enum SystemRole: string
 {
-    use HasSerialization;
+    use EnumHasSerialization;
 
     case SuperAdmin = 'Super Admin';
     case MasterUser = 'Master User';

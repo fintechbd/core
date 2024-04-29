@@ -2,11 +2,11 @@
 
 namespace Fintech\Core\Enums\Ekyc;
 
-use Fintech\Core\Traits\HasSerialization;
+use Fintech\Core\Traits\EnumHasSerialization;
 
 enum KycStatus: string
 {
-    use HasSerialization;
+    use EnumHasSerialization;
 
     case Pending = 'pending';
     case Cancelled = 'cancelled';

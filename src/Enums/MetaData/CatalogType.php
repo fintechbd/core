@@ -2,11 +2,11 @@
 
 namespace Fintech\Core\Enums\MetaData;
 
-use Fintech\Core\Traits\HasSerialization;
+use Fintech\Core\Traits\EnumHasSerialization;
 
 enum CatalogType: string
 {
-    use HasSerialization;
+    use EnumHasSerialization;
 
     case BloodGroup = 'blood-group'; //seeder
     case FundSource = 'fund-source';
