@@ -66,8 +66,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Fintech\\Core\\CoreServiceProvider",
-                "Fintech\\Core\\EventServiceProvider"
+                "Fintech\\Core\\CoreServiceProvider"
             ],
             "aliases": {
                 "Core": "Fintech\\Core\\Facades\\Core"
