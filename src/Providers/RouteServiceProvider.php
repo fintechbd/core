@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core;
+namespace Fintech\Core\Providers;
 
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;

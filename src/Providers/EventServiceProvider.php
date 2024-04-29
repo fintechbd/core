@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core;
+namespace Fintech\Core\Providers;
 
 use Fintech\Core\Listeners\ApiRequestListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

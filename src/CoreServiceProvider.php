@@ -43,8 +43,9 @@ class CoreServiceProvider extends ServiceProvider
             'replace_placeholders' => true,
         ]);
 
-        $this->app->register(RouteServiceProvider::class);
-        $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(\Fintech\Core\Providers\EventServiceProvider::class);
+        $this->app->register(\Fintech\Core\Providers\RouteServiceProvider::class);
+        $this->app->register(\Fintech\Core\Providers\RepositoryServiceProvider::class);
     }
 
     /**
