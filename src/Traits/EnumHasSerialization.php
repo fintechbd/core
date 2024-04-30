@@ -48,9 +48,9 @@ trait EnumHasSerialization
      * Return one of the case that name match
      *
      * @param string $name
-     * @return mixed
+     * @return self
      */
-    public static function name(string $name): mixed
+    public static function name(string $name): self
     {
         $name = strtolower($name);
         foreach (self::cases() as $case)
@@ -64,9 +64,9 @@ trait EnumHasSerialization
      * Return one of the case that value match
      *
      * @param string $value
-     * @return mixed
+     * @return self
      */
-    public static function value(string $value): mixed
+    public static function value(string $value): self
     {
         $value = strtolower($value);
         foreach (self::cases() as $case)
@@ -74,5 +74,15 @@ trait EnumHasSerialization
                 return $case;
 
         throw new \ValueError("{$value} is a invalid backing value for " . self::class . " enum.");
+    }
+
+    /**
+     *  Return the name of the enum case as human form
+     *
+     * @return string
+     */
+    public function label(): string
+    {
+        return trim(preg_replace('([A-Z])', " $0", $this->name));
     }
 }
