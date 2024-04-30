@@ -53,9 +53,11 @@ trait EnumHasSerialization
     public static function name(string $name): self
     {
         $name = strtolower($name);
-        foreach (self::cases() as $case)
-            if (strtolower($case->name) === $name)
+        foreach (self::cases() as $case) {
+            if (strtolower($case->name) === $name) {
                 return $case;
+            }
+        }
 
         throw new \ValueError("{$name} is a invalid backing name for " . self::class . " enum.");
     }
@@ -69,9 +71,11 @@ trait EnumHasSerialization
     public static function value(string $value): self
     {
         $value = strtolower($value);
-        foreach (self::cases() as $case)
-            if (strtolower($case->value) === $value)
+        foreach (self::cases() as $case) {
+            if (strtolower($case->value) === $value) {
                 return $case;
+            }
+        }
 
         throw new \ValueError("{$value} is a invalid backing value for " . self::class . " enum.");
     }
