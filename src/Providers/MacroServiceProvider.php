@@ -34,7 +34,7 @@ class MacroServiceProvider extends ServiceProvider
                     'Host' => parse_url($url, PHP_URL_HOST),
                     'SOAPAction' => $method,
                     'Content-Length' => strlen($payload),
-                    'Content-Type' => 'text/xml;charset="utf-8"',
+                    'Content-Type' => 'text/xml;charset=utf-8',
                 ])
                 ->post($url, $payload);
         });
