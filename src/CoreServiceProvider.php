@@ -6,7 +6,6 @@ use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
 use Fintech\Core\Traits\RegisterPackageTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
