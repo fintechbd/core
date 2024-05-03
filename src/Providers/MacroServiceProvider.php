@@ -35,8 +35,8 @@ class MacroServiceProvider extends ServiceProvider
                     'SOAPAction' => $method,
                     'Content-Length' => strlen($payload),
                     'Content-Type' => 'text/xml;charset=utf-8',
-                ])
-                ->post($url, $payload);
+                ])->withBody($payload)
+                ->post($url);
         });
     }
 }
