@@ -46,6 +46,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(\Fintech\Core\Providers\EventServiceProvider::class);
         $this->app->register(\Fintech\Core\Providers\RouteServiceProvider::class);
         $this->app->register(\Fintech\Core\Providers\RepositoryServiceProvider::class);
+        $this->app->register(\Fintech\Core\Providers\MacroServiceProvider::class);
     }
 
     /**
@@ -54,8 +55,6 @@ class CoreServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->injectOnConfig();
-
-        $this->loadMacros();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
@@ -85,14 +84,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadSettings();
 
         $this->loadQueryLogger();
-    }
-
-    private function loadMacros(): void
-    {
-        Request::macro('platform', function (string $platform = null) {
-            $headerPlatform = request()->header('Platform', null);
-            return ($platform != null) ? strtolower($headerPlatform) == strtolower($platform) : $headerPlatform;
-        });
     }
 
     private function loadSettings(): void
