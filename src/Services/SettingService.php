@@ -56,8 +56,8 @@ class SettingService
                 $attributes = [
                     'package' => $package,
                     'key' => $key,
-                    'label' => ucwords(str_replace('_', ' ', $package . '_' . $key)),
-                    'description' => ucwords(str_replace('_', ' ', $package . '_' . $key)),
+                    'label' => ucwords(str_replace(['_', '.'], [' ', ' '], $package . '_' . $key)),
+                    'description' => ucwords(str_replace(['_', '.'], [' ', ' '], $package . '_' . $key)),
                     'type' => $this->checkType($value, $type),
                 ];
 
