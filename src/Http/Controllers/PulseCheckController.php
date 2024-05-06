@@ -21,8 +21,6 @@ class PulseCheckController extends Controller
 {
     use ApiResponseTrait;
 
-    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules', 'packages'];
-
     /**
      * @lrd:start
      * This api endpoint will check server status and client user agent integrity
