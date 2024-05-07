@@ -4,7 +4,6 @@ namespace Fintech\Core\Traits;
 
 use Illuminate\Support\Facades\App;
 
-
 if (class_exists('OwenIt\Auditing\Auditable')) {
     trait OwenItAuditable
     {
