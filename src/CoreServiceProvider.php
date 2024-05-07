@@ -4,8 +4,11 @@ namespace Fintech\Core;
 
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
+use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
+use Fintech\Core\Http\Middlewares\HttpLogger;
 use Fintech\Core\Supports\Utility;
 use Fintech\Core\Traits\RegisterPackageTrait;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
@@ -43,7 +46,6 @@ class CoreServiceProvider extends ServiceProvider
         ]);
 
         $this->app->register(\Fintech\Core\Providers\EventServiceProvider::class);
-        $this->app->register(\Fintech\Core\Providers\RouteServiceProvider::class);
         $this->app->register(\Fintech\Core\Providers\RepositoryServiceProvider::class);
         $this->app->register(\Fintech\Core\Providers\MacroServiceProvider::class);
     }
@@ -79,6 +81,11 @@ class CoreServiceProvider extends ServiceProvider
                 InstallCommand::class,
             ]);
         }
+
+        $this->app->afterResolving('router', function (Router $router) {
+            $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
+                ->middlewareGroup('http-log', [HttpLogger::class]);
+        });
 
         $this->loadSettings();
 
