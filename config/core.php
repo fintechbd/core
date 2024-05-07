@@ -51,6 +51,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
+    'blameable_enabled' => env('PACKAGE_CORE_BLAMEABLE_ENABLED', false),
     'blameable_model' => Fintech\Auth\Models\User::class,
     'blameable_guard' => 'web',
     /*

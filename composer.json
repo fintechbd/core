@@ -21,7 +21,9 @@
         "ext-imagick": "*",
         "alexusmai/laravel-file-manager": "^3.1",
         "illuminate/contracts": "^9.0|^10.0",
-        "spatie/laravel-medialibrary": "^10.13"
+        "spatie/laravel-medialibrary": "^10.13",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "spatie/laravel-translatable": "^6.5"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -76,7 +78,8 @@
     "suggest": {
         "mongodb/laravel-mongodb": "A laravel integration packge for mongodb",
         "ext-mongodb": "Needed to support MongoDB database handle",
-        "ext-intl": "Need to suppport Localization on currency"
+        "ext-intl": "Need to suppport Localization on currency",
+        "owen-it/laravel-auditing": "For model change audit"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
