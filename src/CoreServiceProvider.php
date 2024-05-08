@@ -52,8 +52,9 @@ class CoreServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any package services.
+     * @param \Illuminate\Routing\Router $router
      */
-    public function boot(): void
+    public function boot(Router $router): void
     {
         $this->injectOnConfig();
 
@@ -82,10 +83,8 @@ class CoreServiceProvider extends ServiceProvider
             ]);
         }
 
-        $this->app->afterResolving('router', function (Router $router) {
             $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
-                ->middlewareGroup('http-log', [HttpLogger::class]);
-        });
+                ->middlewareGroup('http_log', [HttpLogger::class]);
 
         $this->loadSettings();
 
