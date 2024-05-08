@@ -83,8 +83,8 @@ class CoreServiceProvider extends ServiceProvider
             ]);
         }
 
-            $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
-                ->middlewareGroup('http_log', [HttpLogger::class]);
+        $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
+            ->middlewareGroup('http_log', [HttpLogger::class]);
 
         $this->loadSettings();
 
