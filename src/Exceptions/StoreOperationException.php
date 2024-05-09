@@ -24,7 +24,7 @@ class StoreOperationException extends Exception
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {
         if (strlen($message) == 0) {
-            $message = __('core::messages.exception.store', ['model' => $this->getModel()]);
+            $message = __('restapi::messages.exception.store', ['model' => $this->getModel()]);
         }
 
         parent::__construct($message, $code, $previous);

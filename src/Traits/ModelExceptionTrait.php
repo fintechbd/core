@@ -50,11 +50,11 @@ trait ModelExceptionTrait
     private function setMessage()
     {
         $this->message = match ($this->type) {
-            'delete' => __('core::messages.exception.delete', ['model' => $this->getModel(), 'id' => $this->getId()]),
-            'store' => __('core::messages.exception.store', ['model' => $this->getModel()]),
-            'update' => __('core::messages.exception.update', ['model' => $this->getModel(), 'id' => $this->getId()]),
-            'restore' => __('core::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]),
-            default => __('core::messages.exception.default')
+            'delete' => __('restapi::messages.exception.delete', ['model' => $this->getModel(), 'id' => $this->getId()]),
+            'store' => __('restapi::messages.exception.store', ['model' => $this->getModel()]),
+            'update' => __('restapi::messages.exception.update', ['model' => $this->getModel(), 'id' => $this->getId()]),
+            'restore' => __('restapi::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]),
+            default => __('restapi::messages.exception.default')
         };
     }
 

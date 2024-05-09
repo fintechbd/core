@@ -58,8 +58,8 @@ class ApiLog extends BaseModel
         $primaryKey = $this->getKey();
 
         return [
-            'show' => action_link(route('core.api-logs.show', $primaryKey), __('core::messages.action.show'), 'get'),
-            'destroy' => action_link(route('core.api-logs.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'show' => action_link(route('core.api-logs.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
+            'destroy' => action_link(route('core.api-logs.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
         ];
     }
 

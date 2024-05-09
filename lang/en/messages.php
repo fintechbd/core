@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Meta Data Language Lines
+| Rest Api Language Lines
 |--------------------------------------------------------------------------
 |
 | The following language lines are used during authentication for various
