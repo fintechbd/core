@@ -6,12 +6,19 @@ use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
+use Fintech\Core\Providers\EventServiceProvider;
+use Fintech\Core\Providers\MacroServiceProvider;
+use Fintech\Core\Providers\RepositoryServiceProvider;
 use Fintech\Core\Supports\Utility;
 use Fintech\Core\Traits\RegisterPackageTrait;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -45,14 +52,14 @@ class CoreServiceProvider extends ServiceProvider
             'replace_placeholders' => true,
         ]);
 
-        $this->app->register(\Fintech\Core\Providers\EventServiceProvider::class);
-        $this->app->register(\Fintech\Core\Providers\RepositoryServiceProvider::class);
-        $this->app->register(\Fintech\Core\Providers\MacroServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(MacroServiceProvider::class);
     }
 
     /**
      * Bootstrap any package services.
-     * @param \Illuminate\Routing\Router $router
+     * @param Router $router
      */
     public function boot(Router $router): void
     {
@@ -103,9 +110,9 @@ class CoreServiceProvider extends ServiceProvider
     private function loadQueryLogger(): void
     {
         if (Config::get('fintech.core.query_logger_enabled') && Config::get('database.default') != 'mongodb') {
-            \Illuminate\Support\Facades\DB::listen(function (\Illuminate\Database\Events\QueryExecuted $event) {
-                $query = \Illuminate\Support\Str::replaceArray('?', $event->bindings, $event->sql);
-                \Illuminate\Support\Facades\Log::channel('query')
+            DB::listen(function (QueryExecuted $event) {
+                $query = Str::replaceArray('?', $event->bindings, $event->sql);
+                Log::channel('query')
                     ->debug("Duration: {$event->time}, Query: {$query}");
             });
         }

@@ -2,47 +2,14 @@
 
 namespace Fintech\Core\Supports;
 
+use DOMDocument;
+use DOMNode;
+use Exception;
+use Illuminate\Support\Facades\Log;
+
 class Utility
 {
     private static array $xmlArray = [];
-
-    /**
-     * Convert a value to given data type from string
-     *
-     * @param mixed $value
-     * @param string $type
-     * @return mixed|null
-     */
-    public static function typeCast(mixed $value, string $type = 'string'): mixed
-    {
-        if ($value == null) {
-            return null;
-        }
-        switch ($type) {
-            case 'boolean':
-            case 'bool' :
-                if (is_string($value)) {
-                    return $value == 'true';
-                }
-
-                return (bool)$value;
-
-            case 'float' :
-            case 'double' :
-                return (float)$value;
-
-            case 'integer' :
-                return (int)$value;
-
-            case 'json' :
-            case 'array' :
-                return json_decode($value, true);
-
-            case 'string' :
-            default:
-                return (string)$value;
-        }
-    }
 
     /**
      * Convert All Datatype to string equivalent value
@@ -93,19 +60,19 @@ class Utility
         self::$xmlArray = [];
 
         try {
-            $xmlObject = new \DOMDocument();
+            $xmlObject = new DOMDocument();
 
             $xmlObject->loadXML($content);
             /**
-             * @var \DOMNode|null $DOMNode
+             * @var DOMNode|null $DOMNode
              */
             $DOMNode = $xmlObject->firstChild;
 
             self::convertToArray($DOMNode, $DOMNode->tagName, self::$xmlArray, $DOMNode->prefix);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
-            \Illuminate\Support\Facades\Log::info("XML Parse Exception:" . json_encode($exception->getMessage()));
+            Log::info("XML Parse Exception:" . json_encode($exception->getMessage()));
 
         } finally {
 
@@ -137,6 +104,44 @@ class Utility
 
         } else {
             $constructArray[$tagName] = self::typeCast($DOMNode->textContent, gettype($DOMNode->textContent));
+        }
+    }
+
+    /**
+     * Convert a value to given data type from string
+     *
+     * @param mixed $value
+     * @param string $type
+     * @return mixed|null
+     */
+    public static function typeCast(mixed $value, string $type = 'string'): mixed
+    {
+        if ($value == null) {
+            return null;
+        }
+        switch ($type) {
+            case 'boolean':
+            case 'bool' :
+                if (is_string($value)) {
+                    return $value == 'true';
+                }
+
+                return (bool)$value;
+
+            case 'float' :
+            case 'double' :
+                return (float)$value;
+
+            case 'integer' :
+                return (int)$value;
+
+            case 'json' :
+            case 'array' :
+                return json_decode($value, true);
+
+            case 'string' :
+            default:
+                return (string)$value;
         }
     }
 }

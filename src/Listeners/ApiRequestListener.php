@@ -41,7 +41,7 @@ class ApiRequestListener
             'request' => [
                 'timestamp' => time(),
                 'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
-                'headers' => collect($request->headers())->map(fn ($item) => ($item[0] ?? null))->toArray(),
+                'headers' => collect($request->headers())->map(fn($item) => ($item[0] ?? null))->toArray(),
                 'payload' => $request->data(),
             ],
             'response' => [
@@ -64,7 +64,7 @@ class ApiRequestListener
             }
 
             $data['response']['duration'] = $response_time;
-            $data['response']['headers'] = collect($response->headers())->map(fn ($item) => ($item[0] ?? null))->toArray();
+            $data['response']['headers'] = collect($response->headers())->map(fn($item) => ($item[0] ?? null))->toArray();
             $data['response']['body'] = $response->body();
         }
 

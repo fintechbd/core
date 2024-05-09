@@ -1,6 +1,11 @@
 <?php
 
 // config for Fintech/Core
+use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
+use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
+use Fintech\Core\Repositories\Eloquent\JobRepository;
+use Fintech\Core\Repositories\Eloquent\SettingRepository;
+
 return [
 
     /*
@@ -159,13 +164,13 @@ return [
     | This value will be used to across system where model is needed
     */
     'repositories' => [
-        \Fintech\Core\Interfaces\SettingRepository::class => \Fintech\Core\Repositories\Eloquent\SettingRepository::class,
+        \Fintech\Core\Interfaces\SettingRepository::class => SettingRepository::class,
 
-        \Fintech\Core\Interfaces\JobRepository::class => \Fintech\Core\Repositories\Eloquent\JobRepository::class,
+        \Fintech\Core\Interfaces\JobRepository::class => JobRepository::class,
 
-        \Fintech\Core\Interfaces\ApiLogRepository::class => \Fintech\Core\Repositories\Eloquent\ApiLogRepository::class,
+        \Fintech\Core\Interfaces\ApiLogRepository::class => ApiLogRepository::class,
 
-        \Fintech\Core\Interfaces\FailedJobRepository::class => \Fintech\Core\Repositories\Eloquent\FailedJobRepository::class,
+        \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

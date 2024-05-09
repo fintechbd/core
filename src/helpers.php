@@ -1,5 +1,9 @@
 <?php
 
+use Fintech\Core\Supports\Currency;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Model;
+
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
     {
@@ -29,11 +33,11 @@ if (!function_exists('currency')) {
     /**
      * @param string|float|int|null $amount
      * @param string|null $code
-     * @return \Fintech\Core\Supports\Currency
+     * @return Currency
      */
-    function currency(string|float|int|null $amount = 0.0, string $code = null): \Fintech\Core\Supports\Currency
+    function currency(string|float|int|null $amount = 0.0, string $code = null): Currency
     {
-        return new \Fintech\Core\Supports\Currency($amount, $code);
+        return new Currency($amount, $code);
     }
 }
 
@@ -54,11 +58,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            (string)$serial,
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                (string)$serial,
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
@@ -69,7 +73,7 @@ if (!function_exists('get_table')) {
      * for given model class path on configuration
      * @param string $model_path
      * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     function get_table(string $model_path): mixed
     {
@@ -121,12 +125,37 @@ if (!function_exists('determine_base_model')) {
         $connection = config('database.default');
 
         if ($connection == 'mongodb' && !class_exists(\MongoDB\Laravel\Eloquent\Model::class)) {
-            throw new \ErrorException('Mongo DB Package missing. Please install `mongodb/laravel-mongodb` package.');
+            throw new ErrorException('Mongo DB Package missing. Please install `mongodb/laravel-mongodb` package.');
         }
 
         return match ($connection) {
             'mongodb' => \MongoDB\Laravel\Eloquent\Model::class,
-            default => \Illuminate\Database\Eloquent\Model::class
+            default => Model::class
         };
+    }
+}
+
+if (!function_exists('response_format')) {
+    /**
+     * @param $data
+     * @param $statusCode
+     * @return mixed|string[]
+     */
+    function response_format($data, $statusCode = null): mixed
+    {
+        if (is_string($data)) {
+            $data = ['message' => $data];
+            if ($statusCode != null) {
+                $data['code'] = $statusCode;
+            }
+        }
+
+        if (is_array($data) && !isset($data['code'])) {
+            if ($statusCode != null) {
+                $data['code'] = $statusCode;
+            }
+        }
+
+        return $data;
     }
 }

@@ -2,25 +2,34 @@
 
 namespace Fintech\Core\Repositories;
 
+use BadMethodCallException;
 use Exception;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
+use Fintech\Core\Supports\Constant;
+use Fintech\Core\Traits\HasUploadFiles;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use ReflectionClass;
 use ReflectionException;
+use Throwable;
 
 /**
  * Class EloquentRepository
  */
 abstract class EloquentRepository
 {
-    use \Fintech\Core\Traits\HasUploadFiles;
+    use HasUploadFiles;
 
     protected $model;
 
@@ -47,8 +56,8 @@ abstract class EloquentRepository
     {
         $model = app($className);
 
-        if (!$model instanceof \Illuminate\Database\Eloquent\Model) {
-            throw new \InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance `" . get_class($model) . "` given.");
+        if (!$model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance `" . get_class($model) . "` given.");
         }
 
         $this->model = $model;
@@ -58,10 +67,10 @@ abstract class EloquentRepository
      * create a new resource
      *
      * @param array $attributes
-     * @return \Illuminate\Database\Eloquent\Model|mixed|null
+     * @return Model|mixed|null
      * @throws RelationReturnMissingException
      * @throws ReflectionException
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      * @throws Exception
      */
     public function create(array $attributes = []): mixed
@@ -71,7 +80,7 @@ abstract class EloquentRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeCreate())
+            ? DB::transaction(fn() => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -88,7 +97,7 @@ abstract class EloquentRepository
     {
         $fileGroups = [];
 
-        $reflection = new \ReflectionClass($this->model);
+        $reflection = new ReflectionClass($this->model);
 
         $this->hasFileUploads = method_exists($this->model, "getRegisteredMediaCollections");
 
@@ -98,7 +107,7 @@ abstract class EloquentRepository
 
         foreach ($inputs as $field => $value) {
             //Relation
-            $relationName = \Illuminate\Support\Str::camel($field);
+            $relationName = Str::camel($field);
             if ($reflection->hasMethod($relationName)) {
                 $reflectionMethod = $reflection->getMethod($relationName);
                 if (!$reflectionMethod->hasReturnType()) {
@@ -196,8 +205,28 @@ abstract class EloquentRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeUpdate())
+            ? DB::transaction(fn() => $this->executeUpdate())
             : $this->executeUpdate();
+    }
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param int|string $id
+     * @param bool $onlyTrashed
+     * @return BaseModel|null
+     */
+    public function find(int|string $id, $onlyTrashed = false)
+    {
+        if ($onlyTrashed) {
+            if (!method_exists($this->model, 'restore')) {
+                throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
+            }
+
+            return $this->model->onlyTrashed()->find($id);
+        }
+
+        return $this->model->find($id);
     }
 
     /**
@@ -238,15 +267,15 @@ abstract class EloquentRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
@@ -258,29 +287,9 @@ abstract class EloquentRepository
      * find and delete a entry from records
      *
      * @param int|string $id
-     * @param bool $onlyTrashed
-     * @return BaseModel|null
-     */
-    public function find(int|string $id, $onlyTrashed = false)
-    {
-        if ($onlyTrashed) {
-            if (!method_exists($this->model, 'restore')) {
-                throw new \InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
-            }
-
-            return $this->model->onlyTrashed()->find($id);
-        }
-
-        return $this->model->find($id);
-    }
-
-    /**
-     * find and delete a entry from records
-     *
-     * @param int|string $id
      * @return bool|null
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(int|string $id)
     {
@@ -326,12 +335,12 @@ abstract class EloquentRepository
     {
         $asPagination = $options['paginate'] ?? request()->boolean('paginate');
 
-        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(\Fintech\Core\Supports\Constant::PAGINATE_LENGTHS));
+        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)

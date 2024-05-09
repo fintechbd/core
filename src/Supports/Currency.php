@@ -3,150 +3,10 @@
 namespace Fintech\Core\Supports;
 
 use InvalidArgumentException;
+use NumberFormatter;
 
 class Currency
 {
-    public mixed $input;
-    public ?int $amount;
-    public ?int $subunit;
-    public string $code;
-    public array $config;
-
-    /**
-     * @param string|float|int|null $amount
-     * @param string|null $code
-     */
-    public function __construct(string|float|int|null $amount = 0.0, string $code = null)
-    {
-        $this->loadConfig($code);
-        $this->loadAmount($amount);
-    }
-
-    /**
-     * @param string|null $code
-     * @return void
-     */
-    private function loadConfig(string $code = null): void
-    {
-        if (!self::$items[$code]) {
-            throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
-        }
-
-        $this->config = self::$items[$code];
-
-    }
-
-    /**
-     * @param string|float|int|null $amount
-     * @return void
-     */
-    private function loadAmount(string|float|int|null $amount = 0.0): void
-    {
-        $this->input = $amount;
-
-        if ($amount == null || strlen($amount) == '') {
-            $this->amount = null;
-            $this->subunit = null;
-            return;
-        }
-
-        $thousandsSeparator = $this->config['thousands_separator'];
-        $amount = str_replace($thousandsSeparator, '', $amount);
-
-        $decimalSeparator = $this->config['decimal_mark'];
-        $values = explode($decimalSeparator, $amount);
-
-        if ($values[0] == '') {
-            $this->amount = 0;
-        } else {
-            $this->amount = (int)filter_var($values[0], FILTER_SANITIZE_NUMBER_INT);
-        }
-
-        if (isset($values[1])) {
-            $subunit = filter_var($values[1], FILTER_SANITIZE_NUMBER_INT);
-            $this->subunit = (int)str_pad($subunit, $this->config['precision'], "0");
-        } else {
-            $this->subunit = 0;
-        }
-
-    }
-
-    /**
-     * @param string|float|int|null $amount
-     * @param string|null $code
-     * @return static
-     */
-    public static function parse(string|float|int|null $amount, string $code = null): static
-    {
-        return new static($amount, $code);
-    }
-
-    /**
-     * return currency value as currency formatted string
-     *
-     * @param string|null $code
-     * @return string
-     */
-    public function format(string $code = null): string
-    {
-        if ($code != null) {
-            $this->loadConfig($code);
-        }
-
-        return (string)$this;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function toFloat(): ?float
-    {
-        if ($this->amount == null) {
-            return null;
-        }
-
-        return floatval($this->amount . '.' . $this->subunit);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        if ($this->amount == null) {
-            return '-';
-        }
-
-        $mergedValue = floatval($this->amount . '.' . $this->subunit);
-
-        if (extension_loaded('intl')) {
-            $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
-            return $formatter->formatCurrency($mergedValue, $this->config['code']);
-        }
-
-        $money = number_format($mergedValue, $this->config['precision'], $this->config['decimal_mark'], $this->config['thousands_separator']);
-
-        return ($this->config['symbol_first'])
-            ? ($this->config['symbol'] . $money)
-            : ($money . $this->config['symbol']);
-    }
-
-    /**
-     * get currency attributes using a currency code
-     *
-     * @param string|null $code
-     * @return array|mixed
-     */
-    public static function config(string $code = null): mixed
-    {
-        if (!self::$items[$code]) {
-            throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
-        }
-
-        return self::$items[$code];
-
-    }
-
     public const AED = 'AED';
     public const AFN = 'AFN';
     public const ALL = 'ALL';
@@ -2117,4 +1977,144 @@ class Currency
             'color' => '#4a6863',
         ],
     ];
+    public mixed $input;
+    public ?int $amount;
+    public ?int $subunit;
+    public string $code;
+    public array $config;
+
+    /**
+     * @param string|float|int|null $amount
+     * @param string|null $code
+     */
+    public function __construct(string|float|int|null $amount = 0.0, string $code = null)
+    {
+        $this->loadConfig($code);
+        $this->loadAmount($amount);
+    }
+
+    /**
+     * @param string|null $code
+     * @return void
+     */
+    private function loadConfig(string $code = null): void
+    {
+        if (!self::$items[$code]) {
+            throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
+        }
+
+        $this->config = self::$items[$code];
+
+    }
+
+    /**
+     * @param string|float|int|null $amount
+     * @return void
+     */
+    private function loadAmount(string|float|int|null $amount = 0.0): void
+    {
+        $this->input = $amount;
+
+        if ($amount == null || strlen($amount) == '') {
+            $this->amount = null;
+            $this->subunit = null;
+            return;
+        }
+
+        $thousandsSeparator = $this->config['thousands_separator'];
+        $amount = str_replace($thousandsSeparator, '', $amount);
+
+        $decimalSeparator = $this->config['decimal_mark'];
+        $values = explode($decimalSeparator, $amount);
+
+        if ($values[0] == '') {
+            $this->amount = 0;
+        } else {
+            $this->amount = (int)filter_var($values[0], FILTER_SANITIZE_NUMBER_INT);
+        }
+
+        if (isset($values[1])) {
+            $subunit = filter_var($values[1], FILTER_SANITIZE_NUMBER_INT);
+            $this->subunit = (int)str_pad($subunit, $this->config['precision'], "0");
+        } else {
+            $this->subunit = 0;
+        }
+
+    }
+
+    /**
+     * @param string|float|int|null $amount
+     * @param string|null $code
+     * @return static
+     */
+    public static function parse(string|float|int|null $amount, string $code = null): static
+    {
+        return new static($amount, $code);
+    }
+
+    /**
+     * get currency attributes using a currency code
+     *
+     * @param string|null $code
+     * @return array|mixed
+     */
+    public static function config(string $code = null): mixed
+    {
+        if (!self::$items[$code]) {
+            throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
+        }
+
+        return self::$items[$code];
+
+    }
+
+    /**
+     * return currency value as currency formatted string
+     *
+     * @param string|null $code
+     * @return string
+     */
+    public function format(string $code = null): string
+    {
+        if ($code != null) {
+            $this->loadConfig($code);
+        }
+
+        return (string)$this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function toFloat(): ?float
+    {
+        if ($this->amount == null) {
+            return null;
+        }
+
+        return floatval($this->amount . '.' . $this->subunit);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        if ($this->amount == null) {
+            return '-';
+        }
+
+        $mergedValue = floatval($this->amount . '.' . $this->subunit);
+
+        if (extension_loaded('intl')) {
+            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            return $formatter->formatCurrency($mergedValue, $this->config['code']);
+        }
+
+        $money = number_format($mergedValue, $this->config['precision'], $this->config['decimal_mark'], $this->config['thousands_separator']);
+
+        return ($this->config['symbol_first'])
+            ? ($this->config['symbol'] . $money)
+            : ($money . $this->config['symbol']);
+    }
 }

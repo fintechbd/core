@@ -3,11 +3,12 @@
 namespace Fintech\Core\Traits;
 
 use Illuminate\Support\Facades\App;
+use OwenIt\Auditing\Auditable;
 
 if (class_exists('OwenIt\Auditing\Auditable')) {
     trait OwenItAuditable
     {
-        use \OwenIt\Auditing\Auditable;
+        use Auditable;
     }
 } else {
     trait OwenItAuditable

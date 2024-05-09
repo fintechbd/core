@@ -4,6 +4,7 @@ namespace Fintech\Core\Traits;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Config;
+use InvalidArgumentException;
 
 trait RegisterPackageTrait
 {
@@ -21,7 +22,7 @@ trait RegisterPackageTrait
     public function injectOnConfig(string $code = null, string $label = null): void
     {
         if ($code == null && $this->packageCode == null) {
-            throw new \InvalidArgumentException("Code Argument or `packageCode` Property is missing from service provider class.");
+            throw new InvalidArgumentException("Code Argument or `packageCode` Property is missing from service provider class.");
         }
 
         $code = $code ?: $this->packageCode;
@@ -45,7 +46,7 @@ trait RegisterPackageTrait
     public function injectOnContainer(string $class, string $alias = null): void
     {
         if ($alias == null && $this->packageCode == null) {
-            throw new \InvalidArgumentException("Code Argument or `packageCode` Property is missing from service provider class.");
+            throw new InvalidArgumentException("Code Argument or `packageCode` Property is missing from service provider class.");
         }
 
         $alias = $alias ?: $this->packageCode;

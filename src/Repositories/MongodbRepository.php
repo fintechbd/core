@@ -2,22 +2,34 @@
 
 namespace Fintech\Core\Repositories;
 
+use BadMethodCallException;
+use DB;
 use Exception;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
+use Fintech\Core\Supports\Constant;
+use Fintech\Core\Traits\HasUploadFiles;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
+use ReflectionClass;
+use ReflectionException;
+use Throwable;
 
 /**
  * Class MongodbRepository
  */
 abstract class MongodbRepository
 {
-    use \Fintech\Core\Traits\HasUploadFiles;
+    use HasUploadFiles;
 
     protected $model;
 
@@ -45,8 +57,8 @@ abstract class MongodbRepository
     {
         $model = app($className);
 
-        if (!$model instanceof \MongoDB\Laravel\Eloquent\Model) {
-            throw new \InvalidArgumentException("Eloquent repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        if (!$model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
         $this->model = $model;
@@ -56,10 +68,10 @@ abstract class MongodbRepository
      * create a new resource
      *
      * @param array $attributes
-     * @return \MongoDB\Laravel\Eloquent\Model|mixed|null
+     * @return Model|mixed|null
      * @throws RelationReturnMissingException
-     * @throws \ReflectionException
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws ReflectionException
+     * @throws BindingResolutionException
      * @throws Exception
      */
     public function create(array $attributes = []): mixed
@@ -69,7 +81,7 @@ abstract class MongodbRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn () => $this->executeCreate())
+            ? DB::transaction(fn() => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -80,13 +92,13 @@ abstract class MongodbRepository
      * @return void
      *
      * @throws RelationReturnMissingException
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function splitFieldRelationFilesFromInput(array $inputs): void
     {
         $fileGroups = [];
 
-        $reflection = new \ReflectionClass($this->model);
+        $reflection = new ReflectionClass($this->model);
 
         $this->hasFileUploads = method_exists($this->model, "getRegisteredMediaCollections");
 
@@ -96,7 +108,7 @@ abstract class MongodbRepository
 
         foreach ($inputs as $field => $value) {
             //Relation
-            $relationName = \Illuminate\Support\Str::camel($field);
+            $relationName = Str::camel($field);
             if ($reflection->hasMethod($relationName)) {
                 $reflectionMethod = $reflection->getMethod($relationName);
                 if (!$reflectionMethod->hasReturnType()) {
@@ -194,7 +206,7 @@ abstract class MongodbRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? \DB::transaction(fn () => $this->executeUpdate())
+            ? DB::transaction(fn() => $this->executeUpdate())
             : $this->executeUpdate();
     }
 
@@ -209,7 +221,7 @@ abstract class MongodbRepository
     {
         if ($onlyTrashed) {
             if (!method_exists($this->model, 'restore')) {
-                throw new \InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
+                throw new InvalidArgumentException('This model does not have `Illuminate\Database\Eloquent\SoftDeletes` trait to perform trash check.');
             }
 
             return $this->model->onlyTrashed()->find($id);
@@ -253,15 +265,15 @@ abstract class MongodbRepository
                     $this->model->{$relation}()->sync($params['value']);
                     break;
 
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                    //                case HasMany::class:
-                    //
-                    //                    $this->model->{$relation}()->createMany($params['value']);
-                    //                    break;
+                //                case HasOne::class:
+                //
+                //                    $this->model->{$relation}()->create($params['value']);
+                //                    break;
+                //
+                //                case HasMany::class:
+                //
+                //                    $this->model->{$relation}()->createMany($params['value']);
+                //                    break;
 
                 default:
                     break;
@@ -275,7 +287,7 @@ abstract class MongodbRepository
      * @param int|string $id
      * @return bool|null
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function delete(int|string $id)
     {
@@ -297,7 +309,7 @@ abstract class MongodbRepository
      * @param int|string $id
      * @return bool
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function restore(int|string $id)
     {
@@ -316,18 +328,18 @@ abstract class MongodbRepository
     /**
      * @param Builder $query
      * @param array $options
-     * @return Builder[]|Paginator|\Illuminate\Support\Collection
+     * @return Builder[]|Paginator|Collection
      */
     public function executeQuery(Builder $query, array $options = [])
     {
         $asPagination = $options['paginate'] ?? request()->boolean('paginate');
 
-        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(\Fintech\Core\Supports\Constant::PAGINATE_LENGTHS));
+        $perPageCount = $options['per_page'] ?? request()->integer('per_page', array_key_first(Constant::PAGINATE_LENGTHS));
 
         $paginateMethod = config('fintech.core.pagination_type', 'paginate');
 
         if (!method_exists($query, $paginateMethod)) {
-            throw new \BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
+            throw new BadMethodCallException("Invalid pagination type [$paginateMethod] configured for `Illuminate\Database\Eloquent\Builder`.");
         }
 
         return ($asPagination)

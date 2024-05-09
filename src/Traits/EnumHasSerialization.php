@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Traits;
 
+use ValueError;
+
 trait EnumHasSerialization
 {
     /**
@@ -59,7 +61,7 @@ trait EnumHasSerialization
             }
         }
 
-        throw new \ValueError("{$name} is a invalid backing name for " . self::class . " enum.");
+        throw new ValueError("{$name} is a invalid backing name for " . self::class . " enum.");
     }
 
     /**
@@ -77,7 +79,7 @@ trait EnumHasSerialization
             }
         }
 
-        throw new \ValueError("{$value} is a invalid backing value for " . self::class . " enum.");
+        throw new ValueError("{$value} is a invalid backing value for " . self::class . " enum.");
     }
 
     /**
