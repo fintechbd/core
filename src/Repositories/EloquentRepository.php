@@ -57,8 +57,7 @@ abstract class EloquentRepository
         $model = app($className);
 
         if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Hafiz");
-//            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance `" . get_class($model) . "` given.");
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance `" . get_class($model) . "` given.");
         }
 
         $this->model = $model;
