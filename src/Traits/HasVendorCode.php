@@ -9,21 +9,14 @@ trait HasVendorCode
      * if both package and vendor null get all value
      * if vendor is null then get all that package vendor aliases
      *
-     * @param string|null $package
-     * @param string|null $vendor
+     * @param string $path
+     * @param mixed|null $default
      * @return array|mixed|null
      */
-    public function vendorAlias(string $package = null, string $vendor = null): mixed
+    public function vendorAlias(string $path = '*', mixed $default = null): mixed
     {
         if ($column = $this->getAttribute('vendor_code')) {
-            if ($package == null) {
-                return $column;
-            }
-            $aliases = $column[$package] ?? [];
-            if ($vendor == null) {
-                return $aliases;
-            }
-            return $aliases[$vendor] ?? null;
+            return data_get($column, $path, $default);
         }
         return null;
     }
