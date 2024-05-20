@@ -113,7 +113,7 @@ class CoreServiceProvider extends ServiceProvider
             DB::listen(function (QueryExecuted $event) {
                 $query = Str::replaceArray('?', $event->bindings, $event->sql);
                 Log::channel('query')
-                    ->debug("Duration: {$event->time}, Query: {$query}");
+                    ->debug("TIME: {$event->time} ms, SQL: {$query}");
             });
         }
     }
