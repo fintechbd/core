@@ -38,7 +38,8 @@ class MacroServiceProvider extends ServiceProvider
                     'SOAPAction' => $method,
                     'Content-Length' => strlen($payload),
                     'Content-Type' => 'text/xml;charset=utf-8',
-                ])->withBody($payload)
+                ])
+                ->withBody($payload)
                 ->post($url);
         });
 
@@ -134,10 +135,6 @@ class MacroServiceProvider extends ServiceProvider
          * @return JsonResponse
          */
         ResponseFacade::macro('banned', function ($data, array $headers = []) {
-            if (is_string($data)) {
-                $data = ['message' => $data];
-            }
-
             return response()->json(response_format($data, Response::HTTP_UNAUTHORIZED), Response::HTTP_UNAUTHORIZED, $headers);
         });
 
@@ -150,10 +147,6 @@ class MacroServiceProvider extends ServiceProvider
          * @return JsonResponse
          */
         ResponseFacade::macro('forbidden', function ($data, array $headers = []) {
-            if (is_string($data)) {
-                $data = ['message' => $data];
-            }
-
             return response()->json(response_format($data, Response::HTTP_FORBIDDEN), Response::HTTP_FORBIDDEN, $headers);
         });
 
