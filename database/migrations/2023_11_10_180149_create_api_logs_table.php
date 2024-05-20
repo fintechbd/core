@@ -1,6 +1,6 @@
 <?php
 
-use Fintech\Core\Enums\ApiDirectionEnum;
+use Fintech\Core\Enums\RequestDirection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +14,7 @@ return new class () extends Migration {
         Schema::create('api_logs', function (Blueprint $table) {
             $table->id();
             $table->string('request_id')->nullable();
-            $table->string('direction')->default(ApiDirectionEnum::InBound->value);
+            $table->string('direction')->default(RequestDirection::InBound->value);
             $table->foreignId('user_id')->nullable();
             $table->string('method')->nullable();
             $table->string('host');

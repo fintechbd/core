@@ -7,7 +7,6 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum RiskProfile: string
 {
     use EnumHasSerialization;
-
     case
     Low = 'green';
     case

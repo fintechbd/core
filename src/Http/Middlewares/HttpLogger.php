@@ -3,7 +3,7 @@
 namespace Fintech\Core\Http\Middlewares;
 
 use Closure;
-use Fintech\Core\Enums\ApiDirectionEnum;
+use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Facades\Core;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ class HttpLogger
         if (config('fintech.core.http_logger_enabled', false)) {
 
             $data = [
-                'direction' => ApiDirectionEnum::InBound->value,
+                'direction' => RequestDirection::InBound->value,
                 'user_id' => ($request->user() != null) ? $request->user()->id : null,
                 'method' => $request->method(),
                 'host' => $request->getHttpHost(),

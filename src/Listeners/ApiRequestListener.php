@@ -2,7 +2,7 @@
 
 namespace Fintech\Core\Listeners;
 
-use Fintech\Core\Enums\ApiDirectionEnum;
+use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Facades\Core;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
@@ -30,7 +30,7 @@ class ApiRequestListener
         $response = $event->response ?? null;
 
         $data = [
-            'direction' => ApiDirectionEnum::OutBound->value,
+            'direction' => RequestDirection::OutBound->value,
             'user_id' => null,
             'method' => $request->method(),
             'host' => $request->toPsrRequest()->getUri()->getHost(),

@@ -4,10 +4,9 @@ namespace Fintech\Core\Enums;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum Enabled: string
+enum RequestDirection: string
 {
     use EnumHasSerialization;
-
-    case Yes = 'yes';
-    case No = 'no';
+    case InBound = 'inbound';
+    case OutBound = 'outbound';
 }

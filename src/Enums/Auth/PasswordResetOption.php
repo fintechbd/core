@@ -7,7 +7,6 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum PasswordResetOption: string
 {
     use EnumHasSerialization;
-
     case
     TemporaryPassword = 'temporary_password';
     case
