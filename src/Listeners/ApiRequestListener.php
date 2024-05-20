@@ -4,6 +4,7 @@ namespace Fintech\Core\Listeners;
 
 use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Facades\Core;
+use Fintech\Core\Supports\Utility;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Response;
@@ -42,7 +43,7 @@ class ApiRequestListener
                 'timestamp' => time(),
                 'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
                 'headers' => collect($request->headers())->map(fn ($item) => ($item[0] ?? null))->toArray(),
-                'payload' => $request->data(),
+                'payload' => Utility::isJson($request->data()) ? json_decode($request->data(), true) : $request->data(),
             ],
             'response' => [
                 'type' => 'application/json',
@@ -65,7 +66,7 @@ class ApiRequestListener
 
             $data['response']['duration'] = $response_time;
             $data['response']['headers'] = collect($response->headers())->map(fn ($item) => ($item[0] ?? null))->toArray();
-            $data['response']['body'] = $response->body();
+            $data['response']['body'] = Utility::isJson($response->body()) ? json_decode($response->body(), true) : $response->body();
         }
 
         if ($event instanceof ConnectionFailed) {

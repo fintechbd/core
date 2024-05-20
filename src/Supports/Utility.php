@@ -144,4 +144,21 @@ class Utility
                 return (string)$value;
         }
     }
+
+    /**
+     * validate given content is a valid JSON
+     * @param string|null $content
+     * @return bool
+     */
+    public static function isJson(string $content = null): bool
+    {
+        if(is_string($content)){
+
+            $dump = json_decode($content);
+
+            return (json_last_error() == JSON_ERROR_NONE);
+        }
+
+        return false;
+    }
 }
