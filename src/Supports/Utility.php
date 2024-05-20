@@ -152,7 +152,7 @@ class Utility
      */
     public static function isJson(string $content = null): bool
     {
-        if(is_string($content)){
+        if(is_string($content)) {
 
             $dump = json_decode($content);
 
