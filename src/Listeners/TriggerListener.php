@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Listeners\Bell;
+namespace Fintech\Core\Listeners;
 
 class TriggerListener
 {

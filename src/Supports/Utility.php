@@ -147,10 +147,10 @@ class Utility
 
     /**
      * validate given content is a valid JSON
-     * @param string|null $content
+     * @param mixed $content
      * @return bool
      */
-    public static function isJson(string $content = null): bool
+    public static function isJson(mixed $content = null): bool
     {
         if(is_string($content)) {
 
