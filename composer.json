@@ -39,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Fintech\\Core\\": "src/"
+            "Fintech\\Core\\": "src/",
+            "Fintech\\Core\\Seeders\\": "database/seeders"
         },
         "files": [
             "src/helpers.php",
