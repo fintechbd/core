@@ -22,7 +22,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'api_logger_enabled' => false,
+    'api_logger_enabled' => env('PACKAGE_CORE_API_LOG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'http_logger_enabled' => false,
+    'http_logger_enabled' => env('PACKAGE_CORE_REQUEST_LOG', false),
 
     /*
     |--------------------------------------------------------------------------
