@@ -63,6 +63,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
+        $this->loadSettings();
+
         $this->injectOnConfig();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -90,12 +92,12 @@ class CoreServiceProvider extends ServiceProvider
             ]);
         }
 
-        $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
-            ->middlewareGroup('http_log', [HttpLogger::class]);
 
-        $this->loadSettings();
 
         $this->loadQueryLogger();
+
+        $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
+            ->middlewareGroup('http_log', [HttpLogger::class]);
     }
 
     private function loadSettings(): void
