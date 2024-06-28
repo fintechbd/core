@@ -93,7 +93,6 @@ class CoreServiceProvider extends ServiceProvider
         }
 
 
-
         $this->loadQueryLogger();
 
         $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
@@ -113,6 +112,12 @@ class CoreServiceProvider extends ServiceProvider
     {
         if (Config::get('fintech.core.query_logger_enabled') && Config::get('database.default') != 'mongodb') {
             DB::listen(function (QueryExecuted $event) {
+
+                //skip console query logging
+                if ($this->app->runningInConsole() && !config('fintech.core.log_console_query')) {
+                    return;
+                }
+
                 $query = Str::replaceArray('?', $event->bindings, $event->sql);
                 Log::channel('query')
                     ->debug("TIME: {$event->time} ms, SQL: {$query}");
