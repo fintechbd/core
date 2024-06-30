@@ -39,7 +39,7 @@ class MacroServiceProvider extends ServiceProvider
                     'Content-Length' => strlen($payload),
                     'Content-Type' => 'text/xml;charset=utf-8',
                 ])
-                ->withBody($payload)
+                ->withBody($payload, 'text/xml;charset=utf-8')
                 ->post($url);
         });
 

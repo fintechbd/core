@@ -7,6 +7,7 @@ use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\Response;
 
 class ApiRequestListener
@@ -23,6 +24,9 @@ class ApiRequestListener
             return;
         }
 
+        /**
+         * @var Request $request
+         */
         $request = $event->request;
 
         /**
@@ -32,18 +36,18 @@ class ApiRequestListener
 
         $data = [
             'direction' => RequestDirection::OutBound->value,
-            'user_id' => null,
+            'user_id' => request()->user()->id ?? null,
             'method' => $request->method(),
             'host' => $request->toPsrRequest()->getUri()->getHost(),
             'url' => $request->url(),
-            'status_code' => null,
-            'status_text' => null,
+            'status_code' => 0,
+            'status_text' => 'N/A',
             'ip_address' => $_SERVER['SERVER_ADDR'] ?? null,
             'request' => [
                 'timestamp' => time(),
                 'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
-                'headers' => collect($request->headers())->map(fn ($item) => ($item[0] ?? null))->toArray(),
-                'payload' => Utility::isJson($request->data()) ? json_decode($request->data(), true) : $request->data(),
+                'headers' => collect($request->headers())->map(fn($item) => ($item[0] ?? null))->toArray(),
+                'payload' => ($request->isForm() || $request->isJson()) ? $request->data() : [$request->body()],
             ],
             'response' => [
                 'type' => 'application/json',
@@ -65,7 +69,7 @@ class ApiRequestListener
             }
 
             $data['response']['duration'] = $response_time;
-            $data['response']['headers'] = collect($response->headers())->map(fn ($item) => ($item[0] ?? null))->toArray();
+            $data['response']['headers'] = collect($response->headers())->map(fn($item) => ($item[0] ?? null))->toArray();
             $data['response']['body'] = Utility::isJson($response->body()) ? json_decode($response->body(), true) : $response->body();
         }
 
