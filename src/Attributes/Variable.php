@@ -8,10 +8,10 @@ class Variable
      * @param string $name
      * @param string $description
      */
-    public function __construct(public string $name = '',
-                                public string $description = ''
-    )
-    {
+    public function __construct(
+        public string $name = '',
+        public string $description = ''
+    ) {
     }
 
     public function name(): string

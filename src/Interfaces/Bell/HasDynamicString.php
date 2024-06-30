@@ -4,5 +4,5 @@ namespace Fintech\Core\Interfaces\Bell;
 
 interface HasDynamicString
 {
-    public function aliases() : array;
+    public function aliases(): array;
 }

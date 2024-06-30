@@ -11,13 +11,13 @@ class Recipient
      * @param array $variables
      * @param array $recipients
      */
-    public function __construct(private string $name = '',
-                                private string $description = '',
-                                private bool   $enabled = false,
-                                private array  $variables = [],
-                                private array  $recipients = [],
-    )
-    {
+    public function __construct(
+        private string $name = '',
+        private string $description = '',
+        private bool   $enabled = false,
+        private array  $variables = [],
+        private array  $recipients = [],
+    ) {
     }
 
     public function name(): string
