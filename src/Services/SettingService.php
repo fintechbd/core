@@ -63,6 +63,12 @@ class SettingService
 
                 $attributes['value'] = (string)Utility::stringify($attributes['type'], $value);
 
+                if($user_id != null) {
+                    $attributes['user_id'] = $user_id;
+                }
+
+                logger("Data", $attributes);
+
                 $this->create($attributes);
 
                 return;
