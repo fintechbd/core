@@ -67,8 +67,6 @@ class SettingService
                     $attributes['user_id'] = $user_id;
                 }
 
-                logger("Data", $attributes);
-
                 $this->create($attributes);
 
                 return;
