@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Enums\Ekyc;
+namespace Fintech\Core\Enums\Card;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
