@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Card;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum InstantCardStatus: string
+enum PrepaidCardStatus: string
 {
     use EnumHasSerialization;
 
