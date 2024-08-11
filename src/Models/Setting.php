@@ -25,7 +25,7 @@ class Setting extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = [];
 

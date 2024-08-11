@@ -16,7 +16,7 @@ class Job extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     /*
     |--------------------------------------------------------------------------

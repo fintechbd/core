@@ -18,7 +18,7 @@ class ApiLog extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['request' => 'array', 'response' => 'array', 'user_agent' => 'array'];
 

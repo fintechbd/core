@@ -16,7 +16,7 @@ class FailedJob extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     /*
     |--------------------------------------------------------------------------
