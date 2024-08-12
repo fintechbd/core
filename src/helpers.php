@@ -108,9 +108,9 @@ if (!function_exists('calculate_flat_percent')) {
 
         logger("Target Value", [$targetNumber]);
 
-        if (!$targetNumber) {
-            throw new InvalidArgumentException("Invalid value ($value) is given");
-        }
+//        if (!$targetNumber) {
+//            throw new InvalidArgumentException("Invalid value ($value) is given");
+//        }
 
         return (str_contains($value, '%'))
             ? (float)(($amount * $targetNumber) / 100)
