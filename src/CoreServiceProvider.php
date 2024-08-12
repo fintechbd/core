@@ -6,6 +6,7 @@ use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
+use Fintech\Core\Http\Middlewares\ImposterCheck;
 use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
@@ -96,7 +97,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadQueryLogger();
 
         $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
-            ->middlewareGroup('http_log', [HttpLogger::class]);
+            ->middlewareGroup('http_log', [HttpLogger::class])
+            ->middlewareGroup('imposter', [ImposterCheck::class]);
     }
 
     private function loadSettings(): void

@@ -14,6 +14,7 @@ class HttpLogger
      * Handle an incoming request.
      *
      * @param Closure(Request): (Response) $next
+     * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {

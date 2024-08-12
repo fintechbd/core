@@ -14,6 +14,7 @@ class EncryptedRequestResponse
      * Handle an incoming request.
      *
      * @param Closure(Request): (Response) $next
+     * @return JsonResponse|mixed
      */
     public function handle(Request $request, Closure $next)
     {
