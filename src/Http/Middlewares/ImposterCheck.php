@@ -38,7 +38,6 @@ class ImposterCheck
             "Invalid {$credentials['field']}."
         );
 
-        \request()->offsetUnset($credentials['field']);
 
         return $next($request);
     }
