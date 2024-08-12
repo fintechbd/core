@@ -19,7 +19,7 @@ class ImposterCheck
     public function handle(Request $request, Closure $next)
     {
         abort_unless(
-            $request->filled(['password', 'pin']),
+            ($request->filled('password') || $request->filled( 'pin')),
             Response::HTTP_FORBIDDEN,
             'This action required user confirmation.'
         );
