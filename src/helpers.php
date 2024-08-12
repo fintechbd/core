@@ -106,11 +106,13 @@ if (!function_exists('calculate_flat_percent')) {
     {
         $targetNumber = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-        logger("Target Value", [$targetNumber]);
+        if (in_array($targetNumber, [0, false, '', null])) {
+            return 0;
+        }
 
-//        if (!$targetNumber) {
-//            throw new InvalidArgumentException("Invalid value ($value) is given");
-//        }
+        if (!$targetNumber) {
+            throw new InvalidArgumentException("Invalid value ($value) is given");
+        }
 
         return (str_contains($value, '%'))
             ? (float)(($amount * $targetNumber) / 100)
