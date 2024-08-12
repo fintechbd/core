@@ -3,7 +3,6 @@
 namespace Fintech\Core\Supports;
 
 use InvalidArgumentException;
-use NumberFormatter;
 
 class Currency
 {
@@ -2107,7 +2106,7 @@ class Currency
         $mergedValue = floatval($this->amount . '.' . $this->subunit);
 
         if (extension_loaded('intl')) {
-            $formatter = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
             return $formatter->formatCurrency($mergedValue, $this->config['code']);
         }
 
