@@ -34,7 +34,7 @@ class ImposterCheck
 
         abort_unless(
             Hash::check($credentials['value'], $user->{$credentials['field']}),
-            Response::HTTP_UNAUTHORIZED,
+            Response::HTTP_FORBIDDEN,
             "Invalid {$credentials['field']}."
         );
 
