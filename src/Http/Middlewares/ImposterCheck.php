@@ -18,9 +18,11 @@ class ImposterCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        abort_unless($request->filled(['password', 'pin']),
+        abort_unless(
+            $request->filled(['password', 'pin']),
             Response::HTTP_FORBIDDEN,
-            'This action required user confirmation.');
+            'This action required user confirmation.'
+        );
 
         $credentials['field'] = ($request->filled(['password']))
             ? 'password'
@@ -30,9 +32,10 @@ class ImposterCheck
 
         $user = $request->user();
 
-        abort_unless(Hash::check($credentials['value'],$user->{$credentials['field']}),
-        Response::HTTP_UNAUTHORIZED,
-        "Invalid {$credentials['field']}."
+        abort_unless(
+            Hash::check($credentials['value'], $user->{$credentials['field']}),
+            Response::HTTP_UNAUTHORIZED,
+            "Invalid {$credentials['field']}."
         );
 
         return $next($request);
