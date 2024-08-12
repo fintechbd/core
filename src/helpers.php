@@ -106,6 +106,8 @@ if (!function_exists('calculate_flat_percent')) {
     {
         $targetNumber = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
+        logger("Target Value", [$targetNumber]);
+
         if (!$targetNumber) {
             throw new InvalidArgumentException("Invalid value ($value) is given");
         }
