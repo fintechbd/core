@@ -53,6 +53,13 @@ class CoreServiceProvider extends ServiceProvider
             'replace_placeholders' => true,
         ]);
 
+        Config::set('filesystems.disks.source', [
+            'driver' => 'local',
+            'root' => base_path(),
+            'visibility' => 'public',
+            'throw' => false,
+        ]);
+
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(MacroServiceProvider::class);
