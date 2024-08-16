@@ -5,20 +5,13 @@ namespace Fintech\Core\Providers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response as ResponseFacade;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-
-    }
-
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -31,6 +24,14 @@ class MacroServiceProvider extends ServiceProvider
             return ($platform != null) ? strtolower($headerPlatform) == strtolower($platform) : $headerPlatform;
         });
 
+        /**
+         * http client soap request macro
+         *
+         * @param string $url
+         * @param string $method
+         * @param string $payload
+         * @return \Illuminate\Http\Client\Response
+         */
         Http::macro('soap', function (string $url = '/', string $method = '', string $payload = '') {
             return Http::withoutVerifying()
                 ->withHeaders([
@@ -112,6 +113,11 @@ class MacroServiceProvider extends ServiceProvider
          * @return JsonResponse
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
+
+            if ($data instanceof \Exception) {
+                Log::error($data);
+            }
+
             return response()->json(response_format($data, Response::HTTP_BAD_REQUEST), Response::HTTP_BAD_REQUEST, $headers);
         });
 

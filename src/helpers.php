@@ -58,11 +58,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            (string)$serial,
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                (string)$serial,
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
@@ -141,23 +141,18 @@ if (!function_exists('determine_base_model')) {
 
 if (!function_exists('response_format')) {
     /**
-     * @param $data
-     * @param $statusCode
+     * @param string|array $data
+     * @param null $statusCode
      * @return mixed|string[]
      */
-    function response_format($data, $statusCode = null): mixed
+    function response_format(string|array $data, $statusCode = null): mixed
     {
         if (is_string($data)) {
             $data = ['message' => $data];
-            if ($statusCode != null && config('fintech.core.append_status_code')) {
-                $data['code'] = $statusCode;
-            }
         }
 
-        if (is_array($data) && !isset($data['code'])) {
-            if ($statusCode != null && config('fintech.core.append_status_code')) {
-                $data['code'] = $statusCode;
-            }
+        if (config('fintech.core.append_status_code') && !isset($data['code'])) {
+            $data['code'] = $statusCode;
         }
 
         return $data;
