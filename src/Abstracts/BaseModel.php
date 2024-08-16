@@ -19,6 +19,7 @@ class_alias(determine_base_model(), 'Fintech\Core\VirtualModel');
 
 /**
  * @method string|int getKey()
+ * @method void fresh()
  * @method string getKeyName()
  * @method string getTable()
  * @method array modelKeys()
