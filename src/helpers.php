@@ -2,7 +2,6 @@
 
 use Fintech\Core\Supports\Currency;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Model;
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -134,7 +133,7 @@ if (!function_exists('determine_base_model')) {
 
         return match ($connection) {
             'mongodb' => \MongoDB\Laravel\Eloquent\Model::class,
-            default => Model::class
+            default => \Illuminate\Database\Eloquent\Model::class
         };
     }
 }
