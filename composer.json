@@ -18,7 +18,6 @@
     "require": {
         "php": "^8.1",
         "ext-dom": "*",
-        "ext-imagick": "*",
         "alexusmai/laravel-file-manager": "^3.1",
         "illuminate/contracts": "^9.0|^10.0",
         "spatie/laravel-medialibrary": "^10.13",
@@ -77,10 +76,11 @@
         }
     },
     "suggest": {
-        "mongodb/laravel-mongodb": "A laravel integration packge for mongodb",
-        "ext-mongodb": "Needed to support MongoDB database handle",
-        "ext-intl": "Need to suppport Localization on currency",
-        "owen-it/laravel-auditing": "For model change audit"
+        "mongodb/laravel-mongodb": "A laravel eloquent integration driver for mongodb",
+        "ext-mongodb": "Needed to support mongodb database connection",
+        "ext-intl": "Needed to suppport localization on currency",
+        "owen-it/laravel-auditing": "For model change audit",
+        "ext-imagick": "Needed for image optimzation in media library"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
