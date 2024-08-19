@@ -8,6 +8,7 @@ enum OrderStatus: string
 {
     use EnumHasSerialization;
 
+    case Pending = 'pending';
     case Processing = 'processing';
     case Accepted = 'accepted';
     case Rejected = 'rejected';

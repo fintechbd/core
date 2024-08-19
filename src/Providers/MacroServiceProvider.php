@@ -116,6 +116,7 @@ class MacroServiceProvider extends ServiceProvider
 
             if ($data instanceof \Exception) {
                 Log::error($data);
+                $data = $data->getMessage();
             }
 
             return response()->json(response_format($data, Response::HTTP_BAD_REQUEST), Response::HTTP_BAD_REQUEST, $headers);
