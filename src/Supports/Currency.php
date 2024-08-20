@@ -2107,7 +2107,7 @@ class Currency
 
         if (extension_loaded('intl')) {
             $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
-            return $formatter->formatCurrency($mergedValue, $this->config['code']);
+            return str_replace([$this->config['code'], 'CA'], "", $formatter->formatCurrency($mergedValue, $this->config['code']));
         }
 
         $money = number_format($mergedValue, $this->config['precision'], $this->config['decimal_mark'], $this->config['thousands_separator']);
