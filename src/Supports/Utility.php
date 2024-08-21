@@ -92,18 +92,14 @@ class Utility
     private static function convertToArray($DOMNode, $tagName, &$constructArray, string $namespacePrefix = ''): void
     {
         $tagName = str_replace("{$namespacePrefix}:", '', $tagName);
-
         if ($DOMNode->childNodes->length > 1) {
-
             foreach ($DOMNode->childNodes as $childNode) {
-
                 if (isset($childNode->tagName) && $childNode->tagName != 'xs:schema') {
                     self::convertToArray($childNode, $childNode->tagName, $constructArray[$tagName], $childNode->prefix);
                 }
             }
-
         } else {
-            $constructArray[$tagName] = self::typeCast($DOMNode->textContent, gettype($DOMNode->textContent));
+            $constructArray[$tagName] = self::typeCast($DOMNode->nodeValue, gettype($DOMNode->nodeValue));
         }
     }
 
@@ -152,7 +148,7 @@ class Utility
      */
     public static function isJson(mixed $content = null): bool
     {
-        if(is_string($content)) {
+        if (is_string($content)) {
 
             $dump = json_decode($content);
 
