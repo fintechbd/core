@@ -20,7 +20,7 @@ class PercentNumber implements ValidationRule
         preg_match('/^(-?\d+(%|.)?\d*%?)$/i', $value, $matches);
 
         if (empty($matches)) {
-            $fail('The :attribute is not a valid percentage or numeric value Eg:0.5,-10.45%.');
+            $fail('The :attribute is not a valid percentage or numeric value e.g 0.5,-10.45%.');
         }
     }
 }
