@@ -2096,15 +2096,6 @@ class Currency
     }
 
     /**
-     * @return float|null
-     * @deprecated
-     */
-    public function toFloat(): ?float
-    {
-        return $this->float();
-    }
-
-    /**
      * @return string
      */
     public function __toString(): string
