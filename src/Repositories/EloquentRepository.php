@@ -162,8 +162,8 @@ abstract class EloquentRepository
 
         foreach ($this->relations as $relation => $params) {
             match($params['type']) {
-                BelongsToMany::class =>$this->model->{$relation}()->sync($params['value']),
-                HasOne::class =>$this->model->{$relation}()->create($params['value']),
+                BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
+                HasOne::class => $this->model->{$relation}()->create($params['value']),
                 HasMany::class => $this->model->{$relation}()->createMany($params['value']),
             };
         }
@@ -249,8 +249,8 @@ abstract class EloquentRepository
         foreach ($this->relations as $relation => $params) {
             match($params['type']) {
                 BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
-//                HasOne::class =>$this->model->{$relation}()->create($params['value']),
-//                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
+                //                HasOne::class =>$this->model->{$relation}()->create($params['value']),
+                //                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
             };
         }
     }
