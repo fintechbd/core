@@ -272,10 +272,10 @@ abstract class EloquentRepository
                     //                    $this->model->{$relation}()->create($params['value']);
                     //                    break;
                     //
-                                    case HasMany::class:
+                case HasMany::class:
 
-                                        $this->model->{$relation}()->createMany($params['value']);
-                                        break;
+                    $this->model->{$relation}()->createMany($params['value']);
+                    break;
 
                 default:
                     break;

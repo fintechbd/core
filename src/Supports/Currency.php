@@ -2105,12 +2105,12 @@ class Currency
 
         $mergedValue = floatval($this->amount . '.' . $this->subunit);
 
-//@TODO PHP INTL Extension R&D
-//        if (extension_loaded('intl')) {
-//            $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
-//            $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, self::$items[$this->config['code']]['symbol']);
-//            return str_replace([$this->config['code'], 'CA'], "", $formatter->formatCurrency($mergedValue, $this->config['code']));
-//        }
+        //@TODO PHP INTL Extension R&D
+        //        if (extension_loaded('intl')) {
+        //            $formatter = new \NumberFormatter('en_US', \NumberFormatter::CURRENCY);
+        //            $formatter->setSymbol(\NumberFormatter::CURRENCY_SYMBOL, self::$items[$this->config['code']]['symbol']);
+        //            return str_replace([$this->config['code'], 'CA'], "", $formatter->formatCurrency($mergedValue, $this->config['code']));
+        //        }
 
         $money = number_format($mergedValue, $this->config['precision'], $this->config['decimal_mark'], $this->config['thousands_separator']);
 
