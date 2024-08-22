@@ -165,6 +165,7 @@ abstract class EloquentRepository
                 BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
                 HasOne::class => $this->model->{$relation}()->create($params['value']),
                 HasMany::class => $this->model->{$relation}()->createMany($params['value']),
+                default => true
             };
         }
     }
@@ -251,6 +252,7 @@ abstract class EloquentRepository
                 BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
                 //                HasOne::class =>$this->model->{$relation}()->create($params['value']),
                 //                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
+                default => true
             };
         }
     }
