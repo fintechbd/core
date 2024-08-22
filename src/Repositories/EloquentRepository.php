@@ -161,25 +161,11 @@ abstract class EloquentRepository
         }
 
         foreach ($this->relations as $relation => $params) {
-            switch ($params['type']) {
-                case BelongsToMany::class:
-
-                    $this->model->{$relation}()->sync($params['value']);
-                    break;
-
-                case HasOne::class:
-
-                    $this->model->{$relation}()->create($params['value']);
-                    break;
-
-                case HasMany::class:
-
-                    $this->model->{$relation}()->createMany($params['value']);
-                    break;
-
-                default:
-                    break;
-            }
+            match($params['type']) {
+                BelongsToMany::class =>$this->model->{$relation}()->sync($params['value']),
+                HasOne::class =>$this->model->{$relation}()->create($params['value']),
+                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
+            };
         }
     }
 
@@ -261,25 +247,11 @@ abstract class EloquentRepository
         }
 
         foreach ($this->relations as $relation => $params) {
-            switch ($params['type']) {
-                case BelongsToMany::class:
-
-                    $this->model->{$relation}()->sync($params['value']);
-                    break;
-
-                    //                case HasOne::class:
-                    //
-                    //                    $this->model->{$relation}()->create($params['value']);
-                    //                    break;
-                    //
-                case HasMany::class:
-
-                    $this->model->{$relation}()->createMany($params['value']);
-                    break;
-
-                default:
-                    break;
-            }
+            match($params['type']) {
+                BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
+//                HasOne::class =>$this->model->{$relation}()->create($params['value']),
+//                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
+            };
         }
     }
 
