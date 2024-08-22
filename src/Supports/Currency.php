@@ -2085,13 +2085,23 @@ class Currency
     /**
      * @return float|null
      */
-    public function toFloat(): ?float
+    public function float(): ?float
     {
-        if ($this->amount == null) {
+        if ($this->amount === null) {
             return null;
         }
 
-        return floatval($this->amount . '.' . $this->subunit);
+        return round(floatval($this->amount . '.' . $this->subunit), $this->config['precision'] ?? 2);
+
+    }
+
+    /**
+     * @return float|null
+     * @deprecated
+     */
+    public function toFloat(): ?float
+    {
+        return $this->float();
     }
 
     /**
@@ -2112,10 +2122,15 @@ class Currency
         //            return str_replace([$this->config['code'], 'CA'], "", $formatter->formatCurrency($mergedValue, $this->config['code']));
         //        }
 
-        $money = number_format($mergedValue, $this->config['precision'], $this->config['decimal_mark'], $this->config['thousands_separator']);
+        $money = number_format(
+            $mergedValue,
+            ($this->config['precision'] ?? 2),
+            ($this->config['decimal_mark'] ?? '.'),
+            ($this->config['thousands_separator'] ?? ',')
+        );
 
         return ($this->config['symbol_first'])
-            ? ($this->config['symbol'] . " " . $money)
-            : ($money . " " . $this->config['symbol']);
+            ? "{$this->config['symbol']} {$money}"
+            : "{$money} {$this->config['symbol']}";
     }
 }
