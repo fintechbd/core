@@ -48,6 +48,14 @@ class SettingRepository extends EloquentRepository implements InterfacesSettingR
             $query->where('package', '=', strtolower($filters['package']));
         }
 
+        if (!empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
+        }
+
+        if (!empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
+        }
+
         if (!empty($filters['key'])) {
             $query->where('key', '=', $filters['key']);
         }
