@@ -2068,6 +2068,17 @@ class Currency
     }
 
     /**
+     * verify the code of currency exists in the list
+     *
+     * @param string|null $code
+     * @return bool
+     */
+    public static function exists(string $code = null): bool
+    {
+        return isset(self::$items[$code]);
+    }
+
+    /**
      * return currency value as currency formatted string
      *
      * @param string|null $code
