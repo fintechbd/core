@@ -114,7 +114,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'encrypt_response' => false,
+    'encrypt_response' => (bool)env('PACKAGE_CORE_ENCRYPT_COMMUNICATION', false),
     'encryption_key' => env('PACKAGE_CORE_ENCRYPT_KEY', ''),
     'append_status_code' => (bool)env('PACKAGE_CORE_APPEND_HTTP_CODE', false),
 
