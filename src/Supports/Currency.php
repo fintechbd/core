@@ -2133,8 +2133,8 @@ class Currency
 
         return "{$this->config['code']} {$money}";
 
-//        return ($this->config['symbol_first'])
-//            ? "{$this->config['symbol']} {$money}"
-//            : "{$money} {$this->config['symbol']}";
+        //        return ($this->config['symbol_first'])
+        //            ? "{$this->config['symbol']} {$money}"
+        //            : "{$money} {$this->config['symbol']}";
     }
 }
