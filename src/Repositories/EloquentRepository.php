@@ -80,7 +80,7 @@ abstract class EloquentRepository
         $this->model = app()->make(get_class($this->model));
 
         return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeCreate())
+            ? DB::transaction(fn() => $this->executeCreate())
             : $this->executeCreate();
     }
 
@@ -145,6 +145,9 @@ abstract class EloquentRepository
             if ($this->hasFileUploads) {
                 $this->uploadMediaFiles();
             }
+
+            $this->model->refresh();
+
             return $this->model;
         }
 
@@ -161,7 +164,7 @@ abstract class EloquentRepository
         }
 
         foreach ($this->relations as $relation => $params) {
-            match($params['type']) {
+            match ($params['type']) {
                 BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
                 HasOne::class => $this->model->{$relation}()->create($params['value']),
                 HasMany::class => $this->model->{$relation}()->createMany($params['value']),
@@ -192,7 +195,7 @@ abstract class EloquentRepository
         $this->splitFieldRelationFilesFromInput($attributes);
 
         return ($this->useTransaction)
-            ? DB::transaction(fn () => $this->executeUpdate())
+            ? DB::transaction(fn() => $this->executeUpdate())
             : $this->executeUpdate();
     }
 
@@ -229,6 +232,8 @@ abstract class EloquentRepository
                 $this->uploadMediaFiles();
             }
 
+            $this->model->refresh();
+
             return $this->model;
         }
 
@@ -248,7 +253,7 @@ abstract class EloquentRepository
         }
 
         foreach ($this->relations as $relation => $params) {
-            match($params['type']) {
+            match ($params['type']) {
                 BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
                 //                HasOne::class =>$this->model->{$relation}()->create($params['value']),
                 //                HasMany::class => $this->model->{$relation}()->createMany($params['value']),
