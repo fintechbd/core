@@ -2012,9 +2012,9 @@ class Currency
      */
     private function loadAmount(string|float|int|null $amount = 0.0): void
     {
-        $this->input = $amount;
+        $this->input = (string)$amount;
 
-        if ($amount == null || strlen($amount) == '') {
+        if ($amount === null || strlen($amount) == '') {
             $this->amount = null;
             $this->subunit = null;
             return;
