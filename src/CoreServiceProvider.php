@@ -73,12 +73,22 @@ class CoreServiceProvider extends ServiceProvider
 
     private function loadSettings(): void
     {
-        if (\Illuminate\Support\Facades\Schema::getConnection()) {
-            if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-                \Fintech\Core\Facades\Core::setting()->list()->each(function ($setting) {
-                    Config::set("fintech.{$setting->package}.{$setting->key}", Utility::typeCast($setting->value, $setting->type));
-                });
-            }
+        try {
+
+            $cacheValues = cache()->remember('fintech.setting', DAY, function () {
+                $values = [];
+                if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                    \Fintech\Core\Facades\Core::setting()->list()->each(function ($setting) use (&$values) {
+                        $values["fintech.{$setting->package}.{$setting->key}"] = Utility::typeCast($setting->value, $setting->type);
+                    });
+                }
+                return $values;
+            });
+
+            config($cacheValues);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e);
         }
     }
 
