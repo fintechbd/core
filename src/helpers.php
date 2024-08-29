@@ -105,7 +105,7 @@ if (!function_exists('calculate_flat_percent')) {
     {
         $targetNumber = filter_var($value, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-        if (in_array($targetNumber, [0, false, '', null], true)) {
+        if (in_array($targetNumber, [0, '0', false, '', null], true)) {
             return 0;
         }
 
