@@ -36,6 +36,7 @@ class SettingService
         return $this->settingRepository->restore($id);
     }
 
+
     /**
      * Set value for system configuration
      *
@@ -63,7 +64,7 @@ class SettingService
 
                 $attributes['value'] = (string)Utility::stringify($attributes['type'], $value);
 
-                if($user_id != null) {
+                if ($user_id != null) {
                     $attributes['user_id'] = $user_id;
                 }
 
@@ -78,6 +79,39 @@ class SettingService
 
         $this->update($entry->getKey(), ['value' => (string)Utility::stringify($entry->type, $value)]);
 
+        cache()->forget('fintech.setting');
+
+    }
+
+    /**
+     * Set value for system configuration
+     *
+     * @param string $package
+     * @param string $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getValue(string $package, string $key, $default = null): mixed
+    {
+        $entry = $this->list(['package' => $package, 'key' => $key])->first();
+
+        if (!$entry) {
+            return Utility::typeCast($entry->value, $entry->type);
+        }
+
+        return $default;
+
+    }
+
+    public function configurations(): array
+    {
+        $values = [];
+
+        foreach ($this->list() as $setting) {
+            $values["fintech.{$setting->package}.{$setting->key}"] = Utility::typeCast($setting->value, $setting->type);
+        }
+
+        return $values;
     }
 
     /**

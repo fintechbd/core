@@ -76,16 +76,15 @@ class CoreServiceProvider extends ServiceProvider
         try {
 
             $cacheValues = cache()->remember('fintech.setting', DAY, function () {
-                $values = [];
                 if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
-                    \Fintech\Core\Facades\Core::setting()->list()->each(function ($setting) use (&$values) {
-                        $values["fintech.{$setting->package}.{$setting->key}"] = Utility::typeCast($setting->value, $setting->type);
-                    });
+                    return \Fintech\Core\Facades\Core::setting()->configurations();
                 }
-                return $values;
+                return [];
             });
 
-            config($cacheValues);
+            if (!empty($cacheValues)) {
+                config($cacheValues);
+            }
 
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
