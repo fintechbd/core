@@ -2,7 +2,6 @@
 
 namespace Fintech\Core;
 
-use Fintech\Core\Supports\Utility;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
