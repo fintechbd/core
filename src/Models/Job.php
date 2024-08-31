@@ -17,7 +17,6 @@ class Job extends BaseModel
     protected $guarded = ['id'];
 
 
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

@@ -26,7 +26,6 @@ class Setting extends BaseModel
     protected $guarded = ['id'];
 
 
-
     protected $casts = [];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];

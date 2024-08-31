@@ -17,7 +17,6 @@ class FailedJob extends BaseModel
     protected $guarded = ['id'];
 
 
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

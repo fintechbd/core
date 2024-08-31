@@ -7,6 +7,7 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum OrderStatusConfig: string
 {
     use EnumHasSerialization;
+
     case Purchased = 'purchase';
     case Accepted = 'accept';
     case Rejected = 'reject';

@@ -7,6 +7,7 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum LoginStatus: string
 {
     use EnumHasSerialization;
+
     case
     Invalid = 'invalid';
     case

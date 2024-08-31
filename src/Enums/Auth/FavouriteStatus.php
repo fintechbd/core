@@ -7,6 +7,7 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum FavouriteStatus: string
 {
     use EnumHasSerialization;
+
     case
     Requested = 'REQUESTED';
     case
