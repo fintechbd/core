@@ -29,7 +29,8 @@ trait HasCoreSettingTrait
             }
             $this->components->twoColumnDetail(
                 "[<fg=yellow;options=bold>{$this->module}</>] <fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
-                "<fg=yellow;options=bold>SKIP</>");
+                "<fg=yellow;options=bold>SKIP</>"
+            );
         } catch (\Exception $exception) {
             $this->errorMessage($exception->getMessage());
         }
