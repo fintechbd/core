@@ -12,6 +12,8 @@ class InstallCommand extends Command
 {
     use HasCoreSettingTrait;
 
+    private string $module = 'fintech/core';
+
     public $signature = 'core:install';
 
     public $description = 'Configure the system for the `fintech/core` module';
@@ -31,10 +33,11 @@ class InstallCommand extends Command
     {
         try {
 
-            $this->addSettings();
+            $this->addSettings($this->module);
+
             $this->components->twoColumnDetail(
-                '<fg=yellow;options=bold>`fintech/core`</> module settings synced.',
-                '<fg=red;options=bold>SUCCESS</>');
+                "<fg=yellow;options=bold>`{$this->module}`</> module setup completed.",
+                '<fg=green;options=bold>COMPLETED</>');
 
             return self::SUCCESS;
 
