@@ -17,7 +17,8 @@ trait HasCoreSettingTrait
 
             $this->components->twoColumnDetail(
                 "[" . __CLASS__ . "] class is missing the settings property.",
-                '<fg=yellow;options=bold>SKIPPED</>');
+                '<fg=yellow;options=bold>SKIPPED</>'
+            );
 
             goto completed;
         }
@@ -44,6 +45,7 @@ trait HasCoreSettingTrait
         completed:
         $this->components->twoColumnDetail(
             "<fg=yellow;options=bold>`{$module}`</> module settings synced.",
-            '<fg=green;options=bold>SUCCESS</>');
+            '<fg=green;options=bold>SUCCESS</>'
+        );
     }
 }

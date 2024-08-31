@@ -37,7 +37,8 @@ class InstallCommand extends Command
 
             $this->components->twoColumnDetail(
                 "<fg=yellow;options=bold>`{$this->module}`</> module setup completed.",
-                '<fg=green;options=bold>COMPLETED</>');
+                '<fg=green;options=bold>COMPLETED</>'
+            );
 
             return self::SUCCESS;
 
