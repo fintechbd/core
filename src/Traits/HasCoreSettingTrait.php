@@ -13,37 +13,28 @@ trait HasCoreSettingTrait
      */
     private function addSettings(string $module = 'fintech/core'): void
     {
-        if (!property_exists($this, 'settings')) {
-
-            $this->components->twoColumnDetail(
-                "[" . __CLASS__ . "] class is missing the settings property.",
-                '<fg=yellow;options=bold>SKIPPED</>');
-
-            goto completed;
-        }
-
-        foreach ($this->settings as $setting) {
-            DB::beginTransaction();
-            try {
-                $settingModel = Core::setting()->list([
-                    'package' => $setting['package'],
-                    'key' => $setting['key'],
-                ])->first();
-
-                ($settingModel)
-                    ? Core::setting()->update($settingModel->id, $setting)
-                    : Core::setting()->create($setting);
-
-                DB::commit();
-            } catch (\Exception $exception) {
-                DB::rollBack();
-                $this->components->twoColumnDetail($exception->getMessage(), '<fg=red;options=bold>ERROR</>');
+        try {
+            if (property_exists($this, 'settings')) {
+                $this->components->task("[<fg=green;options=bold>{$module}</>] Populating settings", function () {
+                    foreach ($this->settings as $setting) {
+                        $settingModel = Core::setting()->list([
+                            'package' => $setting['package'],
+                            'key' => $setting['key'],
+                        ])->first();
+                        ($settingModel)
+                            ? Core::setting()->update($settingModel->id, $setting)
+                            : Core::setting()->create($setting);
+                    }
+                });
+                return;
             }
+            $this->components->twoColumnDetail(
+                "[<fg=green;options=bold>{$module}</>] <fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
+            "<fg=yellow;options=bold>SKIP</>");
+        } catch (\Exception $exception) {
+            $this->components->twoColumnDetail(
+                "[<fg=green;options=bold>{$module}</>] " . $exception->getMessage(),
+                "<fg=red;options=bold>ERROR</>");
         }
-
-        completed:
-        $this->components->twoColumnDetail(
-            "<fg=yellow;options=bold>`{$module}`</> module settings synced.",
-            '<fg=green;options=bold>SUCCESS</>');
     }
 }
