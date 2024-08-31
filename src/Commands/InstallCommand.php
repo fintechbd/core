@@ -12,7 +12,7 @@ class InstallCommand extends Command
 {
     use HasCoreSettingTrait;
 
-    private string $module = 'fintech/core';
+    private string $module = 'Core';
     public $signature = 'core:install';
     public $description = 'Configure the system for the `fintech/core` module';
     private array $settings = [
@@ -28,9 +28,9 @@ class InstallCommand extends Command
 
     public function handle(): int
     {
-        $this->addSettings($this->module);
+        $this->addSettings();
 
-        $this->components->twoColumnDetail("[<fg=green;options=bold>{$this->module}</>] Installation", "<fg=green;options=bold>COMPLETED</>");
+        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", "<fg=green;options=bold>COMPLETED</>");
 
         return self::SUCCESS;
     }
