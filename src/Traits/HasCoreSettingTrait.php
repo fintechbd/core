@@ -31,9 +31,12 @@ trait HasCoreSettingTrait
                 "[<fg=yellow;options=bold>{$this->module}</>] <fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
                 "<fg=yellow;options=bold>SKIP</>");
         } catch (\Exception $exception) {
-            $this->components->twoColumnDetail(
-                "[<fg=yellow;options=bold>{$this->module}</>] " . $exception->getMessage(),
-                "<fg=red;options=bold>ERROR</>");
+            $this->errorMessage($exception->getMessage());
         }
+    }
+
+    private function errorMessage(string $message): void
+    {
+        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] {$message}", "<fg=red;options=bold>ERROR</>");
     }
 }
