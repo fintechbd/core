@@ -3,7 +3,6 @@
 namespace Fintech\Core\Traits;
 
 use Fintech\Core\Facades\Core;
-use Illuminate\Support\Facades\DB;
 
 trait HasCoreSettingTrait
 {
@@ -30,7 +29,7 @@ trait HasCoreSettingTrait
             }
             $this->components->twoColumnDetail(
                 "[<fg=yellow;options=bold>{$this->module}</>] <fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
-            "<fg=yellow;options=bold>SKIP</>");
+                "<fg=yellow;options=bold>SKIP</>");
         } catch (\Exception $exception) {
             $this->components->twoColumnDetail(
                 "[<fg=yellow;options=bold>{$this->module}</>] " . $exception->getMessage(),
