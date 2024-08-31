@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Commands;
 
+use Fintech\Core\Traits\HasCoreSettingTrait;
 use Illuminate\Console\Command;
 
 /**
@@ -9,14 +10,39 @@ use Illuminate\Console\Command;
  */
 class InstallCommand extends Command
 {
+    use HasCoreSettingTrait;
+
     public $signature = 'core:install';
 
-    public $description = 'My command';
+    public $description = 'Configure the system for the `fintech/core` module';
+
+    private array $settings = [
+        [
+            'package' => 'core',
+            'label' => 'Pagination Style',
+            'description' => 'What type of pagination will display in list view',
+            'key' => 'pagination_type',
+            'type' => 'string',
+            'value' => 'paginate'
+        ]
+    ];
 
     public function handle(): int
     {
-        $this->comment('All done');
+        try {
 
-        return self::SUCCESS;
+            $this->addSettings();
+            $this->components->twoColumnDetail(
+                '<fg=yellow;options=bold>`fintech/core`</> module settings synced.',
+                '<fg=red;options=bold>SUCCESS</>');
+
+            return self::SUCCESS;
+
+        } catch (\Exception $e) {
+
+            $this->components->twoColumnDetail($e->getMessage(), '<fg=red;options=bold>ERROR</>');
+
+            return self::FAILURE;
+        }
     }
 }
