@@ -23,9 +23,10 @@ class ServiceTypeParent implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+
         if ($value != null) {
             $serviceType = Business::serviceType()->find($value);
-            if ($serviceType->service_type_id_parent != $this->type) {
+            if ($serviceType->service_type_is_parent != $this->type) {
                 $fail("The parent service type {$serviceType->service_type_name} needs to be set ({$this->type}).");
             }
         }
