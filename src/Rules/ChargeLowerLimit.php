@@ -37,18 +37,10 @@ class ChargeLowerLimit implements DataAwareRule, ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $limits = Business::chargeBreakDown()->list([
-            'service_stat_id' => $this->data['service_stat_id'],
-            'sort' => 'lower_limit',
-            'dir' => 'asc',
-            'paginate' => false
-        ]);
+        $limits = Business::chargeBreakDown()->available();
 
         if ($limits->isNotEmpty()) {
-            $lowestLimit = $limits->first()->lower_limit;
-            $highestLimit = $limits->last()->higher_limit;
 
-            if ()
         }
     }
 }
