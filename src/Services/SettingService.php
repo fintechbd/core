@@ -95,7 +95,7 @@ class SettingService
     {
         $entry = $this->list(['package' => $package, 'key' => $key])->first();
 
-        if (!$entry) {
+        if ($entry) {
             return Utility::typeCast($entry->value, $entry->type);
         }
 
