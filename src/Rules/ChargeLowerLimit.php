@@ -9,8 +9,6 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class ChargeLowerLimit implements DataAwareRule, ValidationRule
 {
-
-
     /**
      * All the data under validation.
      *
