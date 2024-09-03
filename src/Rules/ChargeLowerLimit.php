@@ -19,7 +19,7 @@ class ChargeLowerLimit implements DataAwareRule, ValidationRule
     /**
      * Set the data under validation.
      *
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function setData(array $data): static
     {
@@ -31,14 +31,12 @@ class ChargeLowerLimit implements DataAwareRule, ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $limits = Business::chargeBreakDown()->available();
-
-        if ($limits->isNotEmpty()) {
-
+        if (!Business::chargeBreakDown()->available($this->data['service_stat_id'], $this->data['lower_limit'])) {
+            $fail("The lower limit isn't allowed.");
         }
     }
 }
