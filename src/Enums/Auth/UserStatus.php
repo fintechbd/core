@@ -8,15 +8,10 @@ enum UserStatus: string
 {
     use EnumHasSerialization;
 
-    case
-    Registered = 'REGISTERED';
-    case
-    Onboarded = 'ONBOARDED';
-    case
-    Suspended = 'SUSPENDED';
-    case
-    Flagged = 'FLAGGED';
-    case
-    Terminated = 'TERMINATED';
+    case Registered = 'REGISTERED';
+    case Onboarded = 'ONBOARDED';
+    case Suspended = 'SUSPENDED';
+    case Flagged = 'FLAGGED';
+    case Terminated = 'TERMINATED';
 
 }

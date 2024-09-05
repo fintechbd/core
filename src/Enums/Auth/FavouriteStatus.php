@@ -8,12 +8,8 @@ enum FavouriteStatus: string
 {
     use EnumHasSerialization;
 
-    case
-    Requested = 'REQUESTED';
-    case
-    Accepted = 'ACCEPTED';
-    case
-    Rejected = 'REJECTED';
-    case
-    Blocked = 'BLOCKED';
+    case Requested = 'REQUESTED';
+    case Accepted = 'ACCEPTED';
+    case Rejected = 'REJECTED';
+    case Blocked = 'BLOCKED';
 }

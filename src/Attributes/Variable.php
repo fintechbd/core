@@ -11,8 +11,7 @@ class Variable
     public function __construct(
         public string $name = '',
         public string $description = ''
-    )
-    {
+    ) {
     }
 
     public function name(): string

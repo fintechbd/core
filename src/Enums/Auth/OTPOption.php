@@ -8,8 +8,6 @@ enum OTPOption: string
 {
     use EnumHasSerialization;
 
-    case
-    Link = 'link';
-    case
-    Otp = 'otp';
+    case Link = 'link';
+    case Otp = 'otp';
 }

@@ -8,10 +8,7 @@ enum RiskProfile: string
 {
     use EnumHasSerialization;
 
-    case
-    Low = 'green';
-    case
-    Moderate = 'yellow';
-    case
-    High = 'red';
+    case Low = 'green';
+    case Moderate = 'yellow';
+    case High = 'red';
 }
