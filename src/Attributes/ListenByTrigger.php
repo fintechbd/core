@@ -20,7 +20,8 @@ class ListenByTrigger
         private bool   $enabled = false,
         private array  $variables = [],
         private array  $recipients = [],
-    ) {
+    )
+    {
     }
 
     public function name(): string

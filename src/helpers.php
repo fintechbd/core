@@ -2,6 +2,7 @@
 
 use Fintech\Core\Supports\Currency;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Model;
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -57,11 +58,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            (string)$serial,
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                (string)$serial,
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
@@ -133,7 +134,7 @@ if (!function_exists('determine_base_model')) {
 
         return match ($connection) {
             'mongodb' => \MongoDB\Laravel\Eloquent\Model::class,
-            default => \Illuminate\Database\Eloquent\Model::class
+            default => Model::class
         };
     }
 }

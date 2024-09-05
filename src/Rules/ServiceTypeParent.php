@@ -5,6 +5,7 @@ namespace Fintech\Core\Rules;
 use Closure;
 use Fintech\Business\Facades\Business;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class ServiceTypeParent implements ValidationRule
 {
@@ -19,7 +20,7 @@ class ServiceTypeParent implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
+     * @param Closure(string): PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

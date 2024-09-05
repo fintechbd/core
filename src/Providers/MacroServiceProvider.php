@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Providers;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -114,7 +115,7 @@ class MacroServiceProvider extends ServiceProvider
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
 
-            if ($data instanceof \Exception) {
+            if ($data instanceof Exception) {
                 Log::error($data);
                 $data = $data->getMessage();
             }

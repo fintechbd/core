@@ -2,12 +2,27 @@
 
 namespace Fintech\Core;
 
+use Exception;
+use Fintech\Core\Commands\InstallCommand;
+use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
+use Fintech\Core\Http\Middlewares\HttpLogger;
+use Fintech\Core\Http\Middlewares\ImposterCheck;
+use Fintech\Core\Providers\EventServiceProvider;
+use Fintech\Core\Providers\MacroServiceProvider;
+use Fintech\Core\Providers\RepositoryServiceProvider;
+use Fintech\Core\Traits\RegisterPackageTrait;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    use \Fintech\Core\Traits\RegisterPackageTrait;
+    use RegisterPackageTrait;
 
     /**
      * Register any application services.
@@ -23,16 +38,16 @@ class CoreServiceProvider extends ServiceProvider
             'fintech.core'
         );
 
-        $this->app->register(\Fintech\Core\Providers\EventServiceProvider::class);
-        $this->app->register(\Fintech\Core\Providers\RepositoryServiceProvider::class);
-        $this->app->register(\Fintech\Core\Providers\MacroServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(MacroServiceProvider::class);
     }
 
     /**
      * Bootstrap any package services.
-     * @param \Illuminate\Routing\Router $router
+     * @param Router $router
      */
-    public function boot(\Illuminate\Routing\Router $router): void
+    public function boot(Router $router): void
     {
         $this->loadSettings();
 
@@ -59,15 +74,15 @@ class CoreServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \Fintech\Core\Commands\InstallCommand::class,
+                InstallCommand::class,
             ]);
         }
 
         $this->loadQueryLogger();
 
-        $router->middlewareGroup('encrypted', [\Fintech\Core\Http\Middlewares\EncryptedRequestResponse::class])
-            ->middlewareGroup('http_log', [\Fintech\Core\Http\Middlewares\HttpLogger::class])
-            ->middlewareGroup('imposter', [\Fintech\Core\Http\Middlewares\ImposterCheck::class]);
+        $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
+            ->middlewareGroup('http_log', [HttpLogger::class])
+            ->middlewareGroup('imposter', [ImposterCheck::class]);
     }
 
     private function loadSettings(): void
@@ -75,7 +90,7 @@ class CoreServiceProvider extends ServiceProvider
         try {
 
             $cacheValues = cache()->remember('fintech.setting', DAY, function () {
-                if (\Illuminate\Support\Facades\Schema::hasTable('settings')) {
+                if (Schema::hasTable('settings')) {
                     return \Fintech\Core\Facades\Core::setting()->configurations();
                 }
                 return [];
@@ -85,21 +100,21 @@ class CoreServiceProvider extends ServiceProvider
                 config($cacheValues);
             }
 
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error($e);
+        } catch (Exception $e) {
+            Log::error($e);
         }
     }
 
     private function loadQueryLogger(): void
     {
         if (Config::get('fintech.core.query_logger_enabled') && Config::get('database.default') != 'mongodb') {
-            \Illuminate\Support\Facades\DB::listen(function (\Illuminate\Database\Events\QueryExecuted $event) {
+            DB::listen(function (QueryExecuted $event) {
                 //skip console query logging
                 if ($this->app->runningInConsole() && !config('fintech.core.log_console_query')) {
                     return;
                 }
-                $query = \Illuminate\Support\Str::replaceArray('?', $event->bindings, $event->sql);
-                \Illuminate\Support\Facades\Log::channel('query')
+                $query = Str::replaceArray('?', $event->bindings, $event->sql);
+                Log::channel('query')
                     ->debug("TIME: {$event->time} ms, SQL: {$query}");
             });
         }
