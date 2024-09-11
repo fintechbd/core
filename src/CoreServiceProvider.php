@@ -3,6 +3,7 @@
 namespace Fintech\Core;
 
 use Exception;
+use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
@@ -38,9 +39,9 @@ class CoreServiceProvider extends ServiceProvider
             'fintech.core'
         );
 
-        $this->app->register(EventServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(MacroServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -77,10 +78,9 @@ class CoreServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
+                EncryptionKeyGenerateCommand::class
             ]);
         }
-
-        $this->loadQueryLogger();
 
         $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
             ->middlewareGroup('http_log', [HttpLogger::class])
@@ -104,21 +104,6 @@ class CoreServiceProvider extends ServiceProvider
 
         } catch (Exception $e) {
             Log::error($e);
-        }
-    }
-
-    private function loadQueryLogger(): void
-    {
-        if (Config::get('fintech.core.query_logger_enabled') && Config::get('database.default') != 'mongodb') {
-            DB::listen(function (QueryExecuted $event) {
-                //skip console query logging
-                if ($this->app->runningInConsole() && !config('fintech.core.log_console_query')) {
-                    return;
-                }
-                $query = Str::replaceArray('?', $event->bindings, $event->sql);
-                Log::channel('query')
-                    ->debug("TIME: {$event->time} ms, SQL: {$query}");
-            });
         }
     }
 }
