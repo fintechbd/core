@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Listeners;
 
-
 class DBQueryListener
 {
     public function handle(\Illuminate\Database\Events\QueryExecuted $event): void

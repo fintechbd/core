@@ -12,14 +12,10 @@ use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
 use Fintech\Core\Traits\RegisterPackageTrait;
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 
 class CoreServiceProvider extends ServiceProvider
 {
