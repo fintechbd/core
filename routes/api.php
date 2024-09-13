@@ -53,9 +53,9 @@ if (Config::get('fintech.core.enabled')) {
                     ->name('failed-jobs.retry');
 
                 Route::apiResource('schedules', \Fintech\RestApi\Http\Controllers\Core\ScheduleController::class);
-    Route::post('schedules/{schedule}/restore', [\Fintech\RestApi\Http\Controllers\Core\ScheduleController::class, 'restore'])->name('schedules.restore');
+                Route::post('schedules/{schedule}/restore', [\Fintech\RestApi\Http\Controllers\Core\ScheduleController::class, 'restore'])->name('schedules.restore');
 
-    //DO NOT REMOVE THIS LINE//
+                //DO NOT REMOVE THIS LINE//
             });
     });
 }

@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\ScheduleRepository;
 
 /**
@@ -16,7 +15,9 @@ class ScheduleService
      * ScheduleService constructor.
      * @param ScheduleRepository $scheduleRepository
      */
-    public function __construct(private readonly ScheduleRepository $scheduleRepository) { }
+    public function __construct(private readonly ScheduleRepository $scheduleRepository)
+    {
+    }
 
     /**
      * @param array $filters

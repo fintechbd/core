@@ -156,7 +156,7 @@ return [
     */
     'failed_job_model' => Fintech\Core\Models\FailedJob::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | Schedule Model

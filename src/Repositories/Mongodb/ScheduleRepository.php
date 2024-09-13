@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Core\Interfaces\ScheduleRepository as InterfacesScheduleRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class ScheduleRepository
@@ -17,7 +15,7 @@ class ScheduleRepository extends MongodbRepository implements InterfacesSchedule
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.schedule_model', \Fintech\Core\Models\Schedule::class));
+        parent::__construct(config('fintech.core.schedule_model', \Fintech\Core\Models\Schedule::class));
     }
 
     /**
