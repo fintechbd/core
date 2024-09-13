@@ -41,7 +41,16 @@ class Core
         return app(JobService::class);
     }
 
+    /**
+     * @return \Fintech\Core\Services\ScheduleService
+     */
+    public function schedule()
+    {
+        return app(\Fintech\Core\Services\ScheduleService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 
     /**

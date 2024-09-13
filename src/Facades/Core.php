@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool packageExists(string $name)
  * @method static ApiLogService apiLog()
  * @method static FailedJobService failedJob()
+ * @method static \Fintech\Core\Services\ScheduleService schedule()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

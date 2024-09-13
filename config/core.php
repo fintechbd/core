@@ -156,6 +156,16 @@ return [
     */
     'failed_job_model' => Fintech\Core\Models\FailedJob::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Schedule Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'schedule_model' => \Fintech\Core\Models\Schedule::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -173,6 +183,8 @@ return [
         \Fintech\Core\Interfaces\ApiLogRepository::class => ApiLogRepository::class,
 
         \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
+
+        \Fintech\Core\Interfaces\ScheduleRepository::class => \Fintech\Core\Repositories\Eloquent\ScheduleRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
