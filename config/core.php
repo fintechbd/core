@@ -4,6 +4,7 @@
 use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
 use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
 use Fintech\Core\Repositories\Eloquent\JobRepository;
+use Fintech\Core\Repositories\Eloquent\ScheduleRepository;
 use Fintech\Core\Repositories\Eloquent\SettingRepository;
 
 return [
@@ -184,7 +185,7 @@ return [
 
         \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
 
-        \Fintech\Core\Interfaces\ScheduleRepository::class => \Fintech\Core\Repositories\Eloquent\ScheduleRepository::class,
+        \Fintech\Core\Interfaces\ScheduleRepository::class => ScheduleRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
