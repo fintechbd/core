@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Commands;
 
-use Fintech\Core\Traits\HasCoreSettingTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Artisan;
  */
 class HealthCheckupCommand extends Command
 {
-
     private string $module = 'Core';
     public $signature = 'core:health-checkup';
     public $description = 'Configure the system for the `fintech/core` module';
