@@ -61,11 +61,13 @@ class HealthCheckupCommand extends Command
         foreach (config('fintech.core.packages', []) as $code => $package) {
             $this->components->twoColumnDetail(
                 "<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Package <fg=bright-blue;options=bold>{$package}</> status",
-                "<fg=green;options=bold>INSTALLED</>");
+                "<fg=green;options=bold>INSTALLED</>"
+            );
 
             $this->components->twoColumnDetail(
                 "<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Package <fg=bright-blue;options=bold>{$package}</> routes",
-                (config("fintech.{$code}.enabled", false) ? "<fg=green;options=bold>ENABLED</>":"<fg=red;options=bold>DISABLED</>"));
+                (config("fintech.{$code}.enabled", false) ? "<fg=green;options=bold>ENABLED</>" : "<fg=red;options=bold>DISABLED</>")
+            );
         }
     }
 }
