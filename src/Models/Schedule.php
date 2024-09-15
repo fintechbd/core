@@ -34,7 +34,7 @@ class Schedule extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $casts = ['parameters' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+    protected $casts = ['parameters' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool', 'schedule_data' => 'array'];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
