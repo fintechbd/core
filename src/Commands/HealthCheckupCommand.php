@@ -23,6 +23,10 @@ class HealthCheckupCommand extends Command
             });
         }
 
+        $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Clear cached bootstrap files", function () {
+            Artisan::call('optimize:clear --quiet');
+        });
+
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Publish default assets", function () {
             Artisan::call('vendor:publish --tag=fintech-auth-assets --quiet --force');
         });
@@ -47,6 +51,21 @@ class HealthCheckupCommand extends Command
             }
         });
 
+        $this->checkAvailablePackages();
+
         return self::SUCCESS;
+    }
+
+    private function checkAvailablePackages(): void
+    {
+        foreach (config('fintech.core.packages', []) as $code => $package) {
+            $this->components->twoColumnDetail(
+                "<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Package <fg=bright-blue;options=bold>{$package}</> status",
+                "<fg=green;options=bold>INSTALLED</>");
+
+            $this->components->twoColumnDetail(
+                "<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Package <fg=bright-blue;options=bold>{$package}</> routes",
+                (config("fintech.{$code}.enabled", false) ? "<fg=green;options=bold>ENABLED</>":"<fg=red;options=bold>DISABLED</>"));
+        }
     }
 }
