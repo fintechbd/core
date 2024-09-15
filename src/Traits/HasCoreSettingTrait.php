@@ -8,9 +8,14 @@ use Throwable;
 
 trait HasCoreSettingTrait
 {
+    private function prefix(): string
+    {
+        return "<fg=bright-white;bg=bright-blue;options=bold> {$this->module} </> ";
+    }
+
     /**
-     * @param string|null $module
      * @return void
+     * @throws Throwable
      */
     private function addSettings(): void
     {
@@ -52,14 +57,21 @@ trait HasCoreSettingTrait
         } catch (Throwable $e) {
             throw $e;
         } finally {
-            $runTime = number_format((microtime(true) - $startTime) * 1000);
-            $this->components->twoColumnDetail("<fg=bright-white;bg=bright-blue;options=bold> {$this->module} </> {$message}",
-                "<fg=gray>{$runTime}ms</> " . ($result !== false ? " <fg=green;options=bold>{$doneLabel}</>" : " <fg=red;options=bold>{$failLabel}</>"));
+            $runTime = ($task != null) ? number_format((microtime(true) - $startTime) * 1000) . "ms "
+                : "";
+
+            $this->components->twoColumnDetail($this->prefix() . $message,
+                "<fg=gray>{$runTime}</>" . ($result !== false ? " <fg=green;options=bold>{$doneLabel}</>" : " <fg=red;options=bold>{$failLabel}</>"));
         }
     }
 
-    private function errorMessage(string $message): void
+    private function errorMessage(string $message, string $label = 'ERROR'): void
     {
-        $this->components->twoColumnDetail("<fg=white;bg=bright-blue;options=bold> {$this->module} </> {$message}", "<fg=red;options=bold>ERROR</>");
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=red;options=bold>{$label}</>");
+    }
+
+    private function infoMessage(string $message, string $label = 'INFO'): void
+    {
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
     }
 }
