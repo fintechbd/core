@@ -53,15 +53,17 @@ trait HasCoreSettingTrait
         $result = false;
 
         try {
-            $result = ($task ?: fn() => true)();
+            $result = ($task ?: fn () => true)();
         } catch (Throwable $e) {
             throw $e;
         } finally {
             $runTime = ($task != null) ? number_format((microtime(true) - $startTime) * 1000) . "ms "
                 : "";
 
-            $this->components->twoColumnDetail($this->prefix() . $message,
-                "<fg=gray>{$runTime}</>" . ($result !== false ? " <fg=green;options=bold>{$doneLabel}</>" : " <fg=red;options=bold>{$failLabel}</>"));
+            $this->components->twoColumnDetail(
+                $this->prefix() . $message,
+                "<fg=gray>{$runTime}</>" . ($result !== false ? " <fg=green;options=bold>{$doneLabel}</>" : " <fg=red;options=bold>{$failLabel}</>")
+            );
         }
     }
 
