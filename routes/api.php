@@ -52,6 +52,7 @@ if (Config::get('fintech.core.enabled')) {
                 Route::post('failed-jobs/{failed_job}/retry', [FailedJobController::class, 'retry'])
                     ->name('failed-jobs.retry');
 
+                Route::get('schedules/{schedule}/health/{status}', [\Fintech\RestApi\Http\Controllers\Core\ScheduleController::class, 'health'])->name('schedules.health');
                 Route::apiResource('schedules', \Fintech\RestApi\Http\Controllers\Core\ScheduleController::class);
                 Route::post('schedules/{schedule}/restore', [\Fintech\RestApi\Http\Controllers\Core\ScheduleController::class, 'restore'])->name('schedules.restore');
 

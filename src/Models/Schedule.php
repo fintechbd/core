@@ -17,6 +17,19 @@ class Schedule extends BaseModel
     |--------------------------------------------------------------------------
     */
 
+    protected $attributes = [
+        'enabled' => false,
+        'parameters' => '[]',
+        'interval' => '0 0 0 0 0',
+        'timezone' => 'UTC',
+        'schedule_data' => [
+            'last_triggered_at' => null,
+            'last_succeed_at' => null,
+            'last_failed_at' => null,
+            'next_scheduled_at' => null,
+        ]
+    ];
+
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
