@@ -4,6 +4,7 @@ namespace Fintech\Core;
 
 use Exception;
 use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
+use Fintech\Core\Commands\HealthCheckupCommand;
 use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
@@ -74,7 +75,8 @@ class CoreServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
-                EncryptionKeyGenerateCommand::class
+                EncryptionKeyGenerateCommand::class,
+                HealthCheckupCommand::class
             ]);
         }
 
