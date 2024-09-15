@@ -18,6 +18,13 @@ class HealthCheckupCommand extends Command
 
     public function handle(): int
     {
+        if (PHP_OS_FAMILY == "Linux") {
+            $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Verify storage directory permission", function () {
+                shell_exec('sudo chown -R www-data:www-data /var/www/html/storage');
+                shell_exec('sudo chmod -R 777 /var/www/html/storage');
+            });
+        }
+
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Publish default assets", function () {
             Artisan::call('vendor:publish --tag=fintech-auth-assets --quiet --force');
         });
@@ -41,13 +48,6 @@ class HealthCheckupCommand extends Command
                 @file_put_contents(storage_path('/logs/worker.log'), '');
             }
         });
-
-        if (PHP_OS_FAMILY == "Linux") {
-            $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Verify storage directory permission", function () {
-                shell_exec('sudo chmod -R 755 /var/www/html/storage');
-                shell_exec('sudo chown -R www-data:www-data /var/www/html/storage');
-            });
-        }
 
         return self::SUCCESS;
     }
