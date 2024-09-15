@@ -4,6 +4,7 @@ namespace Fintech\Core\Commands;
 
 use Fintech\Core\Traits\HasCoreSettingTrait;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 /**
  * Class InstallCommand
@@ -18,15 +19,15 @@ class HealthCheckupCommand extends Command
     public function handle(): int
     {
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Publish default assets", function () {
-            $this->call('vendor:publish', ['--tag' => 'fintech-auth-assets', '--quiet' => true, '--force' => true]);
+            Artisan::call('vendor:publish --tag=fintech-auth-assets --quiet --force');
         });
 
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Publish file manager assets", function () {
-            $this->call('vendor:publish', ['--tag' => 'fm-assets', '--quiet' => true, '--force' => true]);
+            Artisan::call('vendor:publish --tag=fm-assets --quiet --force');
         });
 
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Broadcast queue restart signal", function () {
-            $this->call('queue:restart', ['--quiet' => true]);
+            Artisan::call('queue:restart --quiet');
         });
 
         $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Verify scheduler log file", function () {
