@@ -26,25 +26,6 @@ trait EnumHasSerialization
         return array_combine(self::values(), self::names());
     }
 
-
-    /**
-     * Return enum all entries as a key value pair list
-     *
-     * @return array<string, mixed>
-     */
-    public static function toList(): array
-    {
-        $cases = [];
-        foreach (self::cases() as $case) {
-            $cases[] = [
-                'value' => $case->value,
-                'name' => $case->name
-            ];
-        }
-
-        return $cases;
-    }
-
     /**
      * Return enum all items values as list or array
      *
@@ -63,6 +44,24 @@ trait EnumHasSerialization
     public static function names(): array
     {
         return array_column(self::cases(), 'name');
+    }
+
+    /**
+     * Return enum all entries as a key value pair list
+     *
+     * @return array<string, mixed>
+     */
+    public static function toList(): array
+    {
+        $cases = [];
+        foreach (self::cases() as $case) {
+            $cases[] = [
+                'value' => $case->value,
+                'name' => $case->name
+            ];
+        }
+
+        return $cases;
     }
 
     /**

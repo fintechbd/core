@@ -4,6 +4,7 @@ namespace Fintech\Core\Facades;
 
 use Fintech\Core\Services\ApiLogService;
 use Fintech\Core\Services\FailedJobService;
+use Fintech\Core\Services\ScheduleService;
 use Fintech\Core\Services\SettingService;
 use Illuminate\Support\Facades\Facade;
 
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool packageExists(string $name)
  * @method static ApiLogService apiLog()
  * @method static FailedJobService failedJob()
- * @method static \Fintech\Core\Services\ScheduleService schedule()
+ * @method static ScheduleService schedule()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

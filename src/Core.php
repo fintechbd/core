@@ -5,6 +5,7 @@ namespace Fintech\Core;
 use Fintech\Core\Services\ApiLogService;
 use Fintech\Core\Services\FailedJobService;
 use Fintech\Core\Services\JobService;
+use Fintech\Core\Services\ScheduleService;
 use Fintech\Core\Services\SettingService;
 
 class Core
@@ -42,15 +43,14 @@ class Core
     }
 
     /**
-     * @return \Fintech\Core\Services\ScheduleService
+     * @return ScheduleService
      */
     public function schedule()
     {
-        return app(\Fintech\Core\Services\ScheduleService::class);
+        return app(ScheduleService::class);
     }
 
     //** Crud Service Method Point Do not Remove **//
-
 
 
     /**

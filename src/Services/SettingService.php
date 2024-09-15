@@ -84,37 +84,6 @@ class SettingService
     }
 
     /**
-     * Set value for system configuration
-     *
-     * @param string $package
-     * @param string $key
-     * @param null $default
-     * @return mixed|null
-     */
-    public function getValue(string $package, string $key, $default = null): mixed
-    {
-        $entry = $this->list(['package' => $package, 'key' => $key])->first();
-
-        if ($entry) {
-            return Utility::typeCast($entry->value, $entry->type);
-        }
-
-        return $default;
-
-    }
-
-    public function configurations(): array
-    {
-        $values = [];
-
-        foreach ($this->list() as $setting) {
-            $values["fintech.{$setting->package}.{$setting->key}"] = Utility::typeCast($setting->value, $setting->type);
-        }
-
-        return $values;
-    }
-
-    /**
      * @param array $filters
      * @return mixed
      */
@@ -153,5 +122,36 @@ class SettingService
     public function update($id, array $inputs = [])
     {
         return $this->settingRepository->update($id, $inputs);
+    }
+
+    /**
+     * Set value for system configuration
+     *
+     * @param string $package
+     * @param string $key
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getValue(string $package, string $key, $default = null): mixed
+    {
+        $entry = $this->list(['package' => $package, 'key' => $key])->first();
+
+        if ($entry) {
+            return Utility::typeCast($entry->value, $entry->type);
+        }
+
+        return $default;
+
+    }
+
+    public function configurations(): array
+    {
+        $values = [];
+
+        foreach ($this->list() as $setting) {
+            $values["fintech.{$setting->package}.{$setting->key}"] = Utility::typeCast($setting->value, $setting->type);
+        }
+
+        return $values;
     }
 }

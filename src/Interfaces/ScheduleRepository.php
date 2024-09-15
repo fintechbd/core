@@ -2,9 +2,10 @@
 
 namespace Fintech\Core\Interfaces;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Fintech\Core\Abstracts\BaseModel;
+use InvalidArgumentException;
 
 /**
  * Interface ScheduleRepository
@@ -57,7 +58,7 @@ interface ScheduleRepository
      * find and restore a entry from records
      *
      * @param int|string $id
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function restore(int|string $id);
 }

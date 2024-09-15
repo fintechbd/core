@@ -2,8 +2,9 @@
 
 namespace Fintech\Core\Repositories\Eloquent;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\ScheduleRepository as InterfacesScheduleRepository;
+use Fintech\Core\Models\Schedule;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +16,7 @@ class ScheduleRepository extends EloquentRepository implements InterfacesSchedul
 {
     public function __construct()
     {
-        parent::__construct(config('fintech.core.schedule_model', \Fintech\Core\Models\Schedule::class));
+        parent::__construct(config('fintech.core.schedule_model', Schedule::class));
     }
 
     /**
@@ -29,7 +30,7 @@ class ScheduleRepository extends EloquentRepository implements InterfacesSchedul
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

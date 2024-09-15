@@ -19,21 +19,6 @@ class ScheduleService
     {
     }
 
-    /**
-     * @param array $filters
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->scheduleRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->scheduleRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->scheduleRepository->find($id, $onlyTrashed);
@@ -59,8 +44,23 @@ class ScheduleService
         return $this->scheduleRepository->list($filters);
     }
 
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->scheduleRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->scheduleRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->scheduleRepository->create($inputs);
     }
 }

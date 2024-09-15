@@ -22,8 +22,7 @@ trait ScheduleTaskTrait
                 ->cron(($task->interval ?? '0 0 0 0 0'))
                 ->pingBefore(route('core.schedules.health', [$task->id, 'triggered']))
                 ->pingOnSuccess(route('core.schedules.health', [$task->id, 'succeed']))
-                ->pingOnFailure(route('core.schedules.health', [$task->id, 'failed']))
-            ;
+                ->pingOnFailure(route('core.schedules.health', [$task->id, 'failed']));
         }
 
     }

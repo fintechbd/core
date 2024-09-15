@@ -2,8 +2,9 @@
 
 namespace Fintech\Core\Repositories\Mongodb;
 
-use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Core\Interfaces\ScheduleRepository as InterfacesScheduleRepository;
+use Fintech\Core\Models\Schedule;
+use Fintech\Core\Repositories\MongodbRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +16,7 @@ class ScheduleRepository extends MongodbRepository implements InterfacesSchedule
 {
     public function __construct()
     {
-        parent::__construct(config('fintech.core.schedule_model', \Fintech\Core\Models\Schedule::class));
+        parent::__construct(config('fintech.core.schedule_model', Schedule::class));
     }
 
     /**
@@ -29,7 +30,7 @@ class ScheduleRepository extends MongodbRepository implements InterfacesSchedule
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

@@ -57,7 +57,7 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->publishes([
             __DIR__ . '/../lang' => $this->app->langPath('vendor/core'),

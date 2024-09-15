@@ -1,6 +1,7 @@
 <?php
 
 // config for Fintech/Core
+use Fintech\Core\Models\Schedule;
 use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
 use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
 use Fintech\Core\Repositories\Eloquent\JobRepository;
@@ -165,7 +166,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'schedule_model' => \Fintech\Core\Models\Schedule::class,
+    'schedule_model' => Schedule::class,
 
     //** Model Config Point Do not Remove **//
 
