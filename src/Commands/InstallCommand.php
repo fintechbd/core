@@ -30,7 +30,7 @@ class InstallCommand extends Command
     {
         $this->addSettings();
 
-        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", "<fg=green;options=bold>COMPLETED</>");
+        $this->components->twoColumnDetail("<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Installation", "<fg=green;options=bold>COMPLETED</>");
 
         return self::SUCCESS;
     }
