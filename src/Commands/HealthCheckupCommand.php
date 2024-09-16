@@ -23,12 +23,7 @@ class HealthCheckupCommand extends Command
      */
     public function handle(): int
     {
-        if (PHP_OS_FAMILY == "Linux") {
-            $this->task("Verify storage directory permission", function () {
-                shell_exec('sudo chown -R www-data:www-data /var/www/html/storage');
-                shell_exec('sudo chmod -R 777 /var/www/html/storage');
-            });
-        }
+        $this->setPermissions();
 
         $this->task("Clear cached bootstrap files", function () {
             Artisan::call('optimize:clear --quiet');
@@ -60,6 +55,8 @@ class HealthCheckupCommand extends Command
 
         $this->checkAvailablePackages();
 
+        $this->setPermissions();
+
         return self::SUCCESS;
     }
 
@@ -70,6 +67,19 @@ class HealthCheckupCommand extends Command
                 "<fg=bright-white;bg=bright-blue;options=bold> {$package} </> API routes",
                 (config("fintech.{$code}.enabled", false) ? "<fg=green;options=bold>ENABLED</>" : "<fg=red;options=bold>DISABLED</>")
             );
+        }
+    }
+
+    /**
+     * @throws Throwable
+     */
+    private function setPermissions()
+    {
+        if (PHP_OS_FAMILY == "Linux") {
+            $this->task("Verify storage directory permission", function () {
+                shell_exec('sudo chown -R www-data:www-data /var/www/html/storage');
+                shell_exec('sudo chmod -R 777 /var/www/html/storage');
+            });
         }
     }
 }
