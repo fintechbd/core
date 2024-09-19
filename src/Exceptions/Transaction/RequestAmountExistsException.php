@@ -3,7 +3,6 @@
 namespace Fintech\Core\Exceptions\Transaction;
 
 use Exception;
-use Fintech\MetaData\Facades\MetaData;
 use Throwable;
 
 /**
