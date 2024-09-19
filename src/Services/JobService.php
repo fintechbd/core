@@ -9,8 +9,10 @@ use Fintech\Core\Interfaces\JobRepository;
  * @package Fintech\Core\Services
  *
  */
-class JobService extends \Fintech\Core\Abstracts\Service
+class JobService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * JobService constructor.
      * @param JobRepository $jobRepository

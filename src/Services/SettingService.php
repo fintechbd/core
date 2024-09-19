@@ -11,8 +11,10 @@ use Fintech\Core\Supports\Utility;
  * @package Fintech\Core\Services
  *
  */
-class SettingService extends \Fintech\Core\Abstracts\Service
+class SettingService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * SettingService constructor.
      * @param SettingRepository $settingRepository

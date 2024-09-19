@@ -9,8 +9,10 @@ use Fintech\Core\Interfaces\ApiLogRepository;
  * @package Fintech\Core\Services
  *
  */
-class ApiLogService extends \Fintech\Core\Abstracts\Service
+class ApiLogService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * ApiLogService constructor.
      * @param ApiLogRepository $apiLogRepository

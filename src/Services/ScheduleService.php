@@ -9,8 +9,10 @@ use Fintech\Core\Interfaces\ScheduleRepository;
  * @package Fintech\Core\Services
  *
  */
-class ScheduleService extends \Fintech\Core\Abstracts\Service
+class ScheduleService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * ScheduleService constructor.
      * @param ScheduleRepository $scheduleRepository

@@ -9,8 +9,10 @@ use Fintech\Core\Interfaces\FailedJobRepository;
  * @package Fintech\Core\Services
  *
  */
-class FailedJobService extends \Fintech\Core\Abstracts\Service
+class FailedJobService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * FailedJobService constructor.
      * @param FailedJobRepository $failedJobRepository
