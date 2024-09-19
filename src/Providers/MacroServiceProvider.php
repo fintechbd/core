@@ -116,7 +116,11 @@ class MacroServiceProvider extends ServiceProvider
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
 
             if ($data instanceof Exception) {
-                Log::error($data);
+
+                if (config('app.debug', false)) {
+                    Log::error($data);
+                }
+
                 $data = $data->getMessage();
             }
 
