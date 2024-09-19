@@ -9,7 +9,7 @@ use Fintech\Core\Interfaces\JobRepository;
  * @package Fintech\Core\Services
  *
  */
-class JobService
+class JobService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * JobService constructor.

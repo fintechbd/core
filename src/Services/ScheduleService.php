@@ -9,7 +9,7 @@ use Fintech\Core\Interfaces\ScheduleRepository;
  * @package Fintech\Core\Services
  *
  */
-class ScheduleService
+class ScheduleService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * ScheduleService constructor.

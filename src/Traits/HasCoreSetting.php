@@ -6,7 +6,7 @@ use Exception;
 use Fintech\Core\Facades\Core;
 use Throwable;
 
-trait HasCoreSettingTrait
+trait HasCoreSetting
 {
     private function prefix(): string
     {

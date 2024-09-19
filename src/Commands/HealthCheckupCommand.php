@@ -2,7 +2,7 @@
 
 namespace Fintech\Core\Commands;
 
-use Fintech\Core\Traits\HasCoreSettingTrait;
+use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Throwable;
@@ -12,7 +12,7 @@ use Throwable;
  */
 class HealthCheckupCommand extends Command
 {
-    use HasCoreSettingTrait;
+    use HasCoreSetting;
 
     public $signature = 'core:health-checkup';
     public $description = 'Configure the system for the `fintech/core` module';

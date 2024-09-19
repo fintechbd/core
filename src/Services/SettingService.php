@@ -11,7 +11,7 @@ use Fintech\Core\Supports\Utility;
  * @package Fintech\Core\Services
  *
  */
-class SettingService
+class SettingService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * SettingService constructor.

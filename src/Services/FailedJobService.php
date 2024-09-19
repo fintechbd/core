@@ -9,7 +9,7 @@ use Fintech\Core\Interfaces\FailedJobRepository;
  * @package Fintech\Core\Services
  *
  */
-class FailedJobService
+class FailedJobService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * FailedJobService constructor.

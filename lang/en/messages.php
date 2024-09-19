@@ -37,4 +37,9 @@ return [
         'deleted' => ':package configurations restored to defaults.',
         'failed' => ':package configurations failed to update.'
     ],
+    'transaction' => [
+        'currency_unavailable' => 'This user don\'t have :slug currency account! Please enable, try again later.',
+        'master_currency_unavailable' => 'This system user don\'t have :slug currency account! Please contact administrator.',
+        'request_amount_already_exists' => 'The requested amount is already submitted and processing! Please wait for update.',
+    ]
 ];

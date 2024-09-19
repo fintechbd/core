@@ -7,4 +7,5 @@ namespace Fintech\Core\Abstracts;
  */
 abstract class Service
 {
+    use \Fintech\Core\Traits\HasFirstWhereSearch;
 }

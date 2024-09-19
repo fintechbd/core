@@ -9,7 +9,7 @@ use Fintech\Core\Interfaces\ApiLogRepository;
  * @package Fintech\Core\Services
  *
  */
-class ApiLogService
+class ApiLogService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * ApiLogService constructor.

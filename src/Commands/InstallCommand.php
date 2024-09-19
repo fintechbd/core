@@ -2,7 +2,7 @@
 
 namespace Fintech\Core\Commands;
 
-use Fintech\Core\Traits\HasCoreSettingTrait;
+use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 use Throwable;
 
@@ -11,7 +11,7 @@ use Throwable;
  */
 class InstallCommand extends Command
 {
-    use HasCoreSettingTrait;
+    use HasCoreSetting;
 
     public $signature = 'core:install';
     public $description = 'Configure the system for the `fintech/core` module';
