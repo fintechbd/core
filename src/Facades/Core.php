@@ -9,11 +9,11 @@ use Fintech\Core\Services\SettingService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static SettingService setting()
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|SettingService setting(array $filters = null)
  * @method static bool packageExists(string $name)
- * @method static ApiLogService apiLog()
- * @method static FailedJobService failedJob()
- * @method static ScheduleService schedule()
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ApiLogService apiLog(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|FailedJobService failedJob(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ScheduleService schedule(array $filters = null)
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core
