@@ -13,41 +13,41 @@ class Core
     /**
      * @return SettingService
      */
-    public function setting()
-    {
-        return app(SettingService::class);
+    public function setting($filters = null)
+{
+	return \singleton(SettingService::class, $filters);
     }
 
     /**
      * @return ApiLogService
      */
-    public function apiLog()
-    {
-        return app(ApiLogService::class);
+    public function apiLog($filters = null)
+{
+	return \singleton(ApiLogService::class, $filters);
     }
 
     /**
      * @return FailedJobService
      */
-    public function failedJob()
-    {
-        return app(FailedJobService::class);
+    public function failedJob($filters = null)
+{
+	return \singleton(FailedJobService::class, $filters);
     }
 
     /**
      * @return JobService
      */
-    public function job()
-    {
-        return app(JobService::class);
+    public function job($filters = null)
+{
+	return \singleton(JobService::class, $filters);
     }
 
     /**
      * @return ScheduleService
      */
-    public function schedule()
-    {
-        return app(ScheduleService::class);
+    public function schedule($filters = null)
+{
+	return \singleton(ScheduleService::class, $filters);
     }
 
     //** Crud Service Method Point Do not Remove **//

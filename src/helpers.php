@@ -1,8 +1,6 @@
 <?php
 
 use Fintech\Core\Supports\Currency;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Model;
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -73,7 +71,7 @@ if (!function_exists('get_table')) {
      * for given model class path on configuration
      * @param string $model_path
      * @return mixed
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     function get_table(string $model_path): mixed
     {
@@ -122,6 +120,7 @@ if (!function_exists('calculate_flat_percent')) {
 
 if (!function_exists('determine_base_model')) {
     /**
+     * @return string
      * @throws ErrorException
      */
     function determine_base_model(): string
@@ -134,7 +133,7 @@ if (!function_exists('determine_base_model')) {
 
         return match ($connection) {
             'mongodb' => \MongoDB\Laravel\Eloquent\Model::class,
-            default => Model::class
+            default => \Illuminate\Database\Eloquent\Model::class
         };
     }
 }
@@ -156,5 +155,29 @@ if (!function_exists('response_format')) {
         }
 
         return $data;
+    }
+}
+
+if (!function_exists('singleton')) {
+
+    /**
+     * @param string $abstract
+     * @param null $filters
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Foundation\Application|mixed
+     */
+    function singleton(string $abstract, $filters = null): mixed
+    {
+        if (!app()->offsetExists($abstract)) {
+            $singleton = app($abstract);
+            app()->instance($abstract, $singleton);
+        }
+
+        $singleton = app($abstract);
+
+        if (method_exists($singleton, 'list') && is_array($filters)) {
+            return $singleton->list($filters);
+        }
+
+        return $singleton;
     }
 }
