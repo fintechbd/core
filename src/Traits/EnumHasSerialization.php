@@ -79,7 +79,7 @@ trait EnumHasSerialization
             }
         }
 
-        throw new ValueError("{$name} is a invalid backing name for" . preg_replace('([A-Z])', " $0",class_basename(self::class)) . " enum.");
+        throw new ValueError("{$name} is a invalid backing name for" . preg_replace('([A-Z])', " $0", class_basename(self::class)) . " enum.");
     }
 
     /**
@@ -97,7 +97,7 @@ trait EnumHasSerialization
             }
         }
 
-        throw new ValueError("{$value} is a invalid backing value for" . preg_replace('([A-Z])', " $0",class_basename(self::class)) . " enum.");
+        throw new ValueError("{$value} is a invalid backing value for" . preg_replace('([A-Z])', " $0", class_basename(self::class)) . " enum.");
     }
 
     /**
@@ -108,7 +108,7 @@ trait EnumHasSerialization
      */
     public function label($name = null): string
     {
-       $name = $name?:$this->name;
+        $name = $name ?: $this->name;
 
         return trim(preg_replace('([A-Z])', " $0", $name));
     }
