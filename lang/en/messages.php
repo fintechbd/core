@@ -42,5 +42,8 @@ return [
         'master_currency_unavailable' => 'This system user don\'t have :slug currency account! Please contact administrator.',
         'request_amount_already_exists' => 'The requested amount is already submitted and processing! Please wait for update.',
         'request_order_already_exists' => 'Another order is already on processing! Please wait for update.',
+    ],
+    'assign_vendor' => [
+        'not_found' => ':slug vendor is not available on the configurations.',
     ]
 ];
