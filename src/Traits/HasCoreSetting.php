@@ -23,10 +23,7 @@ trait HasCoreSetting
             if (property_exists($this, 'settings')) {
                 $this->task("Populating settings", function () {
                     foreach ($this->settings as $setting) {
-                        $settingModel = Core::setting()->list([
-                            'package' => $setting['package'],
-                            'key' => $setting['key'],
-                        ])->first();
+                        $settingModel = Core::setting()->findWhere(['package' => $setting['package'], 'key' => $setting['key']]);
                         ($settingModel)
                             ? Core::setting()->update($settingModel->id, $setting)
                             : Core::setting()->create($setting);
