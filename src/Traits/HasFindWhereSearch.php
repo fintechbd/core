@@ -4,7 +4,11 @@ namespace Fintech\Core\Traits;
 
 trait HasFindWhereSearch
 {
-    public function findWhere(array $filters = []): ?\Fintech\Core\Abstracts\BaseModel
+    /**
+     * @param array $filters
+     * @return \Closure|null|\Fintech\Core\Abstracts\BaseModel
+     */
+    public function findWhere(array $filters = [])
     {
         if (!method_exists($this, 'list')) {
             throw new \BadMethodCallException(self::class . '::list(array $filters = []) method is required and missing.');

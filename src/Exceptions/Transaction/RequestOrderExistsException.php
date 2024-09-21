@@ -5,13 +5,13 @@ namespace Fintech\Core\Exceptions\Transaction;
 use Exception;
 
 /**
- * Class RequestAmountExistsException
+ * Class RequestOrderExistsException
  */
-class RequestAmountExistsException extends Exception
+class RequestOrderExistsException extends Exception
 {
     public function __construct()
     {
-        $message = __('core::messages.transaction.request_amount_already_exists');
+        $message = __('core::messages.transaction.request_order_already_exists');
 
         parent::__construct($message, 0, null);
     }

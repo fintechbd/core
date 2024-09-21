@@ -181,3 +181,17 @@ if (!function_exists('singleton')) {
         return $singleton;
     }
 }
+
+if (!function_exists('next_purchase_number')) {
+    /**
+     * @throws \Exception
+     */
+    function next_purchase_number(string $countryIso3): string
+    {
+        $serial = \Fintech\Core\Facades\Core::setting()->getValue('transaction', 'purchase_count', 1);
+
+        \Fintech\Core\Facades\Core::setting()->setValue('transaction', 'purchase_count', $serial + 1, 'integer');
+
+        return entry_number($serial, $countryIso3, \Fintech\Core\Enums\Transaction\OrderStatusConfig::Purchased->value);
+    }
+}
