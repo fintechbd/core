@@ -16,6 +16,7 @@ class FailedJob extends BaseModel
 
     protected $guarded = ['id'];
 
+    protected $casts = ['payload' => 'array', 'failed_at' => 'datetime'];
 
     /*
     |--------------------------------------------------------------------------
