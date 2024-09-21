@@ -71,6 +71,7 @@ trait HasCoreSetting
 
     private function infoMessage(string $message, string $label = 'INFO'): void
     {
+        $this->newLine();
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
     }
 }
