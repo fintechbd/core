@@ -7,7 +7,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
 
-
 /**
  * @template TKey of array-key
  * @template TValue
