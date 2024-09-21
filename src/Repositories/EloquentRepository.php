@@ -165,7 +165,7 @@ abstract class EloquentRepository
 
         foreach ($this->relations as $relation => $params) {
             match ($params['type']) {
-                BelongsToMany::class => $this->model->{$relation}()->sync($params['value']),
+                BelongsToMany::class => $this->model->{$relation}()->attach($params['value']),
                 HasOne::class => $this->model->{$relation}()->create($params['value']),
                 HasMany::class => $this->model->{$relation}()->createMany($params['value']),
                 default => true
