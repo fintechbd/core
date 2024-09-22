@@ -33,11 +33,6 @@ class AppInstallCommand extends Command
      */
     public function handle()
     {
-
-        $this->task("Prepare database", function () {
-            Artisan::call('db:wipe --drop-views --force --quiet');
-        });
-
         $this->task("Prepare database", function () {
             Artisan::call('db:wipe --drop-views --force --quiet');
         });
