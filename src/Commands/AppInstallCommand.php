@@ -95,6 +95,6 @@ class AppInstallCommand extends Command
             $this->call('sanction:install');
         }
 
-        Artisan::call('db:seed');
+//        Artisan::call('db:seed');
     }
 }
