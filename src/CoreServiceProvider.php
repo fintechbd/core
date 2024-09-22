@@ -3,6 +3,7 @@
 namespace Fintech\Core;
 
 use Exception;
+use Fintech\Core\Commands\AppInstallCommand;
 use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
 use Fintech\Core\Commands\HealthCheckupCommand;
 use Fintech\Core\Commands\InstallCommand;
@@ -74,6 +75,7 @@ class CoreServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
+                AppInstallCommand::class,
                 InstallCommand::class,
                 EncryptionKeyGenerateCommand::class,
                 HealthCheckupCommand::class
