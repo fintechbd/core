@@ -14,6 +14,7 @@ class InstallCommand extends Command
     use HasCoreSetting;
 
     public $signature = 'core:install';
+
     public $description = 'Configure the system for the `fintech/core` module';
     private string $module = 'Core';
     private array $settings = [

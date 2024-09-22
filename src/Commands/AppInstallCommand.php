@@ -3,11 +3,14 @@
 namespace Fintech\Core\Commands;
 
 use Fintech\Core\Facades\Core;
+use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
 class AppInstallCommand extends Command
 {
+    use HasCoreSetting;
+
     /**
      * The name and signature of the console command.
      *
@@ -22,13 +25,26 @@ class AppInstallCommand extends Command
      */
     protected $description = 'Command description';
 
+    private string $module = 'Core';
+
     /**
      * Execute the console command.
+     * @throws \Throwable
      */
     public function handle()
     {
 
-        $this->call('migrate:fresh', ['--force' => true, '--quiet' => true]);
+        $this->task("Prepare database", function () {
+            Artisan::call('db:wipe --drop-views --force --quiet');
+        });
+
+        $this->task("Prepare database", function () {
+            Artisan::call('db:wipe --drop-views --force --quiet');
+        });
+
+        $this->task("Running migrations", function () {
+            Artisan::call('migrate:fresh --force --quiet');
+        });
 
         $this->call('core:install');
 
