@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Traits;
 
+use Fintech\Core\Enums\Color;
+
 trait EnumHasSerialization
 {
     /**
@@ -51,7 +53,7 @@ trait EnumHasSerialization
      */
     public static function toList(): array
     {
-        return array_map(fn ($case) => $case->jsonSerialize(), self::cases());
+        return array_map(fn($case) => $case->jsonSerialize(), self::cases());
     }
 
     /**
@@ -115,24 +117,21 @@ trait EnumHasSerialization
     {
         $reflection = new \ReflectionEnumBackedCase($this, $this->name);
         $attributes = $reflection->getAttributes(\Fintech\Core\Attributes\Enumeration::class);
-        $properties['attribute'] = $this->value;
+        $properties['value'] = $this->value;
         $properties['name'] = $this->name;
-        $properties['label'] = $this->label();
+        $properties['label'] = $attribute->label ?? $this->label();
+        $properties['color'] = Color::Black->name;
+        $properties['hex'] = Color::Black->value;
+        $properties['flutter'] = str_replace('#', '0xFF',Color::Black->value);
+
         if (isset($attributes[0])) {
             $attribute = $attributes[0]->newInstance();
-            $properties['description'] = (empty($attribute->description()))
-                ? $attribute->label()
-                : $attribute->description();
-
-            $properties['color'] = $attribute->color();
-            $properties['hex'] = $attribute->hex();
-
-            if (!empty($attribute->label())) {
-                $properties['label'] = $attribute->label();
-            }
+            $properties['description'] = $attribute->description;
+            $properties['color'] = $attribute->color->name;
+            $properties['hex'] = $attribute->color->name;
+            $properties['flutter'] = str_replace('#', '0xFF',$attribute->color->value);
         }
 
         return $properties;
-
     }
 }
