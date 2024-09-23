@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Traits;
 
+use Illuminate\Validation\Rules\Enum;
 use ValueError;
 
 trait EnumHasSerialization
@@ -111,5 +112,26 @@ trait EnumHasSerialization
         $name = $name ?: $this->name;
 
         return trim(preg_replace('([A-Z])', " $0", $name));
+    }
+
+    /**
+     *  Verify that is an enum case or case value exists
+     *
+     * @param $element
+     * @return bool
+     */
+    public static function exists($element): bool
+    {
+        if ($element instanceof self) {
+            $element = $element->value;
+        }
+
+        foreach (self::cases() as $case) {
+            if (strtolower($case->value) === strtolower($element)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

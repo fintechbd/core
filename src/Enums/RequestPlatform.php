@@ -8,7 +8,10 @@ enum RequestPlatform: string
 {
     use EnumHasSerialization;
 
-    case Customer = 'web-customer';
-    case Agent = 'web-agent';
-    case Admin = 'web-admin';
+    case WebCustomer = 'web-customer';
+    case DesktopCustomer = 'desktop-customer';
+    case AndroidCustomer = 'android-customer';
+    case IosCustomer = 'ios-customer';
+    case WebAgent = 'web-agent';
+    case WebAdmin = 'web-admin';
 }
