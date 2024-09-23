@@ -31,7 +31,7 @@ class MacroServiceProvider extends ServiceProvider
 
             $platform = request()->header('Platform');
 
-            return ($platform) ? RequestPlatform::value($platform) : null;
+            return RequestPlatform::tryFrom($platform);
 
         });
 
