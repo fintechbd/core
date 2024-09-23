@@ -51,7 +51,7 @@ trait EnumHasSerialization
      */
     public static function toList(): array
     {
-        return array_map(fn($case) => $case->jsonSerialize(), self::cases());
+        return array_map(fn ($case) => $case->jsonSerialize(), self::cases());
     }
 
     /**

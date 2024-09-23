@@ -18,8 +18,7 @@ class Enumeration
         private ?string $hex = '',
         private ?string $description = null,
         private ?string $label = ''
-    )
-    {
+    ) {
     }
 
     public function color(): ?string
