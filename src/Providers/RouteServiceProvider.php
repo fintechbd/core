@@ -29,9 +29,16 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(__DIR__ . '/../../routes/api.php');
         });
 
-        $this->pushMiddlewareToGroup('api', HttpLogger::class)
-            ->pushMiddlewareToGroup('api', EncryptedRequestResponse::class)
-            ->pushMiddlewareToGroup('api', PlatformCheck::class)
-            ->pushMiddlewareToGroup('imposter', ImposterCheck::class);
+        /**
+         * Future support to laravel 11
+         * @version 11.0.x
+         */
+        if ((int)$this->app->version() >= 11) {
+            $this->pushMiddlewareToGroup('api', HttpLogger::class)
+                ->pushMiddlewareToGroup('api', EncryptedRequestResponse::class)
+                ->pushMiddlewareToGroup('api', PlatformCheck::class);
+        }
+
+        $this->pushMiddlewareToGroup('imposter', ImposterCheck::class);
     }
 }

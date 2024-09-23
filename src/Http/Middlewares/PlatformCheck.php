@@ -21,7 +21,7 @@ class PlatformCheck
         $platform = $request->header('Platform');
 
         if (!$platform || !RequestPlatform::exists($platform)) {
-            abort(Response::HTTP_UNAUTHORIZED, 'Request platform header is invalid or missing.');
+            abort(Response::HTTP_BAD_REQUEST, 'Request platform header is invalid or missing.');
         }
 
         return $next($request);
