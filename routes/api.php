@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 if (Config::get('fintech.core.enabled')) {
-    Route::prefix(config('fintech.core.root_prefix', 'api/'))->middleware(['api', 'http_log', 'encrypted'])->group(function () {
+    Route::prefix(config('fintech.core.root_prefix', 'api/'))->middleware(['api'])->group(function () {
         Route::prefix('core')->name('core.')->group(function () {
             Route::get('session-token', EncryptedKeyController::class)->name('session-token');
             Route::get('packages', PackageRegisteredController::class)->name('packages');

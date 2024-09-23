@@ -10,9 +10,11 @@ use Fintech\Core\Commands\InstallCommand;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
 use Fintech\Core\Http\Middlewares\ImposterCheck;
+use Fintech\Core\Http\Middlewares\PlatformCheck;
 use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
+use Fintech\Core\Providers\RouteServiceProvider;
 use Fintech\Core\Traits\RegisterPackageTrait;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Log;
@@ -40,6 +42,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(MacroServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
 
     /**
@@ -57,8 +60,6 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'core');
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'core');
-
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->publishes([
             __DIR__ . '/../lang' => $this->app->langPath('vendor/core'),
@@ -81,10 +82,6 @@ class CoreServiceProvider extends ServiceProvider
                 HealthCheckupCommand::class
             ]);
         }
-
-        $router->middlewareGroup('encrypted', [EncryptedRequestResponse::class])
-            ->middlewareGroup('http_log', [HttpLogger::class])
-            ->middlewareGroup('imposter', [ImposterCheck::class]);
     }
 
     private function loadSettings(): void

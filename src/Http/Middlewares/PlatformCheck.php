@@ -16,6 +16,12 @@ class PlatformCheck
      */
     public function handle(Request $request, Closure $next)
     {
+        $platform = $request->header('Platform');
+
+        if (!$platform) {
+            abort(Response::HTTP_BAD_REQUEST, 'Request header signature is missing.');
+        }
+
         return $next($request);
     }
 }

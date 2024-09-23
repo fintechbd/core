@@ -3,6 +3,7 @@
 namespace Fintech\Core\Providers;
 
 use Exception;
+use Fintech\Core\Enums\RequestPlatform;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -20,9 +21,18 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Request::macro('platform', function (string $platform = null) {
-            $headerPlatform = request()->header('Platform', null);
-            return ($platform != null) ? strtolower($headerPlatform) == strtolower($platform) : $headerPlatform;
+        /**
+         * http client request platform
+         *
+         * @param RequestPlatform|bool $payload boolean if matches with given platform,
+         * @return \Illuminate\Http\Client\Response
+         */
+        Request::macro('platform', function () {
+
+            $platform = request()->header('Platform');
+
+            return ($platform) ? RequestPlatform::value($platform) : null;
+
         });
 
         /**
