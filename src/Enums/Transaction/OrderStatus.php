@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Transaction;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum OrderStatus: string
+enum OrderStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

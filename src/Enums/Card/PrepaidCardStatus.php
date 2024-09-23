@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Card;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum PrepaidCardStatus: string
+enum PrepaidCardStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

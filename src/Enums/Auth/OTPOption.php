@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Auth;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum OTPOption: string
+enum OTPOption: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

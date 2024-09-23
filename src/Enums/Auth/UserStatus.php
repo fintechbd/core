@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\Auth;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum UserStatus: string
+enum UserStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums\MetaData;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum CatalogType: string
+enum CatalogType: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

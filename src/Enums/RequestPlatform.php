@@ -4,7 +4,7 @@ namespace Fintech\Core\Enums;
 
 use Fintech\Core\Traits\EnumHasSerialization;
 
-enum RequestPlatform: string
+enum RequestPlatform: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 

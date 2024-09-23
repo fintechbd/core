@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Traits;
 
-use Illuminate\Validation\Rules\Enum;
 use ValueError;
 
 trait EnumHasSerialization
@@ -14,7 +13,7 @@ trait EnumHasSerialization
      */
     public static function toJson(): string
     {
-        return json_encode(self::toArray());
+        return json_encode(self::cases());
     }
 
     /**
@@ -50,19 +49,11 @@ trait EnumHasSerialization
     /**
      * Return enum all entries as a key value pair list
      *
-     * @return array<string, mixed>
+     * @return array<int,array>
      */
     public static function toList(): array
     {
-        $cases = [];
-        foreach (self::cases() as $case) {
-            $cases[] = [
-                'value' => $case->value,
-                'name' => $case->name
-            ];
-        }
-
-        return $cases;
+        return array_map(fn($case) => $case->jsonSerialize(), self::cases());
     }
 
     /**
@@ -133,5 +124,21 @@ trait EnumHasSerialization
         }
 
         return false;
+    }
+
+    /**
+     *  Verify that is an enum case or case value exists
+     *
+     * @param $element
+     * @return bool
+     */
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'name' => $this->label(),
+            'value' => $this->value,
+            "color" => "dark",
+            "hex" => "#000"
+        ];
     }
 }
