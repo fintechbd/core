@@ -41,6 +41,10 @@ class HealthCheckupCommand extends Command
             Artisan::call('queue:restart --quiet');
         });
 
+        $this->task("Flush permission cache", function () {
+            Artisan::call('permission:cache-reset --quiet');
+        });
+
         $this->task("Verify scheduler log file", function () {
             if (!file_exists(storage_path('/logs/scheduler.log'))) {
                 @file_put_contents(storage_path('/logs/scheduler.log'), '');
