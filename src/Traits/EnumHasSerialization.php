@@ -122,13 +122,14 @@ trait EnumHasSerialization
         $properties['label'] = $attribute->label ?? $this->label();
         $properties['color'] = Color::Black->name;
         $properties['hex'] = Color::Black->value;
+        $properties['description'] = '';
         $properties['flutter'] = str_replace('#', '0xFF', Color::Black->value);
 
         if (isset($attributes[0])) {
             $attribute = $attributes[0]->newInstance();
             $properties['description'] = $attribute->description;
             $properties['color'] = $attribute->color->name;
-            $properties['hex'] = $attribute->color->name;
+            $properties['hex'] = $attribute->color->name.'FF';
             $properties['flutter'] = str_replace('#', '0xFF', $attribute->color->value);
         }
 
