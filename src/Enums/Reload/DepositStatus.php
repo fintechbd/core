@@ -2,6 +2,7 @@
 
 namespace Fintech\Core\Enums\Reload;
 
+use Fintech\Core\Attributes\Enumeration;
 use Fintech\Core\Enums\Color;
 use Fintech\Core\Traits\EnumHasSerialization;
 
@@ -12,10 +13,10 @@ enum DepositStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 
-    #[Enumeration(color: Color::Purple600)]
+    #[Enumeration(color: Color::Purple600, label: 'Previewing')]
     case Processing = 'processing';
 
-    #[Enumeration(color: Color::Sky600)]
+    #[Enumeration(color: Color::Sky400, description: 'The deposit request has been processed.')]
     case Accepted = 'accepted';
 
     #[Enumeration(color: Color::Red600)]

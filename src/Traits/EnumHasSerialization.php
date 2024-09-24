@@ -119,17 +119,18 @@ trait EnumHasSerialization
         $attributes = $reflection->getAttributes(\Fintech\Core\Attributes\Enumeration::class);
         $properties['value'] = $this->value;
         $properties['name'] = $this->name;
-        $properties['label'] = $attribute->label ?? $this->label();
+        $properties['label'] = $this->label();
         $properties['color'] = Color::Black->name;
         $properties['hex'] = Color::Black->value;
         $properties['description'] = '';
         $properties['flutter'] = str_replace('#', '0xFF', Color::Black->value);
 
-        if (isset($attributes[0])) {
+
+        if (!empty($attributes[0])) {
             $attribute = $attributes[0]->newInstance();
-            $properties['description'] = $attribute->description;
+            $properties['description'] = $attribute->description ?? '';
             $properties['color'] = $attribute->color->name;
-            $properties['hex'] = $attribute->color->name.'FF';
+            $properties['hex'] = $attribute->color->value.'FF';
             $properties['flutter'] = str_replace('#', '0xFF', $attribute->color->value);
         }
 
