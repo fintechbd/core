@@ -23,41 +23,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 if (Config::get('fintech.core.enabled')) {
-    Route::prefix(config('fintech.core.root_prefix', 'api/'))->middleware(['api'])->group(function () {
-        Route::prefix('core')->name('core.')->group(function () {
-            Route::get('session-token', EncryptedKeyController::class)->name('session-token');
-            Route::get('packages', PackageRegisteredController::class)->name('packages');
-        });
-
-        Route::prefix('core')->name('core.')
-            ->middleware(config('fintech.auth.middleware'))
-            ->group(function () {
-                Route::apiResource('settings', SettingController::class);
-                //             Route::post('settings/{setting}/restore', [SettingController::class, 'restore'])->name('settings.restore');
-
-                Route::apiResource('configurations', ConfigurationController::class)
-                    ->only(['show', 'update', 'destroy']);
-
-                Route::apiResource('jobs', JobController::class)
-                    ->only(['index', 'show', 'destroy']);
-
-                Route::apiResource('api-logs', ApiLogController::class)
-                    ->only(['index', 'show', 'destroy']);
-
-                Route::post('failed-jobs/prune', [FailedJobController::class, 'prune'])
-                    ->name('failed-jobs.prune');
-
-                Route::apiResource('failed-jobs', FailedJobController::class)
-                    ->only(['index', 'show', 'destroy']);
-
-                Route::post('failed-jobs/{failed_job}/retry', [FailedJobController::class, 'retry'])
-                    ->name('failed-jobs.retry');
-
-                Route::get('schedules/{schedule}/health/{status}', [ScheduleController::class, 'health'])->name('schedules.health');
-                Route::apiResource('schedules', ScheduleController::class);
-                Route::post('schedules/{schedule}/restore', [ScheduleController::class, 'restore'])->name('schedules.restore');
-
-                //DO NOT REMOVE THIS LINE//
-            });
+    Route::prefix('core')->name('core.')->group(function () {
+        Route::get('session-token', EncryptedKeyController::class)->name('session-token');
+        Route::get('packages', PackageRegisteredController::class)->name('packages');
     });
+    Route::prefix('core')->name('core.')
+        ->middleware(config('fintech.auth.middleware'))
+        ->group(function () {
+            Route::apiResource('settings', SettingController::class);
+            //             Route::post('settings/{setting}/restore', [SettingController::class, 'restore'])->name('settings.restore');
+
+            Route::apiResource('configurations', ConfigurationController::class)
+                ->only(['show', 'update', 'destroy']);
+
+            Route::apiResource('jobs', JobController::class)
+                ->only(['index', 'show', 'destroy']);
+
+            Route::apiResource('api-logs', ApiLogController::class)
+                ->only(['index', 'show', 'destroy']);
+
+            Route::post('failed-jobs/prune', [FailedJobController::class, 'prune'])
+                ->name('failed-jobs.prune');
+
+            Route::apiResource('failed-jobs', FailedJobController::class)
+                ->only(['index', 'show', 'destroy']);
+
+            Route::post('failed-jobs/{failed_job}/retry', [FailedJobController::class, 'retry'])
+                ->name('failed-jobs.retry');
+
+            Route::get('schedules/{schedule}/health/{status}', [ScheduleController::class, 'health'])->name('schedules.health');
+            Route::apiResource('schedules', ScheduleController::class);
+            Route::post('schedules/{schedule}/restore', [ScheduleController::class, 'restore'])->name('schedules.restore');
+
+            //DO NOT REMOVE THIS LINE//
+        });
 }

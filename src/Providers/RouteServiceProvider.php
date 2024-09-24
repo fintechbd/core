@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             Route::middleware('api')
+                ->prefix(config('fintech.core.root_prefix', 'api/'))
                 ->group(__DIR__ . '/../../routes/api.php');
         });
 
