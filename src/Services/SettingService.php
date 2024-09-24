@@ -52,7 +52,13 @@ class SettingService
      */
     public function setValue(string $package, string $key, $value = null, string $type = null, $user_id = null): void
     {
-        $entry = $this->list(['package' => $package, 'key' => $key, 'type' => $type, 'user_id' => $user_id])->first();
+        $filters['package'] = $package;
+        $filters['key'] = $key;
+        if ($user_id != null) {
+            $filters['user_id'] = $user_id;
+        }
+
+        $entry = $this->findWhere($filters);
 
         if (!$entry) {
             try {
@@ -80,8 +86,6 @@ class SettingService
         }
 
         $this->update($entry->getKey(), ['value' => (string)Utility::stringify($entry->type, $value)]);
-
-        cache()->forget('fintech.setting');
 
     }
 
