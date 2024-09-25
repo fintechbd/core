@@ -39,6 +39,10 @@ class ScheduleRepository extends EloquentRepository implements InterfacesSchedul
             }
         }
 
+        if (!empty($filters['command'])) {
+            $query->where('command', '=', $filters['command']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
