@@ -13,6 +13,9 @@ enum DepositStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 
+    #[Enumeration(color: Color::Orange500)]
+    case Pending = 'pending';
+
     #[Enumeration(color: Color::Purple500)]
     case Processing = 'processing';
 
@@ -24,7 +27,7 @@ enum DepositStatus: string implements \JsonSerializable
 
     #[Enumeration(color: Color::Slate500)]
     case Cancelled = 'cancelled';
-    #[Enumeration(color: Color::Yellow500, label: 'Verification')]
+    #[Enumeration(color: Color::Yellow500, label: 'Reviewing')]
     case AdminVerification = 'admin_verification';
 
 

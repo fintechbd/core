@@ -108,6 +108,7 @@ return [
     'reject_number_prefix' => 'R',
     'cancel_number_prefix' => 'C',
     'accept_number_prefix' => 'A',
+    'successful_number_prefix' => 'S',
 
     /*
     |--------------------------------------------------------------------------
