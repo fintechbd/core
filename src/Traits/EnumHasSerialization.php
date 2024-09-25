@@ -53,7 +53,7 @@ trait EnumHasSerialization
      */
     public static function toList(): array
     {
-        return array_map(fn ($case) => $case->jsonSerialize(), self::cases());
+        return array_map(fn($case) => $case->jsonSerialize(), self::cases());
     }
 
     /**
@@ -130,8 +130,11 @@ trait EnumHasSerialization
             $attribute = $attributes[0]->newInstance();
             $properties['description'] = $attribute->description ?? '';
             $properties['color'] = $attribute->color->name;
-            $properties['hex'] = $attribute->color->value.'FF';
+            $properties['hex'] = $attribute->color->value . 'FF';
             $properties['flutter'] = str_replace('#', '0xFF', $attribute->color->value);
+            if (strlen($attribute->label) > 0) {
+                $properties['label'] = $attribute->label;
+            }
         }
 
         return $properties;
