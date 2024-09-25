@@ -19,7 +19,7 @@ class Schedule extends BaseModel
 
     protected $attributes = [
         'enabled' => false,
-        'parameters' => '[]',
+        'parameters' => [],
         'interval' => '0 0 0 0 0',
         'timezone' => 'UTC',
         'schedule_data' => [
