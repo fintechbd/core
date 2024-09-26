@@ -20,8 +20,8 @@ enum OrderType: string implements \JsonSerializable
     case CurrencySwap = 'currency_swap';
     case RequestMoney = 'request_money';
     case WalletToPrepaidCard = 'wallet_to_prepaid_card';
-    const WalletToBank = 'wallet_to_bank';
-    const WalletToAtm = 'wallet_to_atm';
+    public const WalletToBank = 'wallet_to_bank';
+    public const WalletToAtm = 'wallet_to_atm';
 
     /**
      * @return mixed
