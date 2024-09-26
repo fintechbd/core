@@ -26,6 +26,7 @@ class_alias(determine_base_model(), VirtualModel::class);
  * @method array modelKeys()
  * @method array toArray()
  * @method self setVisible(array $fields = [])
+ * @method self setHidden(array $fields = [])
  * @method string toJson()
  * @method mixed getAttribute(string $key)
  * @method static \MongoDB\Laravel\Query\Builder|Builder query()
