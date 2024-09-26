@@ -95,6 +95,8 @@ class AppInstallCommand extends Command
             $this->call('sanction:install');
         }
 
-        //        Artisan::call('db:seed');
+        Artisan::call('core:health-checkup');
+
+        $this->components->info('Run database seed command to finalize the setup.');
     }
 }
