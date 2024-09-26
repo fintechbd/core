@@ -8,16 +8,17 @@ use Fintech\Core\Traits\EnumHasSerialization;
 enum RequestPlatform: string implements \JsonSerializable
 {
     use EnumHasSerialization;
-    #[Enumeration(color: 'primary', label: 'Website')]
+
+    #[Enumeration(color: Color::Sky500, label: 'Website')]
     case WebCustomer = 'web-customer';
-    #[Enumeration(color: 'primary', label: 'Desktop')]
+    #[Enumeration(color: Color::Stone500, label: 'Desktop')]
     case DesktopCustomer = 'desktop-customer';
-    #[Enumeration(color: 'primary', label: 'Android')]
+    #[Enumeration(color: Color::Amber500, label: 'Android')]
     case AndroidCustomer = 'android-customer';
-    #[Enumeration(color: 'primary', label: 'iOS')]
+    #[Enumeration(color: Color::Cyan500, label: 'iOS')]
     case IosCustomer = 'ios-customer';
-    #[Enumeration(color: 'warning', label: 'Agent')]
+    #[Enumeration(color: Color::Orange500, label: 'Agent')]
     case WebAgent = 'web-agent';
-    #[Enumeration(color: 'danger', label: 'Admin')]
+    #[Enumeration(color: Color::Yellow500, label: 'Admin')]
     case WebAdmin = 'web-admin';
 }
