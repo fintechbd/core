@@ -4,6 +4,7 @@ namespace Fintech\Core\Models;
 
 use Fintech\Auth\Models\User;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Enums\RequestDirection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiLog extends BaseModel
@@ -19,7 +20,7 @@ class ApiLog extends BaseModel
     protected $guarded = ['id'];
 
 
-    protected $casts = ['request' => 'array', 'response' => 'array', 'user_agent' => 'array'];
+    protected $casts = ['request' => 'array', 'response' => 'array', 'user_agent' => 'array', 'direction' => RequestDirection::class];
 
     /*
     |--------------------------------------------------------------------------
