@@ -21,6 +21,7 @@ class_alias(determine_base_model(), VirtualModel::class);
 /**
  * @method string|int getKey()
  * @method void fresh()
+ * @method void refresh()
  * @method string getKeyName()
  * @method string getTable()
  * @method array modelKeys()
