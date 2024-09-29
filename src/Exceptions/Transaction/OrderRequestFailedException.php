@@ -11,7 +11,7 @@ class OrderRequestFailedException extends Exception
 {
     public function __construct(string $service, int $code = 0, Exception $previous = null)
     {
-        $service = ucwords(strtolower(str_replace(['_'], ' ',$service)));
+        $service = ucwords(strtolower(str_replace(['_'], ' ', $service)));
 
         $message = __('core::messages.transaction.request_failed', ['service' => $service]);
 
