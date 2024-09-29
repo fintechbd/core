@@ -5,7 +5,7 @@ namespace Fintech\Core\Exceptions\Transaction;
 use Exception;
 
 /**
- * Class RequestOrderExistsException
+ * Class OrderRequestFailedException
  */
 class OrderRequestFailedException extends Exception
 {
