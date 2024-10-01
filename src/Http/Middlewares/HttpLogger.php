@@ -8,7 +8,6 @@ use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Utility;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Str;
 
 class HttpLogger
 {
