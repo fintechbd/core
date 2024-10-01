@@ -33,6 +33,7 @@ return [
     | this setting enable the api will be available or not
     */
     'http_logger_enabled' => env('PACKAGE_CORE_REQUEST_LOG', false),
+    'secret_fields' => ['pin', 'password'],
 
     /*
     |--------------------------------------------------------------------------
