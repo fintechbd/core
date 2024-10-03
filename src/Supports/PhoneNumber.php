@@ -248,7 +248,7 @@ class PhoneNumber
     {
         $phoneNumber = "+" . str_replace(["+", "-"], "", $phoneNumber);
 
-        $matches = [['code' => '--', 'name' => 'UUnknown Phone Number']];
+        $matches = [['code' => '--', 'name' => 'Unknown Phone Number']];
 
         foreach (self::CODES as $code => $countries) {
             if (preg_match("/^\+{$code}\d+$/iu", $phoneNumber)) {
