@@ -213,8 +213,9 @@ class AssignVendorVerdict implements ArrayAccess, Arrayable, Jsonable
     public function toArray(): array
     {
         $this->attributes['original'] = json_decode(json_encode($this->attributes['original']), true);
-
-        return $this->attributes;
+        $attributes = $this->attributes;
+        unset($attributes['timeline']);
+        return $attributes;
     }
 
     /**
@@ -225,7 +226,9 @@ class AssignVendorVerdict implements ArrayAccess, Arrayable, Jsonable
      */
     public function toJson($options = 0): string
     {
-        return json_encode($this->attributes, $options);
+        $attributes = $this->attributes;
+        unset($attributes['timeline']);
+        return json_encode($attributes, $options);
     }
 
     public function orderTimeline(string $message, string $flag = 'info'): static
