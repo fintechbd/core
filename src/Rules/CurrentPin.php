@@ -9,7 +9,6 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 class CurrentPin implements ValidationRule
 {
-
     /**
      * Run the validation rule.
      *
