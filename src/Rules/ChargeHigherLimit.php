@@ -36,8 +36,6 @@ class ChargeHigherLimit implements DataAwareRule, ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        logger("log", [$this->data]);
-
         if (!Business::chargeBreakDown()->available($this->data['service_stat_id'], $this->data['lower_limit'], $this->data['higher_limit'])) {
             $fail("The higher limit isn't allowed.");
         }
