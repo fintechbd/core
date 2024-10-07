@@ -4,9 +4,9 @@ namespace Fintech\Core\Abstracts;
 
 use ArrayAccess;
 use Fintech\Core\Supports\Utility;
-use Fintech\Core\Traits\InvalidArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use InvalidArgumentException;
 
 /**
  * @template TKey of array-key
@@ -196,6 +196,7 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable
         unset($attributes['timeline']);
         return json_encode($attributes, $options);
     }
+
     public static function make(array $attributes = []): static
     {
         return new static($attributes);
