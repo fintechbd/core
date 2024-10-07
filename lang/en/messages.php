@@ -48,5 +48,5 @@ return [
     ],
     'assign_vendor' => [
         'not_found' => ':slug vendor is not available on the configurations.',
-    ]
+    ],
 ];
