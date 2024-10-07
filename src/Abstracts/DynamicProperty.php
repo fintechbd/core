@@ -21,7 +21,7 @@ use InvalidArgumentException;
  */
 abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable
 {
-    private array $attributes = [];
+    protected array $attributes = [];
 
     protected array $fillable = [];
 
