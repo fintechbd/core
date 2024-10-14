@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ApiLogService apiLog(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|FailedJobService failedJob(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ScheduleService schedule(array $filters = null)
+ * @method static \Fintech\Core\Services\TranslationService translation()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

@@ -7,6 +7,7 @@ use Fintech\Core\Services\FailedJobService;
 use Fintech\Core\Services\JobService;
 use Fintech\Core\Services\ScheduleService;
 use Fintech\Core\Services\SettingService;
+use Fintech\Core\Services\TranslationService;
 
 class Core
 {
@@ -34,8 +35,13 @@ class Core
     {
         return \singleton(ScheduleService::class, $filters);
     }
+    public function translation($filters = null)
+    {
+        return \singleton(TranslationService::class, $filters);
+    }
 
     //** Crud Service Method Point Do not Remove **//
+
 
     /**
      * verify if a available addon or package is installed

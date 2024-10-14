@@ -170,6 +170,16 @@ return [
     */
     'schedule_model' => Schedule::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Translation Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'translation_model' => \Fintech\Core\Models\Translation::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -189,6 +199,8 @@ return [
         \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
 
         \Fintech\Core\Interfaces\ScheduleRepository::class => ScheduleRepository::class,
+
+        \Fintech\Core\Interfaces\TranslationRepository::class => \Fintech\Core\Repositories\Eloquent\TranslationRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
