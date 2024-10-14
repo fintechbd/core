@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Core\Interfaces\TranslationRepository as InterfacesTranslationRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class TranslationRepository
@@ -17,7 +15,7 @@ class TranslationRepository extends MongodbRepository implements InterfacesTrans
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.translation_model', \Fintech\Core\Models\Translation::class));
+        parent::__construct(config('fintech.core.translation_model', \Fintech\Core\Models\Translation::class));
     }
 
     /**

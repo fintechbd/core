@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\TranslationRepository;
 
 /**
@@ -18,7 +17,9 @@ class TranslationService
      * TranslationService constructor.
      * @param TranslationRepository $translationRepository
      */
-    public function __construct(private readonly TranslationRepository $translationRepository) { }
+    public function __construct(private readonly TranslationRepository $translationRepository)
+    {
+    }
 
     /**
      * @param array $filters

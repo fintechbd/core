@@ -170,7 +170,7 @@ return [
     */
     'schedule_model' => Schedule::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | Translation Model

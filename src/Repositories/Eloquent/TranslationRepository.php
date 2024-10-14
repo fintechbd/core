@@ -8,7 +8,6 @@ use Fintech\Core\Interfaces\TranslationRepository as InterfacesTranslationReposi
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
-
 /**
  * Class TranslationRepository
  * @package Fintech\Core\Repositories\Eloquent

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Translation extends BaseModel
 {
-   use AuditableTrait;
-   use SoftDeletes;
+    use AuditableTrait;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

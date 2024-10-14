@@ -56,9 +56,9 @@ if (Config::get('fintech.core.enabled')) {
             Route::post('schedules/{schedule}/restore', [ScheduleController::class, 'restore'])->name('schedules.restore');
 
             Route::apiResource('translations', \Fintech\RestApi\Http\Controllers\Core\TranslationController::class);
-    Route::post('translations/{translation}/restore', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'restore'])->name('translations.restore');
-    Route::post('translations/{translation}/download', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'download'])->name('translations.download');
+            Route::post('translations/{translation}/restore', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'restore'])->name('translations.restore');
+            Route::post('translations/{translation}/download', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'download'])->name('translations.download');
 
-    //DO NOT REMOVE THIS LINE//
+            //DO NOT REMOVE THIS LINE//
         });
 }
