@@ -180,7 +180,7 @@ return [
     */
     'translation_model' => \Fintech\Core\Models\Translation::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | JobBatch Model
@@ -190,7 +190,7 @@ return [
     */
     'job_batch_model' => \Fintech\Core\Models\JobBatch::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | ClientError Model

@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\JobBatchRepository as InterfacesJobBatchRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class JobBatchRepository
@@ -17,7 +15,7 @@ class JobBatchRepository extends EloquentRepository implements InterfacesJobBatc
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.job_batch_model', \Fintech\Core\Models\JobBatch::class));
+        parent::__construct(config('fintech.core.job_batch_model', \Fintech\Core\Models\JobBatch::class));
     }
 
     /**

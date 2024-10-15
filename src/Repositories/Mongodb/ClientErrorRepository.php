@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Core\Interfaces\ClientErrorRepository as InterfacesClientErrorRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class ClientErrorRepository
@@ -17,7 +15,7 @@ class ClientErrorRepository extends MongodbRepository implements InterfacesClien
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.client_error_model', \Fintech\Core\Models\ClientError::class));
+        parent::__construct(config('fintech.core.client_error_model', \Fintech\Core\Models\ClientError::class));
     }
 
     /**
