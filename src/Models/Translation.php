@@ -10,7 +10,7 @@ class Translation extends BaseModel
 {
     use AuditableTrait;
     use SoftDeletes;
-    use \Fintech\Core\Traits\OnSupportDatabase;
+    protected $connection = 'support';
 
     /*
     |--------------------------------------------------------------------------

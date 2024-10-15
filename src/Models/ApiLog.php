@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiLog extends BaseModel
 {
-    use \Fintech\Core\Traits\OnSupportDatabase;
+    protected $connection = 'support';
 
     /*
     |--------------------------------------------------------------------------
