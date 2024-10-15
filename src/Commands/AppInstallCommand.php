@@ -6,6 +6,7 @@ use Fintech\Core\Facades\Core;
 use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 
 class AppInstallCommand extends Command
 {
@@ -33,6 +34,19 @@ class AppInstallCommand extends Command
      */
     public function handle()
     {
+        if (Config::get('database.connections.support') == null) {
+            $this->components->error('Missing `support` connection in database configuration.');
+            $this->comment("'support' => [
+    'driver' => 'sqlite',
+    'url' => env('DATABASE_URL'),
+    'database' => storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'),
+    'prefix' => '',
+    'foreign_key_constraints' => false,
+],");
+            $this->components->info("Add given lines inside of  `config/database.php` files `connections` array than try again.");
+            return self::FAILURE;
+        }
+
         $this->task("Prepare database", function () {
             Artisan::call('db:wipe --drop-views --force --quiet');
         });
