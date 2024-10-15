@@ -2,14 +2,14 @@
 
 namespace Fintech\Core\Models;
 
-use Fintech\Auth\Models\User;
+use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
-use Fintech\Core\Enums\RequestDirection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ApiLog extends BaseModel
+class ClientError extends BaseModel
 {
-    use \Fintech\Core\Traits\OnSupportDatabase;
+   use AuditableTrait;
+   use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,11 @@ class ApiLog extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $casts = ['request' => 'array', 'response' => 'array', 'user_agent' => 'array', 'direction' => RequestDirection::class];
+
+
+    protected $casts = ['client_error_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+
+    protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
     /*
     |--------------------------------------------------------------------------
@@ -34,10 +38,6 @@ class ApiLog extends BaseModel
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(config('fintech.auth.user_model', User::class));
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -58,10 +58,20 @@ class ApiLog extends BaseModel
     {
         $primaryKey = $this->getKey();
 
-        return [
-            'show' => action_link(route('core.api-logs.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
-            'destroy' => action_link(route('core.api-logs.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
+        $links = [
+            'show' => action_link(route('core.client-errors.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('core.client-errors.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('core.client-errors.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('core.client-errors.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
+
+        if ($this->getAttribute('deleted_at') == null) {
+            unset($links['restore']);
+        } else {
+            unset($links['destroy']);
+        }
+
+        return $links;
     }
 
     /*

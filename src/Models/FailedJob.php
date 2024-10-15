@@ -6,6 +6,8 @@ use Fintech\Core\Abstracts\BaseModel;
 
 class FailedJob extends BaseModel
 {
+    use \Fintech\Core\Traits\OnSupportDatabase;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

@@ -37,6 +37,10 @@ class AppInstallCommand extends Command
             Artisan::call('db:wipe --drop-views --force --quiet');
         });
 
+        $this->task("Creating support database", function () {
+            @file_put_contents(storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'), '');
+        });
+
         $this->task("Running migrations", function () {
             Artisan::call('migrate:fresh --force --quiet');
         });

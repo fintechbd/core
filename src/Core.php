@@ -40,7 +40,25 @@ class Core
         return \singleton(TranslationService::class, $filters);
     }
 
+    /**
+     * @return \Fintech\Core\Services\JobBatchService
+     */
+    public function jobBatch()
+    {
+        return app(\Fintech\Core\Services\JobBatchService::class);
+    }
+
+    /**
+     * @return \Fintech\Core\Services\ClientErrorService
+     */
+    public function clientError()
+    {
+        return app(\Fintech\Core\Services\ClientErrorService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
+
 
 
     /**

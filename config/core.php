@@ -180,6 +180,26 @@ return [
     */
     'translation_model' => \Fintech\Core\Models\Translation::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | JobBatch Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'job_batch_model' => \Fintech\Core\Models\JobBatch::class,
+
+    
+    /*
+    |--------------------------------------------------------------------------
+    | ClientError Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'client_error_model' => \Fintech\Core\Models\ClientError::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -201,6 +221,10 @@ return [
         \Fintech\Core\Interfaces\ScheduleRepository::class => ScheduleRepository::class,
 
         \Fintech\Core\Interfaces\TranslationRepository::class => \Fintech\Core\Repositories\Eloquent\TranslationRepository::class,
+
+        \Fintech\Core\Interfaces\JobBatchRepository::class => \Fintech\Core\Repositories\Eloquent\JobBatchRepository::class,
+
+        \Fintech\Core\Interfaces\ClientErrorRepository::class => \Fintech\Core\Repositories\Eloquent\ClientErrorRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

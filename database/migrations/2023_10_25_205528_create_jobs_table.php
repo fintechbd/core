@@ -10,7 +10,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::connection('support')->create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('order_id')->nullable();
             $table->string('queue')->index();
@@ -27,6 +27,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('jobs');
+        Schema::connection('support')->dropIfExists('jobs');
     }
 };

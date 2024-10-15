@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|FailedJobService failedJob(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ScheduleService schedule(array $filters = null)
  * @method static \Fintech\Core\Services\TranslationService translation()
+ * @method static \Fintech\Core\Services\JobBatchService jobBatch()
+ * @method static \Fintech\Core\Services\ClientErrorService clientError()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

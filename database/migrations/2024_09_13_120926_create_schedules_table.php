@@ -10,7 +10,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::connection('support')->create('schedules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
@@ -35,6 +35,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedules');
+        Schema::connection('support')->dropIfExists('schedules');
     }
 };
