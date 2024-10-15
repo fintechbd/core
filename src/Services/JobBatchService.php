@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\JobBatchRepository;
 
 /**
@@ -16,7 +15,9 @@ class JobBatchService
      * JobBatchService constructor.
      * @param JobBatchRepository $jobBatchRepository
      */
-    public function __construct(private readonly JobBatchRepository $jobBatchRepository) { }
+    public function __construct(private readonly JobBatchRepository $jobBatchRepository)
+    {
+    }
 
     /**
      * @param array $filters

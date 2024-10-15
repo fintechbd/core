@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\ClientErrorRepository;
 
 /**
@@ -16,7 +15,9 @@ class ClientErrorService
      * ClientErrorService constructor.
      * @param ClientErrorRepository $clientErrorRepository
      */
-    public function __construct(private readonly ClientErrorRepository $clientErrorRepository) { }
+    public function __construct(private readonly ClientErrorRepository $clientErrorRepository)
+    {
+    }
 
     /**
      * @param array $filters

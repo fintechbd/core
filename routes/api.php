@@ -60,11 +60,11 @@ if (Config::get('fintech.core.enabled')) {
             Route::post('translations/{translation}/download', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'download'])->name('translations.download');
 
             Route::apiResource('job-batches', \Fintech\RestApi\Http\Controllers\Core\JobBatchController::class);
-    Route::post('job-batches/{job_batch}/restore', [\Fintech\RestApi\Http\Controllers\Core\JobBatchController::class, 'restore'])->name('job-batches.restore');
+            Route::post('job-batches/{job_batch}/restore', [\Fintech\RestApi\Http\Controllers\Core\JobBatchController::class, 'restore'])->name('job-batches.restore');
 
-    Route::apiResource('client-errors', \Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class);
-    Route::post('client-errors/{client_error}/restore', [\Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class, 'restore'])->name('client-errors.restore');
+            Route::apiResource('client-errors', \Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class);
+            Route::post('client-errors/{client_error}/restore', [\Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class, 'restore'])->name('client-errors.restore');
 
-    //DO NOT REMOVE THIS LINE//
+            //DO NOT REMOVE THIS LINE//
         });
 }

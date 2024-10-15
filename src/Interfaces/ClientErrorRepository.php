@@ -6,7 +6,6 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Fintech\Core\Abstracts\BaseModel;
 
-
 /**
  * Interface ClientErrorRepository
  * @package Fintech\Core\Interfaces
