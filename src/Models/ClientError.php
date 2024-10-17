@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ClientError extends BaseModel
 {
-    use AuditableTrait;
     use SoftDeletes;
 
     /*
@@ -21,7 +20,7 @@ class ClientError extends BaseModel
 
     protected $guarded = ['id'];
 
-
+    protected $connection = 'support';
 
     protected $casts = ['client_error_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

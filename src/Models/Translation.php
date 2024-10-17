@@ -4,12 +4,16 @@ namespace Fintech\Core\Models;
 
 use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\BlameableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Translation extends BaseModel
+class Translation extends BaseModel implements Auditable
 {
-    use AuditableTrait;
+    use \OwenIt\Auditing\Auditable;
+    use BlameableTrait;
     use SoftDeletes;
+
     protected $connection = 'support';
 
     /*

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JobBatch extends BaseModel
 {
-    use AuditableTrait;
     use SoftDeletes;
 
     /*
@@ -21,7 +20,7 @@ class JobBatch extends BaseModel
 
     protected $guarded = ['id'];
 
-
+    protected $connection = 'support';
 
     protected $casts = ['job_batch_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
