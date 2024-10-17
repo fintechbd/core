@@ -62,7 +62,7 @@ return [
     */
     'blameable_enabled' => env('PACKAGE_CORE_BLAMEABLE_ENABLED', false),
     'blameable_model' => Fintech\Auth\Models\User::class,
-    'blameable_guard' => 'web',
+    'blameable_guard' => 'sanctum',
     /*
     |--------------------------------------------------------------------------
     | Pagination Function Type

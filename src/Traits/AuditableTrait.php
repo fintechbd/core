@@ -6,7 +6,7 @@ if (config('audit.enabled', false)) {
     trait AuditableTrait
     {
         use \OwenIt\Auditing\Auditable;
-        use BlameableTrait;
+        use \Fintech\Core\Traits\BlameableTrait;
     }
 } else {
     trait AuditableTrait
