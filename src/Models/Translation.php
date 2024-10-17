@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Traits\BlameableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
