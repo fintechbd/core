@@ -24,8 +24,7 @@ class MacroServiceProvider extends ServiceProvider
         /**
          * http client request platform
          *
-         * @param RequestPlatform|bool $payload boolean if matches with given platform,
-         * @return \Illuminate\Http\Client\Response
+         * @return RequestPlatform|null
          */
         Request::macro('platform', function () {
 
@@ -33,6 +32,15 @@ class MacroServiceProvider extends ServiceProvider
 
             return RequestPlatform::tryFrom($platform);
 
+        });
+
+        /**
+         * check the request is from Agent panel
+         *
+         * @return bool
+         */
+        Request::macro('isAgent', function () {
+            return in_array(request()->platform()->value, [RequestPlatform::WebAgent->value], true);
         });
 
         /**
