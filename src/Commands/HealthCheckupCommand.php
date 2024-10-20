@@ -37,10 +37,6 @@ class HealthCheckupCommand extends Command
             Artisan::call('vendor:publish --tag=fm-assets --quiet --force');
         });
 
-        $this->task("Broadcast queue restart signal", function () {
-            Artisan::call('queue:restart --quiet');
-        });
-
         $this->task("Flush permission cache", function () {
             Artisan::call('permission:cache-reset --quiet');
         });
@@ -60,6 +56,10 @@ class HealthCheckupCommand extends Command
         $this->checkAvailablePackages();
 
         $this->setPermissions();
+
+        $this->task("Broadcast queue restart signal", function () {
+            Artisan::call('queue:restart --quiet');
+        });
 
         return self::SUCCESS;
     }
