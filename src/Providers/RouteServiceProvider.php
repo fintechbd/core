@@ -5,6 +5,7 @@ namespace Fintech\Core\Providers;
 use Fintech\Core\Http\Middlewares\EncryptedRequestResponse;
 use Fintech\Core\Http\Middlewares\HttpLogger;
 use Fintech\Core\Http\Middlewares\ImposterCheck;
+use Fintech\Core\Http\Middlewares\Localization;
 use Fintech\Core\Http\Middlewares\PlatformCheck;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -34,7 +35,9 @@ class RouteServiceProvider extends ServiceProvider
          * @version 11.0.x
          */
         if ((int)$this->app->version() >= 11) {
-            $this->pushMiddlewareToGroup('api', HttpLogger::class)
+            $this
+                ->pushMiddlewareToGroup('api', Localization::class)
+                ->pushMiddlewareToGroup('api', HttpLogger::class)
                 ->pushMiddlewareToGroup('api', EncryptedRequestResponse::class)
                 ->pushMiddlewareToGroup('api', PlatformCheck::class);
         }
