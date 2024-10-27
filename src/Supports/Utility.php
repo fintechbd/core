@@ -2,8 +2,6 @@
 
 namespace Fintech\Core\Supports;
 
-use DOMDocument;
-use DOMNode;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -53,26 +51,26 @@ class Utility
      * Parse and convert a valid xml string into array
      *
      * @param string $content
+     * @param bool $preserveNS
      * @return array
      */
-    public static function parseXml(string $content): array
+    public static function parseXml(string $content, bool $preserveNS = false): array
     {
         self::$xmlArray = [];
 
         try {
-            $xmlObject = new DOMDocument();
-
+            $xmlObject = new \DOMDocument();
+            $xmlObject->preserveWhiteSpace = false;
+            $xmlObject->formatOutput = true;
             $xmlObject->loadXML($content);
-            /**
-             * @var DOMNode|null $DOMNode
-             */
-            $DOMNode = $xmlObject->firstChild;
 
-            self::convertToArray($DOMNode, $DOMNode->tagName, self::$xmlArray, $DOMNode->prefix);
+            $node = $xmlObject->firstElementChild;
+
+            self::domToArray($node, $node->tagName, self::$xmlArray, $node->prefix, $preserveNS);
 
         } catch (Exception $exception) {
 
-            Log::info("XML Parse Exception:" . json_encode($exception->getMessage()));
+            Log::info("XML Parse Exception: {$exception->getMessage()}");
 
         } finally {
 
@@ -83,23 +81,27 @@ class Utility
     /**
      * Iterator for the parseXML function
      *
-     * @param $DOMNode
+     * @param \DOMNode|\DOMElement|null $node
      * @param $tagName
      * @param $constructArray
      * @param string $namespacePrefix
+     * @param bool $preserveNS
      * @return void
      */
-    private static function convertToArray($DOMNode, $tagName, &$constructArray, string $namespacePrefix = ''): void
+    private static function domToArray($node, $tagName, &$constructArray, string $namespacePrefix = '', bool $preserveNS = false): void
     {
-        $tagName = str_replace("{$namespacePrefix}:", '', $tagName);
-        if ($DOMNode->childNodes->length > 1) {
-            foreach ($DOMNode->childNodes as $childNode) {
+        $tagName = ($preserveNS) ? $tagName : str_replace("{$namespacePrefix}:", '', $tagName);
+
+        if ($node->childNodes->length > 1) {
+            foreach ($node->childNodes as $childNode) {
                 if (isset($childNode->tagName) && $childNode->tagName != 'xs:schema') {
-                    self::convertToArray($childNode, $childNode->tagName, $constructArray[$tagName], $childNode->prefix);
+                    self::domToArray($childNode, $childNode->tagName, $constructArray[$tagName], $childNode->prefix, $preserveNS);
                 }
             }
         } else {
-            $constructArray[$tagName] = self::typeCast($DOMNode->nodeValue, gettype($DOMNode->nodeValue));
+            dump([$node->nodeType, $node]);
+
+            $constructArray[$tagName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
         }
     }
 
