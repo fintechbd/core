@@ -56,9 +56,10 @@ class Utility
      */
     public static function parseXml(string $content, bool $preserveNS = false): array
     {
-        self::$xmlArray = [];
+        $xmlArray = [];
 
         try {
+
             $xmlObject = new \DOMDocument();
             $xmlObject->preserveWhiteSpace = false;
             $xmlObject->formatOutput = true;
@@ -66,7 +67,7 @@ class Utility
 
             $node = $xmlObject->firstElementChild;
 
-            self::domToArray($node, $node->tagName, self::$xmlArray, $node->prefix, $preserveNS);
+            self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
 
         } catch (Exception $exception) {
 
@@ -74,7 +75,7 @@ class Utility
 
         } finally {
 
-            return self::$xmlArray;
+            return $xmlArray;
         }
     }
 
@@ -92,15 +93,20 @@ class Utility
     {
         $tagName = ($preserveNS) ? $tagName : str_replace("{$namespacePrefix}:", '', $tagName);
 
-        if ($node->childNodes->length > 1) {
-            foreach ($node->childNodes as $childNode) {
-                if (isset($childNode->tagName) && $childNode->tagName != 'xs:schema') {
-                    self::domToArray($childNode, $childNode->tagName, $constructArray[$tagName], $childNode->prefix, $preserveNS);
+        if ($node->hasChildNodes() >= 1) {
+            foreach ($node->childNodes as $child) {
+                if (isset($child->tagName) && $child->tagName != 'xs:schema') {
+                    self::domToArray($child, $child->tagName, $constructArray[$tagName], $child->prefix, $preserveNS);
                 }
             }
-        } else {
-            dump([$node->nodeType, $node]);
-
+        }/* elseif ($node->childNodes->count() == 1) {
+//            if ($node->nodeType = XML_ELEMENT_NODE) {
+//                self::domToArray($node, $node->tagName, $constructArray[$tagName], $node->prefix, $preserveNS);
+//            }
+//            else {
+//                $constructArray[$tagName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
+//            }
+        }*/ else {
             $constructArray[$tagName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
         }
     }
