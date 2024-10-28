@@ -46,6 +46,7 @@ class_alias(determine_base_model(), VirtualModel::class);
  * @see \Illuminate\Database\Eloquent\Concerns\HasRelationships
  * @const string|null CREATED_AT
  * @const string|null UPDATED_AT
+ * @property string|null $email
  * @extends Model
  */
 class BaseModel extends VirtualModel
