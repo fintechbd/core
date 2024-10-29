@@ -27,6 +27,7 @@ enum DepositStatus: string implements \JsonSerializable
 
     #[Enumeration(color: Color::Slate500)]
     case Cancelled = 'cancelled';
+
     #[Enumeration(color: Color::Yellow500, label: 'Reviewing')]
     case AdminVerification = 'admin_verification';
 
