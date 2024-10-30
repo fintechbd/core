@@ -3,7 +3,6 @@
 namespace Fintech\Core\Supports;
 
 use Exception;
-use Illuminate\Support\Facades\Log;
 
 class Utility
 {
@@ -75,10 +74,10 @@ class Utility
 
             throw $exception;
         }
-//        } finally {
-//
-//            return $xmlArray;
-//        }
+        //        } finally {
+        //
+        //            return $xmlArray;
+        //        }
         return $xmlArray;
     }
 
@@ -108,7 +107,7 @@ class Utility
             } else {
                 $constructArray[$nodeName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
             }
-        } else if ($node->nodeType == XML_TEXT_NODE) {
+        } elseif ($node->nodeType == XML_TEXT_NODE) {
             $constructArray[$nodeName] = self::typeCast($node->textContent, gettype($node->textContent));
         }
     }
@@ -120,8 +119,7 @@ class Utility
      * @param string $type
      * @return mixed|null
      */
-    public
-    static function typeCast(mixed $value, string $type = 'string'): mixed
+    public static function typeCast(mixed $value, string $type = 'string'): mixed
     {
         if ($value == null) {
             return null;
@@ -157,8 +155,7 @@ class Utility
      * @param mixed $content
      * @return bool
      */
-    public
-    static function isJson(mixed $content = null): bool
+    public static function isJson(mixed $content = null): bool
     {
         if (is_string($content)) {
 
