@@ -53,6 +53,14 @@ class ApiLogRepository extends EloquentRepository implements InterfacesApiLogRep
             $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
         }
 
+        if (!empty($filters['method'])) {
+            $query->where('method', $filters['method']);
+        }
+
+        if (!empty($filters['direction'])) {
+            $query->where('direction', '=', $filters['direction']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
