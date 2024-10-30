@@ -53,6 +53,7 @@ class Utility
      * @param string $content
      * @param bool $preserveNS
      * @return array
+     * @throws Exception
      */
     public static function parseXml(string $content, bool $preserveNS = false): array
     {
@@ -65,49 +66,50 @@ class Utility
             $xmlObject->formatOutput = true;
             $xmlObject->loadXML($content);
 
-            $node = $xmlObject->firstElementChild;
+            $node = $xmlObject->firstChild;
 
             self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
 
+
         } catch (Exception $exception) {
 
-            Log::info("XML Parse Exception: {$exception->getMessage()}");
-
-        } finally {
-
-            return $xmlArray;
+            throw $exception;
         }
+//        } finally {
+//
+//            return $xmlArray;
+//        }
+        return $xmlArray;
     }
 
     /**
      * Iterator for the parseXML function
      *
      * @param \DOMNode|\DOMElement|null $node
-     * @param $tagName
+     * @param $nodeName
      * @param $constructArray
      * @param string $namespacePrefix
      * @param bool $preserveNS
      * @return void
      */
-    private static function domToArray($node, $tagName, &$constructArray, string $namespacePrefix = '', bool $preserveNS = false): void
+    private static function domToArray($node, $nodeName, &$constructArray, string $namespacePrefix = '', bool $preserveNS = false): void
     {
-        $tagName = ($preserveNS) ? $tagName : str_replace("{$namespacePrefix}:", '', $tagName);
+        $nodeName = ($preserveNS) ? $nodeName : str_replace("{$namespacePrefix}:", '', $nodeName);
 
-        if ($node->hasChildNodes() >= 1) {
-            foreach ($node->childNodes as $child) {
-                if (isset($child->tagName) && $child->tagName != 'xs:schema') {
-                    self::domToArray($child, $child->tagName, $constructArray[$tagName], $child->prefix, $preserveNS);
+        if ($node->nodeType == XML_ELEMENT_NODE) {
+
+            if ($node->hasChildNodes()) {
+                foreach ($node->childNodes as $child) {
+                    if (isset($child->nodeName) && $child->nodeName == 'xs:schema') {
+                        continue;
+                    }
+                    self::domToArray($child, $child->nodeName, $constructArray[$nodeName], $child->prefix, $preserveNS);
                 }
+            } else {
+                $constructArray[$nodeName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
             }
-        }/* elseif ($node->childNodes->count() == 1) {
-//            if ($node->nodeType = XML_ELEMENT_NODE) {
-//                self::domToArray($node, $node->tagName, $constructArray[$tagName], $node->prefix, $preserveNS);
-//            }
-//            else {
-//                $constructArray[$tagName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
-//            }
-        }*/ else {
-            $constructArray[$tagName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
+        } else if ($node->nodeType == XML_TEXT_NODE) {
+            $constructArray[$nodeName] = self::typeCast($node->textContent, gettype($node->textContent));
         }
     }
 
@@ -118,7 +120,8 @@ class Utility
      * @param string $type
      * @return mixed|null
      */
-    public static function typeCast(mixed $value, string $type = 'string'): mixed
+    public
+    static function typeCast(mixed $value, string $type = 'string'): mixed
     {
         if ($value == null) {
             return null;
@@ -154,7 +157,8 @@ class Utility
      * @param mixed $content
      * @return bool
      */
-    public static function isJson(mixed $content = null): bool
+    public
+    static function isJson(mixed $content = null): bool
     {
         if (is_string($content)) {
 
