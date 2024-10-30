@@ -47,6 +47,7 @@ class_alias(determine_base_model(), VirtualModel::class);
  * @const string|null CREATED_AT
  * @const string|null UPDATED_AT
  * @property string|null $email
+ * @property string|int|null $id
  * @extends Model
  */
 class BaseModel extends VirtualModel
