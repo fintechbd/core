@@ -185,8 +185,13 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
     public function toArray(): array
     {
         $this->attributes['original'] = json_decode(json_encode($this->attributes['original']), true);
+
         $attributes = $this->attributes;
+
         unset($attributes['timeline']);
+
+        ksort($attributes);
+
         return $attributes;
     }
 
@@ -198,8 +203,8 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
      */
     public function toJson($options = 0): string
     {
-        $attributes = $this->attributes;
-        unset($attributes['timeline']);
+        $attributes = $this->toArray();
+
         return json_encode($attributes, $options);
     }
 
