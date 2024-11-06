@@ -138,7 +138,7 @@ class Utility
             case 'boolean':
             case 'bool' :
                 if (is_string($value)) {
-                    return $value == 'true';
+                    return in_array($value, ['true', 'TRUE', '1', 'Y']);
                 }
 
                 return (bool)$value;
