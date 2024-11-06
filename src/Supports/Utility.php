@@ -58,7 +58,7 @@ class Utility
     {
         $xmlArray = [];
 
-//        try {
+        //        try {
 
         $xmlObject = new \DOMDocument();
         $xmlObject->preserveWhiteSpace = false;
@@ -71,15 +71,15 @@ class Utility
 
         return $xmlArray;
 
-//        } catch (Exception $exception) {
-//
-//            throw $exception;
-//        }
+        //        } catch (Exception $exception) {
+        //
+        //            throw $exception;
+        //        }
         //        } finally {
         //
         //            return $xmlArray;
         //        }
-//        return $xmlArray;
+        //        return $xmlArray;
     }
 
     /**
