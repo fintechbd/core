@@ -24,7 +24,7 @@ class AssignVendorVerdict extends DynamicProperty
     protected array $fillable = ['status', 'message', 'ref_number', 'original', 'amount', 'charge', 'discount', 'commission', 'timeline'];
 
     protected array $casts = [
-        'status' => 'bool',
+        'status' => 'boolean',
         'message' => 'string',
         'ref_number' => 'string',
         'amount' => 'float',

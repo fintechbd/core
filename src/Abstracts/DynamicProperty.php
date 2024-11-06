@@ -7,6 +7,7 @@ use Fintech\Core\Supports\Utility;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * @template TKey of array-key
@@ -19,7 +20,7 @@ use InvalidArgumentException;
  * @method self message(string $message = '')
  * @method self original(mixed $response)
  */
-abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable
+abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, JsonSerializable
 {
     protected array $attributes = [];
 
@@ -98,9 +99,14 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable
 
     public function __call(string $name, array $arguments): self
     {
-        if ($this->offsetExists($name)) {
-            $this->offsetSet($name, ($arguments[0] ?? $this->defaults[$name] ?? null));
+        $value = null;
 
+        if (!empty($arguments)) {
+            $value = array_shift($arguments);
+        }
+
+        if ($this->offsetExists($name)) {
+            $this->offsetSet($name,$value);
             return $this;
         }
 
@@ -195,6 +201,11 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable
         $attributes = $this->attributes;
         unset($attributes['timeline']);
         return json_encode($attributes, $options);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->toArray();
     }
 
     public static function make(array $attributes = []): static

@@ -58,27 +58,28 @@ class Utility
     {
         $xmlArray = [];
 
-        try {
+//        try {
 
-            $xmlObject = new \DOMDocument();
-            $xmlObject->preserveWhiteSpace = false;
-            $xmlObject->formatOutput = true;
-            $xmlObject->loadXML($content);
+        $xmlObject = new \DOMDocument();
+        $xmlObject->preserveWhiteSpace = false;
+        $xmlObject->formatOutput = true;
+        $xmlObject->loadXML($content);
 
-            $node = $xmlObject->firstChild;
+        $node = $xmlObject->firstChild;
 
-            self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
+        self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
 
+        return $xmlArray;
 
-        } catch (Exception $exception) {
-
-            throw $exception;
-        }
+//        } catch (Exception $exception) {
+//
+//            throw $exception;
+//        }
         //        } finally {
         //
         //            return $xmlArray;
         //        }
-        return $xmlArray;
+//        return $xmlArray;
     }
 
     /**
@@ -95,21 +96,30 @@ class Utility
     {
         $nodeName = ($preserveNS) ? $nodeName : str_replace("{$namespacePrefix}:", '', $nodeName);
 
-        if ($node->nodeType == XML_ELEMENT_NODE) {
-
-            if ($node->hasChildNodes()) {
-                foreach ($node->childNodes as $child) {
-                    if (isset($child->nodeName) && $child->nodeName == 'xs:schema') {
-                        continue;
-                    }
-                    self::domToArray($child, $child->nodeName, $constructArray[$nodeName], $child->prefix, $preserveNS);
-                }
-            } else {
-                $constructArray[$nodeName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
-            }
-        } elseif ($node->nodeType == XML_TEXT_NODE) {
+        //leaf text element
+        if ($node->nodeType == XML_TEXT_NODE) {
             $constructArray[$nodeName] = self::typeCast($node->textContent, gettype($node->textContent));
+            return;
         }
+
+        //element with only one text element
+        if ($node->childNodes->length == 1 && $node->firstChild->nodeType == XML_TEXT_NODE) {
+            $constructArray[$nodeName] = self::typeCast($node->firstChild->textContent, gettype($node->firstChild->textContent));
+            return;
+        }
+
+        //branch element
+        if ($node->hasChildNodes()) {
+            foreach ($node->childNodes as $child) {
+                if (isset($child->nodeName) && $child->nodeName == 'xs:schema') {
+                    continue;
+                }
+                self::domToArray($child, $child->nodeName, $constructArray[$nodeName], $child->prefix, $preserveNS);
+            }
+            return;
+        }
+
+        $constructArray[$nodeName] = self::typeCast($node->nodeValue, gettype($node->nodeValue));
     }
 
     /**
