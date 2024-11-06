@@ -106,7 +106,7 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
         }
 
         if ($this->offsetExists($name)) {
-            $this->offsetSet($name,$value);
+            $this->offsetSet($name, $value);
             return $this;
         }
 
