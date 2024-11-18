@@ -1834,8 +1834,12 @@ class Currency
      */
     private function loadConfig(string $code = null): void
     {
-        if (!self::$items[$code]) {
+        if (!empty($code) && !self::$items[$code]) {
             throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
+        }
+
+        if(empty($code)) {
+            $code = config('fintech.core.default_currency_code', 'USD');
         }
 
         $this->config = self::$items[$code];

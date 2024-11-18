@@ -24,6 +24,14 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
+    'default_currency_code' => env('PACKAGE_CORE_DEFAULT_CURRENCY_CODE', 'USD'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | APIs Outbound Request Logger
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
     'api_logger_enabled' => env('PACKAGE_CORE_API_LOG', false),
 
     /*
