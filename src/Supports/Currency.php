@@ -1838,7 +1838,7 @@ class Currency
             throw new InvalidArgumentException("Currency code [$code] is invalid or not present in list.");
         }
 
-        if(empty($code)) {
+        if (empty($code)) {
             $code = config('fintech.core.default_currency_code', 'USD');
         }
 
