@@ -25,7 +25,7 @@ class UpdateTranslationRequest extends FormRequest
     {
         return [
             'key' => ['required', Rule::unique('translations', 'key')->ignore($this->route('translation'))],
-            'locale' => ['required', 'array', new Locale],
+            'locale' => ['required', 'array', new Locale()],
         ];
     }
 

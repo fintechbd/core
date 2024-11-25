@@ -56,11 +56,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-                filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
-                $length,
-                config('fintech.core.entry_number_fill', '0'),
-                STR_PAD_LEFT
-            );
+            filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
+            $length,
+            config('fintech.core.entry_number_fill', '0'),
+            STR_PAD_LEFT
+        );
     }
 }
 
@@ -212,7 +212,9 @@ if (!function_exists('recursive_copy_dir')) {
         }
 
         foreach (scandir($src) as $file) {
-            if (in_array($file, ['.', '..'])) continue;
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
             recursive_copy_dir($src . DIRECTORY_SEPARATOR . $file, $dest . DIRECTORY_SEPARATOR . $file);
         }
     }

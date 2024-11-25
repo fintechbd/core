@@ -68,7 +68,7 @@ class ClientErrorController extends Controller
             $clientError = Core::clientError()->create($inputs);
 
             if (! $clientError) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.client_error_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.client_error_model'));
             }
 
             return response()->created([
@@ -97,7 +97,7 @@ class ClientErrorController extends Controller
             $clientError = Core::clientError()->find($id);
 
             if (! $clientError) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             return new ClientErrorResource($clientError);
@@ -128,14 +128,14 @@ class ClientErrorController extends Controller
             $clientError = Core::clientError()->find($id);
 
             if (! $clientError) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (! Core::clientError()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Client Error']));
@@ -168,12 +168,12 @@ class ClientErrorController extends Controller
             $clientError = Core::clientError()->find($id);
 
             if (! $clientError) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             if (! Core::clientError()->destroy($id)) {
 
-                throw (new DeleteOperationException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new DeleteOperationException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Client Error']));
@@ -204,12 +204,12 @@ class ClientErrorController extends Controller
             $clientError = Core::clientError()->find($id, true);
 
             if (! $clientError) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             if (! Core::clientError()->restore($id)) {
 
-                throw (new RestoreOperationException)->setModel(config('fintech.core.client_error_model'), $id);
+                throw (new RestoreOperationException())->setModel(config('fintech.core.client_error_model'), $id);
             }
 
             return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Client Error']));

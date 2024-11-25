@@ -70,7 +70,7 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->create($inputs);
 
             if (! $schedule) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.schedule_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.schedule_model'));
             }
 
             return response()->created([
@@ -99,7 +99,7 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->find($id);
 
             if (! $schedule) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             return new ScheduleResource($schedule);
@@ -132,12 +132,12 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->find($id);
 
             if (! $schedule) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             if (! Core::schedule()->destroy($id)) {
 
-                throw (new DeleteOperationException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new DeleteOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Schedule']));
@@ -168,12 +168,12 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->find($id, true);
 
             if (! $schedule) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             if (! Core::schedule()->restore($id)) {
 
-                throw (new RestoreOperationException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new RestoreOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Schedule']));
@@ -249,7 +249,7 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->find($id);
 
             if (! $schedule) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             $schedule_data = $schedule->schedule_data ?? [];
@@ -265,7 +265,7 @@ class ScheduleController extends Controller
 
             if (! Core::schedule()->update($id, ['schedule_data' => $schedule_data])) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Schedule']));
@@ -296,14 +296,14 @@ class ScheduleController extends Controller
             $schedule = Core::schedule()->find($id);
 
             if (! $schedule) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (! Core::schedule()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.schedule_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
             return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Schedule']));

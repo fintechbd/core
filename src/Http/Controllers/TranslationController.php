@@ -69,7 +69,7 @@ class TranslationController extends Controller
             $translation = Core::translation()->create($inputs);
 
             if (! $translation) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.translation_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.translation_model'));
             }
 
             return response()->created([
@@ -98,7 +98,7 @@ class TranslationController extends Controller
             $translation = Core::translation()->find($id);
 
             if (! $translation) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             return new TranslationResource($translation);
@@ -129,14 +129,14 @@ class TranslationController extends Controller
             $translation = Core::translation()->find($id);
 
             if (! $translation) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (! Core::translation()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Translation']));
@@ -169,12 +169,12 @@ class TranslationController extends Controller
             $translation = Core::translation()->find($id);
 
             if (! $translation) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             if (! Core::translation()->destroy($id)) {
 
-                throw (new DeleteOperationException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new DeleteOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Translation']));
@@ -205,12 +205,12 @@ class TranslationController extends Controller
             $translation = Core::translation()->find($id, true);
 
             if (! $translation) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             if (! Core::translation()->restore($id)) {
 
-                throw (new RestoreOperationException)->setModel(config('fintech.core.translation_model'), $id);
+                throw (new RestoreOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
             return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Translation']));

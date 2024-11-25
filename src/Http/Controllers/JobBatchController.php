@@ -68,7 +68,7 @@ class JobBatchController extends Controller
             $jobBatch = Core::jobBatch()->create($inputs);
 
             if (! $jobBatch) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.job_batch_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.job_batch_model'));
             }
 
             return response()->created([
@@ -97,7 +97,7 @@ class JobBatchController extends Controller
             $jobBatch = Core::jobBatch()->find($id);
 
             if (! $jobBatch) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             return new JobBatchResource($jobBatch);
@@ -128,14 +128,14 @@ class JobBatchController extends Controller
             $jobBatch = Core::jobBatch()->find($id);
 
             if (! $jobBatch) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (! Core::jobBatch()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Job Batch']));
@@ -168,12 +168,12 @@ class JobBatchController extends Controller
             $jobBatch = Core::jobBatch()->find($id);
 
             if (! $jobBatch) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             if (! Core::jobBatch()->destroy($id)) {
 
-                throw (new DeleteOperationException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new DeleteOperationException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Job Batch']));
@@ -204,12 +204,12 @@ class JobBatchController extends Controller
             $jobBatch = Core::jobBatch()->find($id, true);
 
             if (! $jobBatch) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             if (! Core::jobBatch()->restore($id)) {
 
-                throw (new RestoreOperationException)->setModel(config('fintech.core.job_batch_model'), $id);
+                throw (new RestoreOperationException())->setModel(config('fintech.core.job_batch_model'), $id);
             }
 
             return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Job Batch']));

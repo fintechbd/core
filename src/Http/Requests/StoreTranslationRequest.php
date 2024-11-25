@@ -25,7 +25,7 @@ class StoreTranslationRequest extends FormRequest
     {
         return [
             'key' => ['required', Rule::unique('translations', 'key'), 'string'],
-            'locale' => ['required', 'array', new Locale],
+            'locale' => ['required', 'array', new Locale()],
         ];
     }
 
