@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Traits;
+namespace Fintech\Core\Traits\RestApi;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 

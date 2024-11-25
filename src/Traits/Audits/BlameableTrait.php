@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Traits;
+namespace Fintech\Core\Traits\Audits;
 
 use Fintech\Auth\Models\User;
 use Fintech\Core\Observers\BlameableObserver;

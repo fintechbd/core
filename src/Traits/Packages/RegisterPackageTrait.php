@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Traits;
+namespace Fintech\Core\Traits\Packages;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Config;
