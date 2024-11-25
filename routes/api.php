@@ -1,13 +1,13 @@
 <?php
 
-use Fintech\RestApi\Http\Controllers\Core\ApiLogController;
-use Fintech\RestApi\Http\Controllers\Core\ConfigurationController;
-use Fintech\RestApi\Http\Controllers\Core\EncryptedKeyController;
-use Fintech\RestApi\Http\Controllers\Core\FailedJobController;
-use Fintech\RestApi\Http\Controllers\Core\JobController;
-use Fintech\RestApi\Http\Controllers\Core\PackageRegisteredController;
-use Fintech\RestApi\Http\Controllers\Core\ScheduleController;
-use Fintech\RestApi\Http\Controllers\Core\SettingController;
+use Fintech\Core\Http\Controllers\ApiLogController;
+use Fintech\Core\Http\Controllers\ConfigurationController;
+use Fintech\Core\Http\Controllers\EncryptedKeyController;
+use Fintech\Core\Http\Controllers\FailedJobController;
+use Fintech\Core\Http\Controllers\JobController;
+use Fintech\Core\Http\Controllers\PackageRegisteredController;
+use Fintech\Core\Http\Controllers\ScheduleController;
+use Fintech\Core\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +26,7 @@ if (Config::get('fintech.core.enabled')) {
     Route::prefix('core')->name('core.')->group(function () {
         Route::get('session-token', EncryptedKeyController::class)->name('session-token');
         Route::get('packages', PackageRegisteredController::class)->name('packages');
-        Route::post('client-errors', [\Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class, 'store'])
+        Route::post('client-errors', [\Fintech\Core\Http\Controllers\ClientErrorController::class, 'store'])
             ->name('client-errors.store');
     });
     Route::prefix('core')->name('core.')
@@ -57,16 +57,16 @@ if (Config::get('fintech.core.enabled')) {
             Route::apiResource('schedules', ScheduleController::class);
             Route::post('schedules/{schedule}/restore', [ScheduleController::class, 'restore'])->name('schedules.restore');
 
-            Route::apiResource('translations', \Fintech\RestApi\Http\Controllers\Core\TranslationController::class);
-            Route::post('translations/{translation}/restore', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'restore'])->name('translations.restore');
-            Route::post('translations/{translation}/download', [\Fintech\RestApi\Http\Controllers\Core\TranslationController::class, 'download'])->name('translations.download');
+            Route::apiResource('translations', \Fintech\Core\Http\Controllers\TranslationController::class);
+            Route::post('translations/{translation}/restore', [\Fintech\Core\Http\Controllers\TranslationController::class, 'restore'])->name('translations.restore');
+            Route::post('translations/{translation}/download', [\Fintech\Core\Http\Controllers\TranslationController::class, 'download'])->name('translations.download');
 
-            Route::apiResource('job-batches', \Fintech\RestApi\Http\Controllers\Core\JobBatchController::class);
-            Route::post('job-batches/{job_batch}/restore', [\Fintech\RestApi\Http\Controllers\Core\JobBatchController::class, 'restore'])->name('job-batches.restore');
+            Route::apiResource('job-batches', \Fintech\Core\Http\Controllers\JobBatchController::class);
+            Route::post('job-batches/{job_batch}/restore', [\Fintech\Core\Http\Controllers\JobBatchController::class, 'restore'])->name('job-batches.restore');
 
-            Route::apiResource('client-errors', \Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class)
+            Route::apiResource('client-errors', \Fintech\Core\Http\Controllers\ClientErrorController::class)
                 ->only('index', 'show', 'destroy');
-            Route::post('client-errors/{client_error}/restore', [\Fintech\RestApi\Http\Controllers\Core\ClientErrorController::class, 'restore'])->name('client-errors.restore');
+            Route::post('client-errors/{client_error}/restore', [\Fintech\Core\Http\Controllers\ClientErrorController::class, 'restore'])->name('client-errors.restore');
 
             //DO NOT REMOVE THIS LINE//
         });

@@ -40,7 +40,7 @@ class MacroServiceProvider extends ServiceProvider
          * @return bool
          */
         Request::macro('isAgent', function () {
-            return in_array(request()->platform()->value, [RequestPlatform::WebAgent->value], true);
+            return request()->platform()->value === RequestPlatform::WebAgent->value;
         });
 
         /**
