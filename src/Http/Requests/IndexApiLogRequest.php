@@ -4,7 +4,7 @@ namespace Fintech\Core\Http\Requests;
 
 use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Enums\RequestMethod;
-use Fintech\RestApi\Traits\HasPaginateQuery;
+use Fintech\Core\Traits\RestApi\HasPaginateQuery;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
