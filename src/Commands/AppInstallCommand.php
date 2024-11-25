@@ -52,7 +52,7 @@ class AppInstallCommand extends Command
         });
 
         $this->task("Creating support database", function () {
-            if (Config::get('database.connections.support.driver',) == 'sqlite') {
+            if (Config::get('database.connections.support.driver', ) == 'sqlite') {
                 @file_put_contents(storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'), '');
             } else {
                 Artisan::call('db:wipe --drop-views --database=support --force --quiet');
