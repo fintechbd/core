@@ -13,8 +13,6 @@ class Translation extends BaseModel implements Auditable
     use BlameableTrait;
     use SoftDeletes;
 
-    protected $connection = 'support';
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
