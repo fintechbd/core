@@ -280,6 +280,7 @@ class TranslationController extends Controller
     public function download(string $locale): BinaryFileResponse|JsonResponse
     {
         try {
+
             $translations = Core::translation()->list(['locale' => $locale])->pluck("locale.{$locale}", 'key')->toArray();
 
             return response()->download($translations, "{$locale}.json}", ['Content-Type' => 'application/json']);

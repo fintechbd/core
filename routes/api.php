@@ -59,7 +59,9 @@ if (Config::get('fintech.core.enabled')) {
 
             Route::apiResource('translations', \Fintech\Core\Http\Controllers\TranslationController::class);
             Route::post('translations/{translation}/restore', [\Fintech\Core\Http\Controllers\TranslationController::class, 'restore'])->name('translations.restore');
-            Route::post('translations/{translation}/download', [\Fintech\Core\Http\Controllers\TranslationController::class, 'download'])->name('translations.download');
+            Route::post('translations/{translation}/download', [\Fintech\Core\Http\Controllers\TranslationController::class, 'download'])
+                ->name('translations.download')
+                ->withoutMiddleware(config('fintech.auth.middleware', []));
 
             Route::apiResource('job-batches', \Fintech\Core\Http\Controllers\JobBatchController::class);
             Route::post('job-batches/{job_batch}/restore', [\Fintech\Core\Http\Controllers\JobBatchController::class, 'restore'])->name('job-batches.restore');

@@ -1,12 +1,14 @@
 <?php
 
 // config for Fintech/Core
-use Fintech\Core\Models\Schedule;
 use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
+use Fintech\Core\Repositories\Eloquent\ClientErrorRepository;
 use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
+use Fintech\Core\Repositories\Eloquent\JobBatchRepository;
 use Fintech\Core\Repositories\Eloquent\JobRepository;
 use Fintech\Core\Repositories\Eloquent\ScheduleRepository;
 use Fintech\Core\Repositories\Eloquent\SettingRepository;
+use Fintech\Core\Repositories\Eloquent\TranslationRepository;
 
 return [
 
@@ -176,7 +178,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'schedule_model' => Schedule::class,
+    'schedule_model' => Fintech\Core\Models\Schedule::class,
 
 
     /*
@@ -218,21 +220,29 @@ return [
     | This value will be used to across system where model is needed
     */
     'repositories' => [
-        \Fintech\Core\Interfaces\SettingRepository::class => SettingRepository::class,
+        Fintech\Core\Interfaces\SettingRepository::class
+        => Fintech\Core\Repositories\Eloquent\SettingRepository::class,
 
-        \Fintech\Core\Interfaces\JobRepository::class => JobRepository::class,
+        Fintech\Core\Interfaces\JobRepository::class
+        => Fintech\Core\Repositories\Eloquent\JobRepository::class,
 
-        \Fintech\Core\Interfaces\ApiLogRepository::class => ApiLogRepository::class,
+        Fintech\Core\Interfaces\ApiLogRepository::class
+        => Fintech\Core\Repositories\Eloquent\ApiLogRepository::class,
 
-        \Fintech\Core\Interfaces\FailedJobRepository::class => FailedJobRepository::class,
+        Fintech\Core\Interfaces\FailedJobRepository::class
+        => Fintech\Core\Repositories\Eloquent\FailedJobRepository::class,
 
-        \Fintech\Core\Interfaces\ScheduleRepository::class => ScheduleRepository::class,
+        Fintech\Core\Interfaces\ScheduleRepository::class
+        => Fintech\Core\Repositories\Eloquent\ScheduleRepository::class,
 
-        \Fintech\Core\Interfaces\TranslationRepository::class => \Fintech\Core\Repositories\Eloquent\TranslationRepository::class,
+        Fintech\Core\Interfaces\TranslationRepository::class
+        => Fintech\Core\Repositories\Eloquent\TranslationRepository::class,
 
-        \Fintech\Core\Interfaces\JobBatchRepository::class => \Fintech\Core\Repositories\Eloquent\JobBatchRepository::class,
+        Fintech\Core\Interfaces\JobBatchRepository::class
+        => Fintech\Core\Repositories\Eloquent\JobBatchRepository::class,
 
-        \Fintech\Core\Interfaces\ClientErrorRepository::class => \Fintech\Core\Repositories\Eloquent\ClientErrorRepository::class,
+        Fintech\Core\Interfaces\ClientErrorRepository::class
+        => Fintech\Core\Repositories\Eloquent\ClientErrorRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
