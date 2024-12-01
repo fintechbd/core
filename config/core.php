@@ -1,14 +1,6 @@
 <?php
 
 // config for Fintech/Core
-use Fintech\Core\Repositories\Eloquent\ApiLogRepository;
-use Fintech\Core\Repositories\Eloquent\ClientErrorRepository;
-use Fintech\Core\Repositories\Eloquent\FailedJobRepository;
-use Fintech\Core\Repositories\Eloquent\JobBatchRepository;
-use Fintech\Core\Repositories\Eloquent\JobRepository;
-use Fintech\Core\Repositories\Eloquent\ScheduleRepository;
-use Fintech\Core\Repositories\Eloquent\SettingRepository;
-use Fintech\Core\Repositories\Eloquent\TranslationRepository;
 
 return [
 
