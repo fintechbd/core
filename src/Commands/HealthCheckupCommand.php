@@ -81,7 +81,7 @@ class HealthCheckupCommand extends Command
     {
         if (PHP_OS_FAMILY == "Linux") {
             $this->task("Verify storage directory permission", function () {
-                shell_exec('sudo chown -R www-data:www-data /var/www/html/storage');
+                shell_exec('sudo chown -R ubuntu:ubuntu /var/www/html/storage');
                 shell_exec('sudo chmod -R 777 /var/www/html/storage');
             });
         }

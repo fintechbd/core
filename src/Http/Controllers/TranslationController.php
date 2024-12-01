@@ -283,7 +283,7 @@ class TranslationController extends Controller
 
             $translations = Core::translation()->list(['locale' => $locale])->pluck("locale.{$locale}", 'key')->toArray();
 
-            return response()->download($translations, "{$locale}.json}", ['Content-Type' => 'application/json']);
+            return response()->download(json_encode($translations), "{$locale}.json}", ['Content-Type' => 'application/json']);
 
         } catch (Exception $exception) {
 
