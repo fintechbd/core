@@ -34,7 +34,7 @@ class Base64File implements ValidationRule
 
         if (!empty($this->allowedMimeTypes)) {
             try {
-               \Fintech\Core\Supports\Base64File::load($value, ...$this->allowedMimeTypes);
+                \Fintech\Core\Supports\Base64File::load($value, ...$this->allowedMimeTypes);
 
             } catch (InvalidBase64Data $e) {
                 $fail('The :attribute is not a valid Base64 file content.');
