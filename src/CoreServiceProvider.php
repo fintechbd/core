@@ -11,6 +11,7 @@ use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
 use Fintech\Core\Providers\RouteServiceProvider;
+use Fintech\Core\Providers\ValidatorServiceProvider;
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Log;
@@ -39,6 +40,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(MacroServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(ValidatorServiceProvider::class);
     }
 
     /**

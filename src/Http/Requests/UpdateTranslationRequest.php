@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Http\Requests;
 
-use Fintech\Core\Rules\Locale;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,7 +24,7 @@ class UpdateTranslationRequest extends FormRequest
     {
         return [
             'key' => ['required', Rule::unique('translations', 'key')->ignore($this->route('translation'))],
-            'locale' => ['required', 'array', new Locale()],
+            'locale' => ['required', 'array', 'locale'],
         ];
     }
 

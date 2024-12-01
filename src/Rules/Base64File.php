@@ -14,7 +14,7 @@ class Base64File implements ValidationRule
 
     public function __construct(...$allowedMimes)
     {
-        $this->allowedMimeTypes = $allowedMimes ?? [];
+        $this->allowedMimeTypes = $allowedMimes;
     }
 
     /**
@@ -40,7 +40,7 @@ class Base64File implements ValidationRule
                 $fail('The :attribute is not a valid Base64 file content.');
 
             } catch (MimeTypeNotAllowed $e) {
-                $fail('The :attribute field must be a file of type: '.implode(',', $this->allowedMimeTypes).'.');
+                $fail('The :attribute must be a file of type: '.implode(',', $this->allowedMimeTypes).'.');
             }
         }
     }
