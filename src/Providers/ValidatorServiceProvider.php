@@ -19,34 +19,46 @@ class ValidatorServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('base64', function ($attribute, $value, $parameters, $validator) {
-            (new Base64File(...$parameters))->validate($attribute, $value,
+            (new Base64File(...$parameters))->validate(
+                $attribute,
+                $value,
                 function ($message) use ($validator, $attribute) {
                     $validator->errors()->add($attribute, __($message, ['attribute' => $attribute]));
-                });
+                }
+            );
             return !$validator->errors()->has($attribute);
         });
 
         Validator::extend('current_pin', function ($attribute, $value, $parameters, $validator) {
-            (new CurrentPin)->validate($attribute, $value,
+            (new CurrentPin())->validate(
+                $attribute,
+                $value,
                 function ($message) use ($validator, $attribute) {
                     $validator->errors()->add($attribute, __($message, ['attribute' => $attribute]));
-                });
+                }
+            );
             return !$validator->errors()->has($attribute);
         });
 
         Validator::extend('locale', function ($attribute, $value, $parameters, $validator) {
-            (new Locale)->validate($attribute, $value,
+            (new Locale())->validate(
+                $attribute,
+                $value,
                 function ($message) use ($validator, $attribute) {
                     $validator->errors()->add($attribute, __($message, ['attribute' => $attribute]));
-                });
+                }
+            );
             return !$validator->errors()->has($attribute);
         });
 
         Validator::extend('mobile', function ($attribute, $value, $parameters, $validator) {
-            (new MobileNumber)->validate($attribute, $value,
+            (new MobileNumber())->validate(
+                $attribute,
+                $value,
                 function ($message) use ($validator, $attribute) {
                     $validator->errors()->add($attribute, __($message, ['attribute' => $attribute]));
-                });
+                }
+            );
             return !$validator->errors()->has($attribute);
         });
 
