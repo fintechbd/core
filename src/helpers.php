@@ -1,7 +1,6 @@
 <?php
 
 use Fintech\Core\Supports\Currency;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -57,11 +56,11 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-                filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
-                $length,
-                config('fintech.core.entry_number_fill', '0'),
-                STR_PAD_LEFT
-            );
+            filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
+            $length,
+            config('fintech.core.entry_number_fill', '0'),
+            STR_PAD_LEFT
+        );
     }
 }
 
