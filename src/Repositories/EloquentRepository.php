@@ -8,7 +8,6 @@ use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Exceptions\RelationReturnMissingException;
 use Fintech\Core\Supports\Constant;
 use Fintech\Core\Traits\HasUploadFiles;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
