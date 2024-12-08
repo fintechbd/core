@@ -104,7 +104,7 @@ class FailedJobController extends Controller
                 throw (new DeleteOperationException())->setModel(config('fintech.core.failed_job_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Failed Job']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Failed Job']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -163,7 +163,7 @@ class FailedJobController extends Controller
         try {
 
             if (Artisan::call('queue:flush') == Command::SUCCESS) {
-                return response()->success(__('restapi::messages.resource.restored', ['model' => 'Failed Job']));
+                return response()->success(__('core::messages.resource.restored', ['model' => 'Failed Job']));
             }
 
         } catch (Exception $exception) {

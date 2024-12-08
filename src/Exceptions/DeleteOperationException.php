@@ -14,5 +14,5 @@ class DeleteOperationException extends Exception
 
     protected $type = 'delete';
 
-    //__('restapi::messages.exception.delete', ['model' => $this->getModel(), 'id' => $this->getId()])
+    //__('core::messages.exception.delete', ['model' => $this->getModel(), 'id' => $this->getId()])
 }

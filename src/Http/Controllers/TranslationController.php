@@ -73,7 +73,7 @@ class TranslationController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Translation']),
+                'message' => __('core::messages.resource.created', ['model' => 'Translation']),
                 'id' => $translation->id,
             ]);
 
@@ -139,7 +139,7 @@ class TranslationController extends Controller
                 throw (new UpdateOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Translation']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Translation']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -177,7 +177,7 @@ class TranslationController extends Controller
                 throw (new DeleteOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Translation']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Translation']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -213,7 +213,7 @@ class TranslationController extends Controller
                 throw (new RestoreOperationException())->setModel(config('fintech.core.translation_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Translation']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Translation']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -239,7 +239,7 @@ class TranslationController extends Controller
 
             $translationPaginate = Core::translation()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Translation']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Translation']));
 
         } catch (Exception $exception) {
 

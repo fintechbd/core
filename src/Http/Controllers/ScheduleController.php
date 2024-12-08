@@ -74,7 +74,7 @@ class ScheduleController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Schedule']),
+                'message' => __('core::messages.resource.created', ['model' => 'Schedule']),
                 'id' => $schedule->id,
             ]);
 
@@ -140,7 +140,7 @@ class ScheduleController extends Controller
                 throw (new DeleteOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Schedule']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Schedule']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class ScheduleController extends Controller
                 throw (new RestoreOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Schedule']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Schedule']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -202,7 +202,7 @@ class ScheduleController extends Controller
 
             $schedulePaginate = Core::schedule()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Schedule']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Schedule']));
 
         } catch (Exception $exception) {
 
@@ -268,7 +268,7 @@ class ScheduleController extends Controller
                 throw (new UpdateOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Schedule']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Schedule']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -306,7 +306,7 @@ class ScheduleController extends Controller
                 throw (new UpdateOperationException())->setModel(config('fintech.core.schedule_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Schedule']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Schedule']));
 
         } catch (ModelNotFoundException $exception) {
 

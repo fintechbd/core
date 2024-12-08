@@ -24,7 +24,7 @@ class RestoreOperationException extends Exception
     public function __construct($message = '', $code = 0, Throwable $previous = null)
     {
         if (strlen($message) == 0) {
-            $message = __('restapi::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]);
+            $message = __('core::messages.exception.restore', ['model' => $this->getModel(), 'id' => $this->getId()]);
         }
 
         parent::__construct($message, $code, $previous);
