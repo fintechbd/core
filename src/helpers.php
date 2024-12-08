@@ -1,6 +1,7 @@
 <?php
 
 use Fintech\Core\Supports\Currency;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -56,38 +57,30 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
-if (!function_exists('get_table')) {
+if (!function_exists('entry_timeline')) {
 
     /**
-     * Return a model class table or collection name for mongodb
-     * for given model class path on configuration
-     * @param string $model_path
-     * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * return a array that is compilable with timeline display program
+     *
+     * @param string $message
+     * @param string $flag = info
+     * @return array
      */
-    function get_table(string $model_path): mixed
+    function entry_timeline(string $message, string $flag = 'info'): array
     {
-        $model_namespace = config("fintech.{$model_path}_model");
-
-        if ($model_namespace == null) {
-            throw new InvalidArgumentException("Invalid Model path (fintech.{$model_path}_model) given.");
-        }
-
-        $model = app()->make($model_namespace);
-
-        $table = $model->getTable();
-
-        unset($model);
-
-        return $table;
+        return [
+            'message' => $message,
+            'flag' => $flag,
+            'timestamp' => now(),
+        ];
 
     }
 }
