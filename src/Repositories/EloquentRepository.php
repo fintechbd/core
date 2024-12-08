@@ -70,14 +70,15 @@ abstract class EloquentRepository
      * @return Model|mixed|null
      * @throws RelationReturnMissingException
      * @throws ReflectionException
-     * @throws BindingResolutionException
      * @throws Exception
      */
     public function create(array $attributes = []): mixed
     {
         $this->splitFieldRelationFilesFromInput($attributes);
 
-        $this->model = app()->make(get_class($this->model));
+        $fullClassName = get_class($this->model);
+
+        $this->model = new $fullClassName($this->fields);
 
         return ($this->useTransaction)
             ? DB::transaction(fn () => $this->executeCreate())
@@ -136,8 +137,6 @@ abstract class EloquentRepository
      */
     private function executeCreate()
     {
-        $this->model->fill($this->fields);
-
         if ($this->model->save()) {
 
             $this->relationCreateOperation();
