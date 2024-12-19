@@ -3,11 +3,12 @@
 namespace Fintech\Core\Rules;
 
 use Fintech\Core\Facades\Core;
+use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
-class MasterCurrency implements ValidationRule
+class MasterCurrency implements ValidationRule, DataAwareRule
 {
     /**
      * Run the validation rule.
@@ -29,5 +30,16 @@ class MasterCurrency implements ValidationRule
         if (!$masterExists) {
             $fail('core::validation.master_currency');
         }
+    }
+
+    /**
+     * Set the data under validation.
+     *
+     * @param array $data
+     * @return $this
+     */
+    public function setData(array $data)
+    {
+        return $this;
     }
 }
