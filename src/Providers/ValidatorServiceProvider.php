@@ -31,7 +31,7 @@ class ValidatorServiceProvider extends ServiceProvider
         });
 
         Validator::extend('current_pin', function ($attribute, $value, $parameters, $validator) {
-            (new CurrentPin)->validate(
+            (new CurrentPin())->validate(
                 $attribute,
                 $value,
                 function ($message) use ($validator, $attribute) {
@@ -42,7 +42,7 @@ class ValidatorServiceProvider extends ServiceProvider
         });
 
         Validator::extend('locale', function ($attribute, $value, $parameters, $validator) {
-            (new Locale)->validate(
+            (new Locale())->validate(
                 $attribute,
                 $value,
                 function ($message) use ($validator, $attribute) {
@@ -53,7 +53,7 @@ class ValidatorServiceProvider extends ServiceProvider
         });
 
         Validator::extend('mobile', function ($attribute, $value, $parameters, $validator) {
-            (new MobileNumber)->validate(
+            (new MobileNumber())->validate(
                 $attribute,
                 $value,
                 function ($message) use ($validator, $attribute) {
@@ -64,7 +64,7 @@ class ValidatorServiceProvider extends ServiceProvider
         });
 
         Validator::extend('master_currency', function ($attribute, $value, $parameters, $validator) {
-            (new MasterCurrency)->validate(
+            (new MasterCurrency())->validate(
                 $attribute,
                 $value,
                 function ($message) use ($validator, $attribute) {
