@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Rest Api Language Lines
+| Core Language Lines
 |--------------------------------------------------------------------------
 |
 | The following language lines are used during authentication for various
