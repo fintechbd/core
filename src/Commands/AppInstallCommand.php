@@ -20,7 +20,7 @@ class AppInstallCommand extends Command
     protected $signature = 'app:install
                             {--states : Seed states data if metadata modules installed}
                             {--cities : Seed cities data if metadata modules installed}
-                            {--countries=* : Seed which country banks data if bank modules installed}';
+                            {--countries= : Seed which country banks data if bank modules installed}';
 
     /**
      * The console command description.
@@ -122,9 +122,13 @@ class AppInstallCommand extends Command
                 $this->call('sanction:install', $this->passableOptions());
             }
 
-            Artisan::call('core:health-checkup', $this->passableOptions());
+            sleep(10);
 
-            Artisan::call('db:seed', $this->passableOptions());
+            $this->call('core:health-checkup', $this->passableOptions());
+
+//            $this->call('db:seed', $this->passableOptions());
+
+            $this->components->info('Run database seed command to finalize the setup.');
 
             return self::SUCCESS;
 
