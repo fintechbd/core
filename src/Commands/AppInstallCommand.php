@@ -126,7 +126,7 @@ class AppInstallCommand extends Command
 
             $this->call('core:health-checkup', $this->passableOptions());
 
-//            $this->call('db:seed', $this->passableOptions());
+            //            $this->call('db:seed', $this->passableOptions());
 
             $this->components->info('Run database seed command to finalize the setup.');
 
