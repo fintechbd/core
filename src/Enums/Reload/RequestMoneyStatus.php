@@ -9,7 +9,7 @@ use Fintech\Core\Traits\EnumHasSerialization;
 /**
  * N.B: status value must have to match with order status
  */
-enum RequestMoneyConfirm: string implements \JsonSerializable
+enum RequestMoneyStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 
