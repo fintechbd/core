@@ -17,7 +17,10 @@ class AppInstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:install';
+    protected $signature = 'app:install
+                            {--states : Seed states data if metadata modules installed}
+                            {--cities : Seed cities data if metadata modules installed}
+                            {--countries=* : Seed which country banks data if bank modules installed}';
 
     /**
      * The console command description.
@@ -34,91 +37,111 @@ class AppInstallCommand extends Command
      */
     public function handle()
     {
-        if (Config::get('database.connections.support') == null) {
-            $this->components->error('Missing `support` connection in database configuration.');
-            $this->comment("'support' => [
+        try {
+
+            if (Config::get('database.connections.support') == null) {
+                $this->components->error('Missing `support` connection in database configuration.');
+                $this->comment("'support' => [
     'driver' => 'sqlite',
     'url' => env('DATABASE_URL'),
     'database' => storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'),
     'prefix' => '',
     'foreign_key_constraints' => false,
 ],");
-            $this->components->info("Add given lines inside of  `config/database.php` files `connections` array than try again.");
+                $this->components->info("Add given lines inside of  `config/database.php` files `connections` array than try again.");
+                return self::FAILURE;
+            }
+
+            $this->task("Prepare database", function () {
+                Artisan::call('db:wipe --drop-views --force --quiet');
+            });
+
+            $this->task("Creating support database", function () {
+                if (Config::get('database.connections.support.driver') == 'sqlite') {
+                    @file_put_contents(storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'), '');
+                } else {
+                    Artisan::call('db:wipe --drop-views --database=support --force --quiet');
+                }
+            });
+
+            $this->task("Running migrations", function () {
+                Artisan::call('migrate:fresh --force --quiet');
+            });
+
+            $this->call('core:install', $this->passableOptions());
+
+            if (Core::packageExists('Auth')) {
+                $this->call('auth:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('MetaData')) {
+                $this->call('metadata:install', $this->passableOptions('states', 'cities'));
+            }
+
+            if (Core::packageExists('Banco')) {
+                $this->call('banco:install', $this->passableOptions('countries'));
+            }
+
+            if (Core::packageExists('Transaction')) {
+                $this->call('transaction:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Business')) {
+                $this->call('business:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Reload')) {
+                $this->call('reload:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Remit')) {
+                $this->call('remit:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Airtime')) {
+                $this->call('airtime:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Tab')) {
+                $this->call('tab:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Bell')) {
+                $this->call('bell:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Card')) {
+                $this->call('card:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Gift')) {
+                $this->call('gift:install', $this->passableOptions());
+            }
+
+            if (Core::packageExists('Sanction')) {
+                $this->call('sanction:install', $this->passableOptions());
+            }
+
+            Artisan::call('core:health-checkup', $this->passableOptions());
+
+            Artisan::call('db:seed', $this->passableOptions());
+
+            return self::SUCCESS;
+
+        } catch (\Exception $e) {
+            throw $e;
             return self::FAILURE;
         }
+    }
 
-        $this->task("Prepare database", function () {
-            Artisan::call('db:wipe --drop-views --force --quiet');
-        });
+    public function passableOptions(...$only): array
+    {
+        $options = [];
 
-        $this->task("Creating support database", function () {
-            if (Config::get('database.connections.support.driver', ) == 'sqlite') {
-                @file_put_contents(storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'), '');
-            } else {
-                Artisan::call('db:wipe --drop-views --database=support --force --quiet');
-            }
-        });
-
-        $this->task("Running migrations", function () {
-            Artisan::call('migrate:fresh --force --quiet');
-        });
-
-        $this->call('core:install');
-
-        if (Core::packageExists('Auth')) {
-            $this->call('auth:install');
+        foreach ($only as $key) {
+            $options["--{$key}"] = $this->option($key);
         }
 
-        if (Core::packageExists('MetaData')) {
-            $this->call('metadata:install', ['--states' => true, '--cities' => true]);
-        }
-
-        if (Core::packageExists('Banco')) {
-            $this->call('banco:install', ['--countries' => 'BD,CA,AE']);
-        }
-
-        if (Core::packageExists('Transaction')) {
-            $this->call('transaction:install');
-        }
-
-        if (Core::packageExists('Business')) {
-            $this->call('business:install');
-        }
-
-        if (Core::packageExists('Reload')) {
-            $this->call('reload:install');
-        }
-
-        if (Core::packageExists('Remit')) {
-            $this->call('remit:install');
-        }
-
-        if (Core::packageExists('Airtime')) {
-            $this->call('airtime:install');
-        }
-
-        if (Core::packageExists('Tab')) {
-            $this->call('tab:install');
-        }
-
-        if (Core::packageExists('Bell')) {
-            $this->call('bell:install');
-        }
-
-        if (Core::packageExists('Card')) {
-            $this->call('card:install');
-        }
-
-        if (Core::packageExists('Gift')) {
-            $this->call('gift:install');
-        }
-
-        if (Core::packageExists('Sanction')) {
-            $this->call('sanction:install');
-        }
-
-        Artisan::call('core:health-checkup');
-
-        $this->components->info('Run database seed command to finalize the setup.');
+        return $options;
     }
 }
