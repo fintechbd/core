@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Traits;
 
-use BackedEnum;
 use Fintech\Core\Enums\RequestPlatform;
 use Fintech\Core\Enums\Transaction\OrderType;
 
