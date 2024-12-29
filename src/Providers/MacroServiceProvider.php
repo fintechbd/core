@@ -7,7 +7,6 @@ use Fintech\Core\Enums\RequestPlatform;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response as ResponseFacade;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
