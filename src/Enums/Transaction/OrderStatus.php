@@ -10,7 +10,7 @@ enum OrderStatus: string implements \JsonSerializable
 {
     use EnumHasSerialization;
 
-    #[Enumeration(color: Color::Amber500)]
+    #[Enumeration(color: Color::Orange500, label: 'Transaction Pending')]
     case PaymentPending = 'payment_pending';
 
     #[Enumeration(color: Color::Yellow500)]
