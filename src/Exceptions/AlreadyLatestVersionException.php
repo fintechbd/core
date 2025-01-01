@@ -3,7 +3,6 @@
 namespace Fintech\Core\Exceptions;
 
 use Exception;
-use Fintech\Core\Traits\ModelExceptionTrait;
 
 /**
  * Class DeleteOperationException

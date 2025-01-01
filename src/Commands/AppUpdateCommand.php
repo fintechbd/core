@@ -6,8 +6,6 @@ use Fintech\Core\Exceptions\AlreadyLatestVersionException;
 use Fintech\Core\Supports\Updater;
 use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
-
 
 class AppUpdateCommand extends Command
 {
@@ -54,7 +52,7 @@ class AppUpdateCommand extends Command
             foreach ($updater->availableVersions() as $version => $task) {
                 $this->task("Executing Version v{$version} tasks", $task);
             }
-            
+
             $this->call('core:health-checkup');
 
             $this->successMessage("Application Upgrade", 'COMPLETE', false);
