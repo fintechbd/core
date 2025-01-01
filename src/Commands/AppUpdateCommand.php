@@ -35,7 +35,10 @@ class AppUpdateCommand extends Command
      */
     public function handle()
     {
-        $updater = new Updater();
+        /**
+         * @var Updater $updater
+         */
+        $updater = app()->make(Updater::class);
 
         try {
             $this->infoMessage("Application Upgrade", 'RUNNING', false);
@@ -48,6 +51,10 @@ class AppUpdateCommand extends Command
 
             $this->successMessage("New Version Detected", $updater->latest(), false);
 
+            foreach ($updater->availableVersions() as $version => $task) {
+                $this->task("Executing Version v{$version} tasks", $task);
+            }
+            
             $this->call('core:health-checkup');
 
             $this->successMessage("Application Upgrade", 'COMPLETE', false);
