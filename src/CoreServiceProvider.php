@@ -4,6 +4,7 @@ namespace Fintech\Core;
 
 use Exception;
 use Fintech\Core\Commands\AppInstallCommand;
+use Fintech\Core\Commands\AppUpdateCommand;
 use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
 use Fintech\Core\Commands\HealthCheckupCommand;
 use Fintech\Core\Commands\InstallCommand;
@@ -34,6 +35,11 @@ class CoreServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/core.php',
             'fintech.core'
+        );
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/changelog.php',
+            'fintech.changelog'
         );
 
         $this->app->register(RepositoryServiceProvider::class);
@@ -67,6 +73,9 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../config/core.php' => config_path('fintech/core.php'),
             __DIR__ . '/../config/media-library.php' => config_path('media-library.php'),
         ]);
+        $this->publishes([
+            __DIR__ . '/../config/changelog.php' => config_path('fintech/changelog.php'),
+        ], 'fintech-changelog');
 
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/core'),
@@ -75,6 +84,7 @@ class CoreServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 AppInstallCommand::class,
+                AppUpdateCommand::class,
                 InstallCommand::class,
                 EncryptionKeyGenerateCommand::class,
                 HealthCheckupCommand::class

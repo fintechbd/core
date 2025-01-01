@@ -52,6 +52,11 @@ class AppInstallCommand extends Command
                 return self::FAILURE;
             }
 
+            $this->task("Resetting App Version", function () {
+                @file_put_contents(storage_path('app' . DIRECTORY_SEPARATOR . 'version'), "1.0.0\n");
+                Artisan::call('vendor:publish --tag=fintech-changelog --quiet');
+            });
+
             $this->task("Prepare database", function () {
                 Artisan::call('db:wipe --drop-views --force --quiet');
             });

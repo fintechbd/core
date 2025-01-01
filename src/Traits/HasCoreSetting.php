@@ -50,7 +50,7 @@ trait HasCoreSetting
         $result = false;
 
         try {
-            $result = ($task ?: fn () => true)();
+            $result = ($task ?: fn() => true)();
         } catch (Throwable $e) {
             throw $e;
         } finally {
@@ -64,14 +64,27 @@ trait HasCoreSetting
         }
     }
 
-    private function errorMessage(string $message, string $label = 'ERROR'): void
+    private function errorMessage(string $message, string $label = 'ERROR', bool $addNewline = true): void
     {
+        if ($addNewline) {
+            $this->newLine();
+        }
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=red;options=bold>{$label}</>");
     }
 
-    private function infoMessage(string $message, string $label = 'INFO'): void
+    private function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
     {
-        $this->newLine();
+        if ($addNewline) {
+            $this->newLine();
+        }
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
+    }
+
+    private function successMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
+    {
+        if ($addNewline) {
+            $this->newLine();
+        }
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-green;options=bold>{$label}</>");
     }
 }
