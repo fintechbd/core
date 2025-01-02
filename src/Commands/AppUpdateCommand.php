@@ -78,14 +78,4 @@ class AppUpdateCommand extends Command
         return self::FAILURE;
     }
 
-    public function passableOptions(...$only): array
-    {
-        $options = [];
-
-        foreach ($only as $key) {
-            $options["--{$key}"] = $this->option($key);
-        }
-
-        return $options;
-    }
 }
