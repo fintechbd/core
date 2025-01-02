@@ -23,7 +23,7 @@ class AppUpdateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update the application from changelog.';
 
     private string $module = 'Core';
 
@@ -44,13 +44,17 @@ class AppUpdateCommand extends Command
             $this->infoMessage("Current version", $updater->current(), false);
 
             if (version_compare($updater->latest(), $updater->current(), '<=')) {
+
                 throw new AlreadyLatestVersionException($updater->latest());
             }
 
             $this->successMessage("New Version Detected", $updater->latest(), false);
 
             foreach ($updater->availableVersions() as $version => $task) {
-                $this->task("Executing Version v{$version} tasks", $task);
+
+                $this->task("Executed version <fg=bright-yellow;options=bold>{$version}</> tasks", $task);
+
+                $updater->setCurrent($version);
             }
 
             $this->call('core:health-checkup');
@@ -59,12 +63,17 @@ class AppUpdateCommand extends Command
 
             return self::SUCCESS;
 
+        } catch (AlreadyLatestVersionException $e) {
+
+            $this->errorMessage($e->getMessage(), 'ERROR', false);
+            $this->successMessage("Application Upgrade", 'SKIPPED', false);
+
         } catch (\Exception $e) {
+
             $this->errorMessage($e->getMessage());
             $this->errorMessage("Application Upgrade", 'FAILED', false);
-
-            return self::FAILURE;
         }
+        return self::FAILURE;
     }
 
     public function passableOptions(...$only): array

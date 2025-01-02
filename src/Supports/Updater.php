@@ -25,9 +25,16 @@ class Updater
 
         $this->changelog = Config::get('fintech.changelog', []);
 
-        usort($this->changelog, 'version_compare');
+        uksort($this->changelog, 'version_compare');
 
         $this->latestVersion = array_key_last($this->changelog);
+
+        foreach ($this->changelog as $version => $task) {
+            if (version_compare($version, $this->currentVersion, '>')) {
+                $this->aheadVersions[$version] = $task;
+            }
+        }
+
     }
 
     public function current(): string
@@ -45,5 +52,10 @@ class Updater
     {
         return $this->latestVersion;
 
+    }
+
+    public function setCurrent(string $version): void
+    {
+        @file_put_contents($this->filepath, $version);
     }
 }

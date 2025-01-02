@@ -50,7 +50,7 @@ trait HasCoreSetting
         $result = false;
 
         try {
-            $result = ($task ?: fn () => true)();
+            $result = ($task ?: fn () => true)($this);
         } catch (Throwable $e) {
             throw $e;
         } finally {
