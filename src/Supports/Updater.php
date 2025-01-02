@@ -57,5 +57,7 @@ class Updater
     public function setCurrent(string $version): void
     {
         @file_put_contents($this->filepath, $version);
+
+        $this->currentVersion = $version;
     }
 }

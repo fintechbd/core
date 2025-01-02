@@ -48,7 +48,7 @@ class AppUpdateCommand extends Command
                 throw new AlreadyLatestVersionException($updater->latest());
             }
 
-            $this->successMessage("New Version Detected", $updater->latest(), false);
+            $this->infoMessage("Latest Version Detected", $updater->latest(), false);
 
             foreach ($updater->availableVersions() as $version => $task) {
 
@@ -59,7 +59,9 @@ class AppUpdateCommand extends Command
 
             $this->call('core:health-checkup');
 
-            $this->successMessage("Application Upgrade", 'COMPLETE', false);
+            $this->successMessage("Application updated version", $updater->current(), false);
+
+            $this->successMessage("Application upgrade", 'COMPLETE', false);
 
             return self::SUCCESS;
 
