@@ -43,7 +43,7 @@ return [
         'currency_unavailable' => 'This user don\'t have :slug currency account! Please enable, try again later.',
         'master_currency_unavailable' => 'This system user don\'t have :slug currency account! Please contact administrator.',
         'request_amount_already_exists' => 'The requested amount is already submitted and processing! Please wait for update.',
-        'request_order_already_exists' => 'Another order is already on processing! Please wait for update.',
+        'request_order_already_exists' => 'Consecutive transaction in the same account requires :delay minutes interval. So please try after :next_available.',
         'request_failed' => 'Your transaction for :service request has failed! Please try again later.',
         'request_created' => 'Your transaction for :service request has been submitted. Please wait for update.',
     ],
