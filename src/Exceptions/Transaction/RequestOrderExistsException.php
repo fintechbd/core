@@ -13,7 +13,7 @@ class RequestOrderExistsException extends Exception
     {
         $transaction_delay = config('fintech.transaction.delay_time', 10);
 
-        $message = __('core::messages.transaction.request_order_already_exists',[
+        $message = __('core::messages.transaction.request_order_already_exists', [
             'delay' => $transaction_delay,
             'next_available' => now()->addMinutes($transaction_delay)->format('h:i A e')
         ]);
