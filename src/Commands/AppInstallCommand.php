@@ -29,7 +29,7 @@ class AppInstallCommand extends Command
      */
     protected $description = 'Install the application\'s prerequisites.';
 
-    private string $module = 'Core';
+    private string $module = 'App';
 
     /**
      * Execute the console command.

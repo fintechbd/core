@@ -25,7 +25,7 @@ class AppUpdateCommand extends Command
      */
     protected $description = 'Update the application from changelog.';
 
-    private string $module = 'Core';
+    private string $module = 'App';
 
     /**
      * Execute the console command.

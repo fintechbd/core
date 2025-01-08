@@ -43,7 +43,7 @@ trait HasCoreSetting
     /**
      * @throws Throwable
      */
-    private function task(string $message, $task = null, $doneLabel = 'DONE', $failLabel = 'FAILED'): void
+    public function task(string $message, $task = null, $doneLabel = 'DONE', $failLabel = 'FAILED'): void
     {
         $startTime = microtime(true);
 
@@ -64,7 +64,7 @@ trait HasCoreSetting
         }
     }
 
-    private function errorMessage(string $message, string $label = 'ERROR', bool $addNewline = true): void
+    public function errorMessage(string $message, string $label = 'ERROR', bool $addNewline = true): void
     {
         if ($addNewline) {
             $this->newLine();
@@ -72,7 +72,7 @@ trait HasCoreSetting
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=red;options=bold>{$label}</>");
     }
 
-    private function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
+    public function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
     {
         if ($addNewline) {
             $this->newLine();
@@ -80,7 +80,7 @@ trait HasCoreSetting
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
     }
 
-    private function successMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
+    public function successMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
     {
         if ($addNewline) {
             $this->newLine();

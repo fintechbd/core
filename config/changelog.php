@@ -14,11 +14,38 @@ return [
 //        dump(get_class($command));
 //        //        $this->call('db:seed', ['--class' => \Fintech\Transaction\Seeders\PolicySeeder::class]);
 //    },
-//    '1.0.2' => function (AppUpdateCommand $command) {
-//        dump(get_class($command));
-//        //        $this->call('db:seed', ['--class' => \Fintech\Transaction\Seeders\PolicySeeder::class]);
-//    },
+    '1.0.2' => function (AppUpdateCommand $command) {
+
+    if (\Fintech\Core\Facades\Core::packageExists('Business')) {
+
+            if($serviceSetting = \Fintech\Business\Facades\Business::serviceSetting()->create([
+                'service_setting_type' => 'service',
+                'service_setting_name' => 'Visible Website Kommerce',
+                'service_setting_field_name' => 'visible_website_kommerce',
+                'service_setting_type_field' => 'select',
+                'service_setting_feature' => 'Display this service in Kommerce asia',
+                'service_setting_rule' => 'nullable|string|in:yes,no',
+                'service_setting_value' => 'yes',
+                'enabled' => true
+            ])) {
+
+                $command->successMessage("Visible Website Kommerce Service Setting created successfully.");
+
+                \Fintech\Business\Facades\Business::service()->list()->each(function ($service) use ($command) {
+                    $serviceData = $service->service_data ?? [];
+                    $serviceData['visible_website_kommerce'] = 'yes';
+                    $service->service_data = $serviceData;
+
+                    if($service->save()) {
+                        $command->successMessage(sprintf('ID: %d, Service "%s" has been updated successfully..', $service->getKey(), $service->service_name));
+                    }
+                });
+            }
+        }
+    },
     '1.0.1' => function (AppUpdateCommand $command) {
-        \Illuminate\Support\Facades\Artisan::call('db:seed --quiet --class=' . addslashes(\Fintech\Transaction\Seeders\PolicySeeder::class));
+        if (\Fintech\Core\Facades\Core::packageExists('Transaction')) {
+            \Illuminate\Support\Facades\Artisan::call('db:seed --quiet --class=' . addslashes(\Fintech\Transaction\Seeders\PolicySeeder::class));
+        }
     }
 ];
