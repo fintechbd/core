@@ -80,7 +80,7 @@ trait HasCoreSetting
         $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
     }
 
-    public function successMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
+    public function successMessage(string $message, string $label = 'DONE', bool $addNewline = true): void
     {
         if ($addNewline) {
             $this->newLine();

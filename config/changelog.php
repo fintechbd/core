@@ -29,7 +29,7 @@ return [
                 'enabled' => true
             ])) {
 
-                $command->successMessage("Visible Website Kommerce Service Setting created successfully.");
+                $command->successMessage("Visible Website Kommerce Service Setting created successfully.", false);
 
                 \Fintech\Business\Facades\Business::service()->list()->each(function ($service) use ($command) {
                     $serviceData = $service->service_data ?? [];
@@ -37,7 +37,7 @@ return [
                     $service->service_data = $serviceData;
 
                     if ($service->save()) {
-                        $command->successMessage(sprintf('ID: %d, Service "%s" has been updated successfully..', $service->getKey(), $service->service_name));
+                        $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_name}</>] service has been updated", 'DONE',false);
                     }
                 });
             }
