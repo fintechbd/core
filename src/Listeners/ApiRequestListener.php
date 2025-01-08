@@ -34,6 +34,14 @@ class ApiRequestListener
          */
         $response = $event->response ?? null;
 
+        $whitelist = config('fintech.core.api_logger_whitelist', []);
+
+        foreach ($whitelist as $uri) {
+            if (preg_match("/".addcslashes($uri, '\/')."/iu", $request->url()) != 0) {
+                return;
+            }
+        }
+
         $data = [
             'direction' => RequestDirection::OutBound->value,
             'user_id' => request()->user()->id ?? null,
@@ -46,7 +54,7 @@ class ApiRequestListener
             'request' => [
                 'timestamp' => time(),
                 'type' => $request->hasHeader('Content-Type') ? $request->header('Content-Type') : 'application/x-www-form-urlencoded',
-                'headers' => collect($request->headers())->map(fn ($item) => ($item[0] ?? null))->toArray(),
+                'headers' => collect($request->headers())->map(fn($item) => ($item[0] ?? null))->toArray(),
                 'payload' => ($request->isForm() || $request->isJson()) ? $request->data() : [$request->body()],
             ],
             'response' => [
@@ -69,7 +77,7 @@ class ApiRequestListener
             }
 
             $data['response']['duration'] = $response_time;
-            $data['response']['headers'] = collect($response->headers())->map(fn ($item) => ($item[0] ?? null))->toArray();
+            $data['response']['headers'] = collect($response->headers())->map(fn($item) => ($item[0] ?? null))->toArray();
             $data['response']['body'] = Utility::isJson($response->body()) ? json_decode($response->body(), true) : $response->body();
         }
 

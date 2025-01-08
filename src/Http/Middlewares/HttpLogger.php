@@ -29,6 +29,14 @@ class HttpLogger
     {
         if (config('fintech.core.http_logger_enabled', false)) {
 
+            $whitelist = config('fintech.core.http_logger_whitelist', []);
+
+            foreach ($whitelist as $uri) {
+                if (preg_match("/".addcslashes($uri, '\/')."/iu", $request->url()) != 0) {
+                    return;
+                }
+            }
+
             $data = [
                 'direction' => RequestDirection::InBound->value,
                 'user_id' => ($request->user() != null) ? $request->user()->id : null,

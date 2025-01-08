@@ -27,15 +27,20 @@ return [
     | this setting enable the api will be available or not
     */
     'api_logger_enabled' => env('PACKAGE_CORE_API_LOG', false),
+    'api_logger_whitelist' => [],
 
     /*
     |--------------------------------------------------------------------------
     | Http Inbound Request Logger
     |--------------------------------------------------------------------------
-    | this setting enable the api will be available or not
+    | this setting enable the log of inbound http request logging
     */
     'http_logger_enabled' => env('PACKAGE_CORE_REQUEST_LOG', false),
     'secret_fields' => ['pin', 'password'],
+    'http_logger_whitelist' => [
+        '/api-logs',
+        '/dropdown/(.*)'
+    ],
 
     /*
     |--------------------------------------------------------------------------
