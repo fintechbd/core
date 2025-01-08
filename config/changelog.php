@@ -16,9 +16,9 @@ return [
 //    },
     '1.0.2' => function (AppUpdateCommand $command) {
 
-    if (\Fintech\Core\Facades\Core::packageExists('Business')) {
+        if (\Fintech\Core\Facades\Core::packageExists('Business')) {
 
-            if($serviceSetting = \Fintech\Business\Facades\Business::serviceSetting()->create([
+            if ($serviceSetting = \Fintech\Business\Facades\Business::serviceSetting()->create([
                 'service_setting_type' => 'service',
                 'service_setting_name' => 'Visible Website Kommerce',
                 'service_setting_field_name' => 'visible_website_kommerce',
@@ -36,7 +36,7 @@ return [
                     $serviceData['visible_website_kommerce'] = 'yes';
                     $service->service_data = $serviceData;
 
-                    if($service->save()) {
+                    if ($service->save()) {
                         $command->successMessage(sprintf('ID: %d, Service "%s" has been updated successfully..', $service->getKey(), $service->service_name));
                     }
                 });
