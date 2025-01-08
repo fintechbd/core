@@ -55,6 +55,12 @@ return [
     */
     'query_logger_enabled' => env('PACKAGE_CORE_QUERY_LOGGER_ENABLED', false),
     'log_console_query' => env('PACKAGE_CORE_LOG_CONSOLE_QUERY', false),
+    'whitelist_query' => [
+        "insert into `api_logs`",
+        "select * from `api_logs`",
+        "select column_name as `name`",
+        "select * from `personal_access_tokens`"
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -12,9 +12,15 @@ class DBQueryListener
 {
     public function handle(QueryExecuted $event): void
     {
+        $whitelist = config('fintech.core.whitelist_query', []);
+
         if (config('fintech.core.query_logger_enabled') && config('database.default') != 'mongodb') {
 
             if (app()->runningInConsole() && !config('fintech.core.log_console_query')) {
+                return;
+            }
+
+            if (!empty($whitelist) && Str::contains($event->sql, $whitelist)) {
                 return;
             }
 
