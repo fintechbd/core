@@ -37,7 +37,7 @@ return [
                     $service->service_data = $serviceData;
 
                     if ($service->save()) {
-                        $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_name}</>] service has been updated", 'DONE',false);
+                        $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_name}</>] service has been updated", 'DONE', false);
                     }
                 });
             }
