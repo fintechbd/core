@@ -18,6 +18,13 @@ return [
                     $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_type_name}</>] service type has been updated", 'DONE', false);
                 }
             });
+
+            \Fintech\Business\Facades\Business::serviceStat()->list()->each(function ($serviceStat) use ($command) {
+                $serviceStat->enabled = true;
+                if ($serviceStat->save()) {
+                    $command->successMessage("[<fg=bright-yellow;options=bold>{$serviceStat->id}</>] service stat has been updated", 'DONE', false);
+                }
+            });
         }
     },
     '1.0.2' => function (AppUpdateCommand $command) {
