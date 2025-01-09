@@ -10,12 +10,17 @@ return [
 //        dump(get_class($command));
 //        //        $this->call('db:seed', ['--class' => \Fintech\Transaction\Seeders\PolicySeeder::class]);
 //    },
-//    '1.0.3' => function (AppUpdateCommand $command) {
-//        dump(get_class($command));
-//        //        $this->call('db:seed', ['--class' => \Fintech\Transaction\Seeders\PolicySeeder::class]);
-//    },
+    '1.0.3' => function (AppUpdateCommand $command) {
+        if (\Fintech\Core\Facades\Core::packageExists('Business')) {
+            \Fintech\Business\Facades\Business::serviceType()->list()->each(function ($service) use ($command) {
+                $service->enabled = true;
+                if ($service->save()) {
+                    $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_type_name}</>] service type has been updated", 'DONE', false);
+                }
+            });
+        }
+    },
     '1.0.2' => function (AppUpdateCommand $command) {
-
         if (\Fintech\Core\Facades\Core::packageExists('Business')) {
 
             if ($serviceSetting = \Fintech\Business\Facades\Business::serviceSetting()->create([
