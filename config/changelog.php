@@ -35,6 +35,7 @@ return [
                     $serviceData = $service->service_data ?? [];
                     $serviceData['visible_website_kommerce'] = 'yes';
                     $service->service_data = $serviceData;
+                    $service->enabled = true;
 
                     if ($service->save()) {
                         $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_name}</>] service has been updated", 'DONE', false);
