@@ -7,7 +7,7 @@ use Fintech\Core\Supports\Updater;
 use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 
-class AppUpdateCommand extends Command
+class AppReleaseCommand extends Command
 {
     use HasCoreSetting;
 
@@ -16,7 +16,7 @@ class AppUpdateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'core:app-update';
+    protected $signature = 'core:app-release';
 
     /**
      * The console command description.
@@ -39,7 +39,7 @@ class AppUpdateCommand extends Command
         $updater = app()->make(Updater::class);
 
         try {
-            $this->infoMessage("Application Upgrade", 'RUNNING', false);
+            $this->infoMessage("Application Release", 'RUNNING', false);
 
             $this->infoMessage("Current version", $updater->current(), false);
 
@@ -61,19 +61,19 @@ class AppUpdateCommand extends Command
 
             $this->successMessage("Application updated version", $updater->current(), false);
 
-            $this->successMessage("Application Upgrade", 'COMPLETE', false);
+            $this->successMessage("Application Release", 'COMPLETE', false);
 
             return self::SUCCESS;
 
         } catch (AlreadyLatestVersionException $e) {
 
             $this->errorMessage($e->getMessage(), 'ERROR', false);
-            $this->successMessage("Application Upgrade", 'SKIPPED', false);
+            $this->successMessage("Application Release", 'SKIPPED', false);
 
         } catch (\Exception $e) {
 
             $this->errorMessage($e->getMessage());
-            $this->errorMessage("Application Upgrade", 'FAILED', false);
+            $this->errorMessage("Application Release", 'FAILED', false);
         }
         return self::FAILURE;
     }

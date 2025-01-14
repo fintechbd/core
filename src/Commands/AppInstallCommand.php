@@ -17,7 +17,7 @@ class AppInstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:install
+    protected $signature = 'core:app-install
                             {--states : Seed states data if metadata modules installed}
                             {--cities : Seed cities data if metadata modules installed}
                             {--countries= : Seed which country banks data if bank modules installed}';
@@ -29,7 +29,7 @@ class AppInstallCommand extends Command
      */
     protected $description = 'Install the application\'s prerequisites.';
 
-    private string $module = 'App';
+    private string $module = 'Core';
 
     /**
      * Execute the console command.
@@ -41,14 +41,6 @@ class AppInstallCommand extends Command
 
             if (Config::get('database.connections.support') == null) {
                 $this->components->error('Missing `support` connection in database configuration.');
-                $this->comment("'support' => [
-    'driver' => 'sqlite',
-    'url' => env('DATABASE_URL'),
-    'database' => storage_path('app' . DIRECTORY_SEPARATOR . 'support.sqlite'),
-    'prefix' => '',
-    'foreign_key_constraints' => false,
-],");
-                $this->components->info("Add given lines inside of  `config/database.php` files `connections` array than try again.");
                 return self::FAILURE;
             }
 
