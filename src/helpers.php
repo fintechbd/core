@@ -15,7 +15,6 @@ if (!function_exists('permission_format')) {
 }
 
 if (!function_exists('action_link')) {
-
     function action_link($url, $label, $method = 'get'): array
     {
         return [
@@ -27,7 +26,6 @@ if (!function_exists('action_link')) {
 }
 
 if (!function_exists('currency')) {
-
     /**
      * @param string|float|int|null $amount
      * @param string|null $code
@@ -40,7 +38,6 @@ if (!function_exists('currency')) {
 }
 
 if (!function_exists('entry_number')) {
-
     /**
      * generate a right format purchase reject order accept number for receipt
      *
@@ -56,16 +53,15 @@ if (!function_exists('entry_number')) {
         $length = (int)config('fintech.core.entry_number_length', 20) - strlen($prefix);
 
         return $prefix . str_pad(
-            filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
-            $length,
-            config('fintech.core.entry_number_fill', '0'),
-            STR_PAD_LEFT
-        );
+                filter_var($serial, FILTER_SANITIZE_NUMBER_INT),
+                $length,
+                config('fintech.core.entry_number_fill', '0'),
+                STR_PAD_LEFT
+            );
     }
 }
 
 if (!function_exists('entry_timeline')) {
-
     /**
      * return a array that is compilable with timeline display program
      *
@@ -151,7 +147,6 @@ if (!function_exists('response_format')) {
 }
 
 if (!function_exists('singleton')) {
-
     /**
      * @param string $abstract
      * @param null $filters
@@ -209,5 +204,19 @@ if (!function_exists('recursive_copy_dir')) {
             }
             recursive_copy_dir($src . DIRECTORY_SEPARATOR . $file, $dest . DIRECTORY_SEPARATOR . $file);
         }
+    }
+}
+
+if (!function_exists('throttle_key')) {
+    /**
+     * Get the rate limiting throttle key for the request.
+     */
+    function throttle_key(): string
+    {
+        $key = request()->input(config('fintech.auth.auth_field', 'login_id'));
+
+        return \Illuminate\Support\Str::transliterate(
+            \Illuminate\Support\Str::lower($key) . '|' . request()->ip()
+        );
     }
 }
