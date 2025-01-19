@@ -7,13 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class TriggerNotification implements ShouldQueue
 {
     /**
-     * The name of the queue the job should be sent to.
-     *
-     * @var string|null
-     */
-    public $queue = 'notification';
-
-    /**
      * The time (seconds) before the job should be processed.
      *
      * @var int
@@ -40,6 +33,12 @@ class TriggerNotification implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        $aliases = $event->aliases();
+        if (method_exists($event, 'aliases')) {
+            $aliases = $event->aliases();
+
+            logger()->debug(get_class($event), $aliases);
+
+        }
+
     }
 }
