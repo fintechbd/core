@@ -8,10 +8,8 @@ use Fintech\Bell\Notifications\EmailNotification;
 use Fintech\Bell\Notifications\LogNotification;
 use Fintech\Bell\Notifications\PushNotification;
 use Fintech\Bell\Notifications\SmsNotification;
-use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -114,11 +112,11 @@ class TriggerNotification implements ShouldQueue
             }
         }
 
-//        if (!empty($recipients['extra'])) {
-//            if ($admin = $userService->findWhere(['id' => 1])) {
-//                $users->push($admin);
-//            }
-//        }
+        //        if (!empty($recipients['extra'])) {
+        //            if ($admin = $userService->findWhere(['id' => 1])) {
+        //                $users->push($admin);
+        //            }
+        //        }
 
         return $users->unique();
     }

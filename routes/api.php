@@ -72,8 +72,8 @@ if (Config::get('fintech.core.enabled')) {
 
             Route::apiResource('mails', \Fintech\Core\Http\Controllers\MailController::class)
                 ->only(['index', 'show', 'destroy']);
-    Route::post('mails/{mail}/restore', [\Fintech\Core\Http\Controllers\MailController::class, 'restore'])->name('mails.restore');
+            Route::post('mails/{mail}/restore', [\Fintech\Core\Http\Controllers\MailController::class, 'restore'])->name('mails.restore');
 
-    //DO NOT REMOVE THIS LINE//
+            //DO NOT REMOVE THIS LINE//
         });
 }

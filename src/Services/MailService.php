@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\MailRepository;
 
 /**
@@ -16,7 +15,9 @@ class MailService
      * MailService constructor.
      * @param MailRepository $mailRepository
      */
-    public function __construct(private readonly MailRepository $mailRepository) { }
+    public function __construct(private readonly MailRepository $mailRepository)
+    {
+    }
 
     /**
      * @param array $filters

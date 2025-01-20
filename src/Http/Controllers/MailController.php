@@ -1,17 +1,14 @@
 <?php
 
 namespace Fintech\Core\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Http\Resources\MailResource;
 use Fintech\Core\Http\Resources\MailCollection;
 use Fintech\Core\Http\Requests\ImportMailRequest;
-use Fintech\Core\Http\Requests\StoreMailRequest;
-use Fintech\Core\Http\Requests\UpdateMailRequest;
 use Fintech\Core\Http\Requests\IndexMailRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
@@ -71,7 +68,7 @@ class MailController extends Controller
             $mail = Core::mail()->find($id);
 
             if (!$mail) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.mail_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.mail_model'), $id);
             }
 
             return new MailResource($mail);
@@ -103,7 +100,7 @@ class MailController extends Controller
             $mail = Core::mail()->find($id);
 
             if (!$mail) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.mail_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.mail_model'), $id);
             }
 
             if (!Core::mail()->destroy($id)) {
@@ -139,7 +136,7 @@ class MailController extends Controller
             $mail = Core::mail()->find($id, true);
 
             if (!$mail) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.mail_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.mail_model'), $id);
             }
 
             if (!Core::mail()->restore($id)) {

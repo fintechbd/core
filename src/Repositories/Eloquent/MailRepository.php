@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\MailRepository as InterfacesMailRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class MailRepository
@@ -17,7 +15,7 @@ class MailRepository extends EloquentRepository implements InterfacesMailReposit
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.mail_model', \Fintech\Core\Models\Mail::class));
+        parent::__construct(config('fintech.core.mail_model', \Fintech\Core\Models\Mail::class));
     }
 
     /**

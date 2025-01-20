@@ -213,7 +213,7 @@ return [
     */
     'client_error_model' => \Fintech\Core\Models\ClientError::class,
 
-    
+
     /*
     |--------------------------------------------------------------------------
     | Mail Model
