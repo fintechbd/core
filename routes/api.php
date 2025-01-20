@@ -70,6 +70,10 @@ if (Config::get('fintech.core.enabled')) {
                 ->only('index', 'show', 'destroy');
             Route::post('client-errors/{client_error}/restore', [\Fintech\Core\Http\Controllers\ClientErrorController::class, 'restore'])->name('client-errors.restore');
 
-            //DO NOT REMOVE THIS LINE//
+            Route::apiResource('mails', \Fintech\Core\Http\Controllers\MailController::class)
+                ->only(['index', 'show', 'destroy']);
+    Route::post('mails/{mail}/restore', [\Fintech\Core\Http\Controllers\MailController::class, 'restore'])->name('mails.restore');
+
+    //DO NOT REMOVE THIS LINE//
         });
 }

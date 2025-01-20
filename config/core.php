@@ -213,6 +213,16 @@ return [
     */
     'client_error_model' => \Fintech\Core\Models\ClientError::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Mail Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'mail_model' => \Fintech\Core\Models\Mail::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -246,6 +256,8 @@ return [
 
         Fintech\Core\Interfaces\ClientErrorRepository::class
         => Fintech\Core\Repositories\Eloquent\ClientErrorRepository::class,
+
+        \Fintech\Core\Interfaces\MailRepository::class => \Fintech\Core\Repositories\Eloquent\MailRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

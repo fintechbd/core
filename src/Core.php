@@ -56,7 +56,16 @@ class Core
         return app(\Fintech\Core\Services\ClientErrorService::class);
     }
 
+    /**
+     * @return \Fintech\Core\Services\MailService
+     */
+    public function mail()
+    {
+        return app(\Fintech\Core\Services\MailService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 
 
