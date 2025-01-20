@@ -33,12 +33,8 @@ class TriggerNotification implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        if (method_exists($event, 'aliases')) {
-            $aliases = $event->aliases();
+        $variables = $event->variables();
 
-            logger()->debug(get_class($event), $aliases);
-
-        }
-
+        $templates = $event->templates();
     }
 }

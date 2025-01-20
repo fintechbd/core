@@ -2,6 +2,8 @@
 
 namespace Fintech\Core\Abstracts;
 
+use Fintech\Core\Facades\Core;
+
 abstract class BaseEvent
 {
     public $variables = [];
@@ -9,6 +11,8 @@ abstract class BaseEvent
     public $ipAddress;
 
     public $agent;
+
+    public $templates;
 
     protected function init(): void
     {
@@ -43,6 +47,16 @@ abstract class BaseEvent
         }
 
         return $this->variables;
+    }
+
+    public function templates()
+    {
+        if (Core::packageExists('Bell') && $this->templates == null) {
+            $this->templates = \Fintech\Bell\Facades\Bell::template()
+                ->list(['trigger_code' => static::class, 'enabled' => true]);
+        }
+
+        return $this->templates;
     }
 
 }
