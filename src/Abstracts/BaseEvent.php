@@ -16,7 +16,6 @@ abstract class BaseEvent
 
     protected function init(): void
     {
-
         $this->ip();
         $this->userAgent();
         $this->variables();
@@ -52,11 +51,8 @@ abstract class BaseEvent
     public function templates()
     {
         if (Core::packageExists('Bell') && $this->templates == null) {
-            $this->templates = \Fintech\Bell\Facades\Bell::template()
-                ->list(['trigger_code' => static::class, 'enabled' => true]);
+            $this->templates = \Fintech\Bell\Facades\Bell::template()->list(['trigger_code' => get_class($this), 'enabled' => true]);
         }
-
         return $this->templates;
     }
-
 }
