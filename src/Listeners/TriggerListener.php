@@ -3,6 +3,7 @@
 namespace Fintech\Core\Listeners;
 
 use Fintech\Auth\Facades\Auth;
+use Fintech\Bell\Notifications\DynamicNotification;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
@@ -45,14 +46,16 @@ class TriggerListener implements ShouldQueue
         $templates = $event->templates();
 
         foreach ($templates as $template) {
-            $recipients = $this->recipients($event, $template->recipients);
-            match ($template->medium) {
-                NotificationMedium::Sms => Notification::send($recipients, new SmsNotification($template, $variables)),
-                NotificationMedium::Email => Notification::send($recipients, new EmailNotification($template, $variables)),
-                NotificationMedium::Push => Notification::send($recipients, new PushNotification($template, $variables)),
-                NotificationMedium::Chat => Notification::send($recipients, new ChatNotification($template, $variables)),
-                default => Notification::send($recipients, new LogNotification($template, $variables)),
-            };
+
+            [$users,$anonymous] = $this->recipients($event, $template);
+
+            if ($users->isNotEmpty()) {
+                Notification::send($users, new DynamicNotification($template, $variables));
+            }
+
+            if ($anonymous->isNotEmpty()) {}
+                Notification::route($users)->notify(new DynamicNotification($template, $variables));
+
         }
     }
 
@@ -83,9 +86,13 @@ class TriggerListener implements ShouldQueue
         return null;
     }
 
-    private function recipients(object $event, array $recipients = []): Collection
+    private function recipients(object $event, object $template): Collection
     {
         $users = collect();
+
+        $recipients = $template->recipients;
+
+        $extraRecipients = collect();
 
         if (isset($recipients['admin']) && $recipients['admin'] === true) {
             if ($admin = $this->systemAdmin()) {
@@ -105,11 +112,11 @@ class TriggerListener implements ShouldQueue
             }
         }
 
-        //        if (!empty($recipients['extra'])) {
-        //            if ($admin = $userService->findWhere(['id' => 1])) {
-        //                $users->push($admin);
-        //            }
-        //        }
+        if (!empty($recipients['extra'])) {
+            if ($admin = $userService->findWhere(['id' => 1])) {
+                $users->push($admin);
+            }
+        }
 
         return $users->unique();
     }

@@ -14,9 +14,7 @@ class Recipient
     public function __construct(
         private string $name = '',
         private string $description = '',
-        private bool   $enabled = false,
-        private array  $variables = [],
-        private array  $recipients = [],
+        private bool   $enabled = false
     ) {
     }
 
@@ -34,15 +32,4 @@ class Recipient
     {
         return $this->enabled;
     }
-
-    public function variables(): array
-    {
-        return $this->variables;
-    }
-
-    public function recipients(): array
-    {
-        return $this->recipients;
-    }
-
 }
