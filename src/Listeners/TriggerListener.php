@@ -2,15 +2,14 @@
 
 namespace Fintech\Core\Listeners;
 
-use Fintech\Auth\Facades\Auth;
-use Fintech\Bell\Notifications\DynamicNotification;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class TriggerListener implements ShouldQueue
 {
@@ -29,40 +28,31 @@ class TriggerListener implements ShouldQueue
     public $tries = 1;
 
     /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * Handle the event.
      */
     public function handle(object $event): void
     {
         $variables = $event->variables();
 
-        $templates = $event->templates();
+        if (Core::packageExists('Bell')) {
 
-        foreach ($templates as $template) {
+            $templates = $event->templates();
 
-            [$users,$anonymous] = $this->recipients($event, $template);
+            foreach ($templates as $template) {
 
-            if ($users->isNotEmpty()) {
-                Notification::send($users, new DynamicNotification($template, $variables));
+                $recipients = $this->recipients($event, $template);
+
+                logger("Recipients", $recipients->toArray());
+
+                Notification::send($recipients, new \Fintech\Bell\Notifications\DynamicNotification($template->content, $variables));
             }
-
-            if ($anonymous->isNotEmpty()) {}
-                Notification::route($users)->notify(new DynamicNotification($template, $variables));
-
         }
     }
 
     private function systemAdmin(): null|Authenticatable|BaseModel
     {
         if (Core::packageExists('Auth')) {
-            return Auth::user()->findWhere(['id' => 1]);
+            return \Fintech\Auth\Facades\Auth::user()->findWhere(['id' => 1]);
         }
 
         return null;
@@ -70,7 +60,7 @@ class TriggerListener implements ShouldQueue
 
     private function eventUser($event): null|Authenticatable|BaseModel
     {
-        if (Core::packageExists('Auth') && property_exists($event, 'user')) {
+        if (property_exists($event, 'user')) {
             return $event->user;
         }
 
@@ -79,7 +69,7 @@ class TriggerListener implements ShouldQueue
 
     private function eventAgent($event): null|Authenticatable|BaseModel
     {
-        if (Core::packageExists('Auth') && property_exists($event, 'agent')) {
+        if (property_exists($event, 'agent')) {
             return $event->agent;
         }
 
@@ -88,36 +78,54 @@ class TriggerListener implements ShouldQueue
 
     private function recipients(object $event, object $template): Collection
     {
-        $users = collect();
+        $templateRecipients = $template->recipients;
 
-        $recipients = $template->recipients;
+        $recipients = collect();
 
-        $extraRecipients = collect();
-
-        if (isset($recipients['admin']) && $recipients['admin'] === true) {
+        if (isset($templateRecipients['admin']) && $templateRecipients['admin'] === true) {
             if ($admin = $this->systemAdmin()) {
-                $users->push($admin);
+                $recipients->push($admin);
             }
         }
 
-        if (isset($recipients['customer']) && $recipients['customer'] === true) {
+        if (isset($templateRecipients['customer']) && $templateRecipients['customer'] === true) {
             if ($customer = $this->eventUser($event)) {
-                $users->push($customer);
+                $recipients->push($customer);
             }
         }
 
-        if (isset($recipients['agent']) && $recipients['agent'] === true) {
+        if (isset($templateRecipients['agent']) && $templateRecipients['agent'] === true) {
             if ($agent = $this->eventAgent($event)) {
-                $users->push($agent);
+                $recipients->push($agent);
             }
         }
 
-        if (!empty($recipients['extra'])) {
-            if ($admin = $userService->findWhere(['id' => 1])) {
-                $users->push($admin);
+        foreach ($templateRecipients['extra'] as $recipient) {
+            $recipient = trim($recipient);
+
+            if ($template->medium == NotificationMedium::Sms) {
+                if (preg_match('/^\+[1-9]\d{9,14}$/i', $recipient) === 1) {
+                    $recipients->push((new AnonymousNotifiable())->route(NotificationMedium::Sms->value, $recipient));
+                }
+            } elseif ($template->medium == NotificationMedium::Email) {
+                if (filter_var($recipient, FILTER_VALIDATE_EMAIL) !== false) {
+                    $recipients->push((new AnonymousNotifiable())->route(NotificationMedium::Email->value, [$recipient => 'Anonymous Notifiable']));
+
+                    $recipients->push($recipient);
+                }
+            } elseif ($template->medium == NotificationMedium::Chat) {
+                if (filter_var($recipient, FILTER_VALIDATE_INT) !== false && Core::packageExists('Auth')) {
+                    if ($user = \Fintech\Auth\Facades\Auth::user()->find($recipient)) {
+                        $recipients->push($user);
+                    }
+                }
+            } elseif ($template->medium == NotificationMedium::Push) {
+                $recipients->push($recipient);
             }
         }
 
-        return $users->unique();
+        return $recipients->filter(function ($recipient) {
+            return $recipient !== null;
+        });
     }
 }
