@@ -3,6 +3,7 @@
 namespace Fintech\Core\Abstracts;
 
 use Fintech\Core\Facades\Core;
+use Illuminate\Support\Collection;
 
 abstract class BaseEvent
 {
@@ -53,6 +54,6 @@ abstract class BaseEvent
         if (Core::packageExists('Bell') && $this->templates == null) {
             $this->templates = \Fintech\Bell\Facades\Bell::template()->list(['trigger_code' => get_class($this), 'enabled' => true]);
         }
-        return $this->templates;
+        return $this->templates == null ? collect() : $this->templates;
     }
 }

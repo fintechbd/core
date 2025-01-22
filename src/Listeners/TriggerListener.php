@@ -6,7 +6,6 @@ use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
@@ -32,17 +31,9 @@ class TriggerListener implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        $variables = $event->variables();
-
         if (Core::packageExists('Bell')) {
-
-            $templates = $event->templates();
-
-            foreach ($templates as $template) {
-
-                $recipients = $this->recipients($event, $template);
-
-                Notification::send($recipients, new \Fintech\Bell\Notifications\DynamicNotification($template->medium, $template->content, $variables));
+            foreach ($event->templates() as $template) {
+                Notification::send($this->recipients($event, $template), new \Fintech\Bell\Notifications\DynamicNotification($template->medium, $template->content, $event->variables()));
             }
         }
     }
@@ -103,13 +94,11 @@ class TriggerListener implements ShouldQueue
 
             if ($template->medium == NotificationMedium::Sms) {
                 if (preg_match('/^\+[1-9]\d{9,14}$/i', $recipient) === 1) {
-                    $recipients->push((new AnonymousNotifiable())->route(NotificationMedium::Sms->value, $recipient));
+                    $recipients->push(Notification::route(NotificationMedium::Sms->value, $recipient));
                 }
             } elseif ($template->medium == NotificationMedium::Email) {
                 if (filter_var($recipient, FILTER_VALIDATE_EMAIL) !== false) {
-                    $recipients->push((new AnonymousNotifiable())->route(NotificationMedium::Email->value, [$recipient => 'Anonymous Notifiable']));
-
-                    $recipients->push($recipient);
+                    $recipients->push(Notification::route(NotificationMedium::Email->value, [$recipient => 'Anonymous Notification']));
                 }
             } elseif ($template->medium == NotificationMedium::Chat) {
                 if (filter_var($recipient, FILTER_VALIDATE_INT) !== false && Core::packageExists('Auth')) {
@@ -122,8 +111,6 @@ class TriggerListener implements ShouldQueue
             }
         }
 
-        return $recipients->filter(function ($recipient) {
-            return $recipient !== null;
-        });
+        return $recipients->filter(fn($recipient) => gettype($recipient) == 'object');
     }
 }
