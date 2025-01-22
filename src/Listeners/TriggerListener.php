@@ -3,18 +3,15 @@
 namespace Fintech\Core\Listeners;
 
 use Fintech\Auth\Facades\Auth;
-use Fintech\Bell\Notifications\ChatNotification;
-use Fintech\Bell\Notifications\EmailNotification;
-use Fintech\Bell\Notifications\LogNotification;
-use Fintech\Bell\Notifications\PushNotification;
-use Fintech\Bell\Notifications\SmsNotification;
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class TriggerNotification implements ShouldQueue
+class TriggerListener implements ShouldQueue
 {
     /**
      * The time (seconds) before the job should be processed.
@@ -38,35 +35,6 @@ class TriggerNotification implements ShouldQueue
 
     }
 
-
-    public function systemAdmin()
-    {
-        if (Core::packageExists('Auth')) {
-            return \Fintech\Auth\Facades\Auth::user()->findWhere(['id' => 1]);
-        }
-
-        return null;
-    }
-
-    public function eventUser($event)
-    {
-        if (Core::packageExists('Auth') && property_exists($event, 'user')) {
-            return $event->user;
-        }
-
-        return null;
-    }
-
-    public function eventAgent($event)
-    {
-        if (Core::packageExists('Auth') && property_exists($event, 'agent')) {
-            return $event->agent;
-        }
-
-        return null;
-    }
-
-
     /**
      * Handle the event.
      */
@@ -88,11 +56,36 @@ class TriggerNotification implements ShouldQueue
         }
     }
 
-    public function recipients(object $event, array $recipients = []): Collection
+    private function systemAdmin(): null|Authenticatable|BaseModel
+    {
+        if (Core::packageExists('Auth')) {
+            return Auth::user()->findWhere(['id' => 1]);
+        }
+
+        return null;
+    }
+
+    private function eventUser($event): null|Authenticatable|BaseModel
+    {
+        if (Core::packageExists('Auth') && property_exists($event, 'user')) {
+            return $event->user;
+        }
+
+        return null;
+    }
+
+    private function eventAgent($event): null|Authenticatable|BaseModel
+    {
+        if (Core::packageExists('Auth') && property_exists($event, 'agent')) {
+            return $event->agent;
+        }
+
+        return null;
+    }
+
+    private function recipients(object $event, array $recipients = []): Collection
     {
         $users = collect();
-
-        $userService = Auth::user();
 
         if (isset($recipients['admin']) && $recipients['admin'] === true) {
             if ($admin = $this->systemAdmin()) {

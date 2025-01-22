@@ -13,7 +13,7 @@ enum NotificationMedium: string implements \JsonSerializable
     #[Enumeration(color: Color::Zinc500)]
     case Sms = 'sms';
     #[Enumeration(color: Color::Teal500)]
-    case Email = 'email';
+    case Email = 'mail';
     #[Enumeration(color: Color::Green500)]
     case Push = 'push';
     #[Enumeration(color: Color::Sky500)]
