@@ -3,7 +3,6 @@
 namespace Fintech\Core\Abstracts;
 
 use Fintech\Core\Facades\Core;
-use Illuminate\Support\Collection;
 
 abstract class BaseEvent
 {

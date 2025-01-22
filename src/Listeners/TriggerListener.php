@@ -111,6 +111,6 @@ class TriggerListener implements ShouldQueue
             }
         }
 
-        return $recipients->filter(fn($recipient) => gettype($recipient) == 'object');
+        return $recipients->filter(fn ($recipient) => gettype($recipient) == 'object');
     }
 }
