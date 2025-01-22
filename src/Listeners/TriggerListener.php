@@ -5,7 +5,6 @@ namespace Fintech\Core\Listeners;
 use Fintech\Auth\Facades\Auth;
 use Fintech\Bell\Notifications\DynamicNotification;
 use Fintech\Core\Abstracts\BaseModel;
-use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
@@ -53,8 +52,9 @@ class TriggerListener implements ShouldQueue
                 Notification::send($users, new DynamicNotification($template, $variables));
             }
 
-            if ($anonymous->isNotEmpty()) {}
-                Notification::route($users)->notify(new DynamicNotification($template, $variables));
+            if ($anonymous->isNotEmpty()) {
+            }
+            Notification::route($users)->notify(new DynamicNotification($template, $variables));
 
         }
     }
