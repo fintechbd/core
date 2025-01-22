@@ -42,9 +42,7 @@ class TriggerListener implements ShouldQueue
 
                 $recipients = $this->recipients($event, $template);
 
-                logger("Recipients", $recipients->toArray());
-
-                Notification::send($recipients, new \Fintech\Bell\Notifications\DynamicNotification($template->content, $variables));
+                Notification::send($recipients, new \Fintech\Bell\Notifications\DynamicNotification($template->medium, $template->content, $variables));
             }
         }
     }
