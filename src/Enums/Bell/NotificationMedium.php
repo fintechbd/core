@@ -18,4 +18,6 @@ enum NotificationMedium: string implements \JsonSerializable
     case Push = 'push';
     #[Enumeration(color: Color::Amber500, label: 'Message')]
     case Chat = 'chat';
+    #[Enumeration(color: Color::Lime500, label: 'In App/Web')]
+    case Database = 'database';
 }
