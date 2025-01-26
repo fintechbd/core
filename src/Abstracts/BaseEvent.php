@@ -14,6 +14,8 @@ abstract class BaseEvent
 
     public $templates;
 
+
+
     protected function init(): void
     {
         $this->ip();
@@ -42,7 +44,9 @@ abstract class BaseEvent
     public function variables(): array
     {
         if (empty($this->variables)) {
+
             $this->variables = $this->aliases();
+            $this->variables['__timestamp__'] = now()->format('r');
         }
 
         return $this->variables;

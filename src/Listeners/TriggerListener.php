@@ -31,9 +31,24 @@ class TriggerListener implements ShouldQueue
      */
     public function handle(object $event): void
     {
+        $variables = $event->variables();
+
+        if (Core::packageExists('Auth')) {
+
+            $whitelist = config('fintech.auth.geoip.whitelist', []);
+
+            if (!empty($variables['__ip__']) &&
+                !in_array($variables['__ip__'], $whitelist)) {
+                $ipInfo = \Fintech\Auth\Facades\Auth::geoip()->find($variables['__ip__']);
+                $variables['__location__'] = $ipInfo['city'] . ', ' . $ipInfo['region_name'] . ', ' . $ipInfo['country_name'] . '.';
+                $variables['__latitude__'] = round($ipInfo['latitude'], 5);
+                $variables['__longitude__'] = round($ipInfo['longitude'], 5);
+            }
+        }
+
         if (Core::packageExists('Bell')) {
             foreach ($event->templates() as $template) {
-                Notification::send($this->recipients($event, $template), new \Fintech\Bell\Notifications\DynamicNotification($template->medium, $template->content, $event->variables()));
+                Notification::send($this->recipients($event, $template), new \Fintech\Bell\Notifications\DynamicNotification($template->medium, $template->content, $variables));
             }
         }
     }
@@ -111,6 +126,6 @@ class TriggerListener implements ShouldQueue
             }
         }
 
-        return $recipients->filter(fn ($recipient) => gettype($recipient) == 'object');
+        return $recipients->filter(fn($recipient) => gettype($recipient) == 'object');
     }
 }
