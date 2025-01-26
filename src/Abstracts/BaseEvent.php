@@ -18,8 +18,8 @@ abstract class BaseEvent
 
     protected function init(): void
     {
-        $this->ip();
-        $this->userAgent();
+//        $this->ip();
+//        $this->userAgent();
         $this->variables();
     }
 
