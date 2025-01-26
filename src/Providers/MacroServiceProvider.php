@@ -134,9 +134,7 @@ class MacroServiceProvider extends ServiceProvider
 
             if ($data instanceof Exception) {
 
-                if (config('app.debug', false)) {
-                    throw new Exception($data->getMessage(), $data->getCode(), $data);
-                }
+                throw_if(config('app.debug', false), $data);
 
                 $data = $data->getMessage();
             }
