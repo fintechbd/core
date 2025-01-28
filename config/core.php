@@ -10,7 +10,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'enabled' => env('PACKAGE_CORE_ENABLED', true),
+    'enabled' => env('CORE_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'default_currency_code' => env('PACKAGE_CORE_DEFAULT_CURRENCY_CODE', 'USD'),
+    'default_currency_code' => env('CORE_DEFAULT_CURRENCY_CODE', 'USD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'api_logger_enabled' => env('PACKAGE_CORE_API_LOG', false),
+    'api_logger_enabled' => env('CORE_OUTBOUND_API_LOG', false),
     'api_logger_whitelist' => [],
 
     /*
@@ -35,7 +35,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the log of inbound http request logging
     */
-    'http_logger_enabled' => env('PACKAGE_CORE_REQUEST_LOG', false),
+    'http_logger_enabled' => env('CORE_INBOUND_REQUEST_LOG', false),
     'secret_fields' => ['pin', 'password'],
     'http_logger_whitelist' => [
         '/api-logs',
@@ -58,8 +58,8 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the db query logger
     */
-    'query_logger_enabled' => env('PACKAGE_CORE_QUERY_LOGGER_ENABLED', false),
-    'log_console_query' => env('PACKAGE_CORE_LOG_CONSOLE_QUERY', false),
+    'query_logger_enabled' => env('CORE_QUERY_LOGGER_ENABLED', false),
+    'log_console_query' => env('CORE_LOG_CONSOLE_QUERY', false),
     'whitelist_query' => [
         "insert into `api_logs`",
         "select * from `api_logs`",
@@ -73,7 +73,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'blameable_enabled' => env('PACKAGE_CORE_BLAMEABLE_ENABLED', false),
+    'blameable_enabled' => env('CORE_BLAMEABLE_ENABLED', false),
     'blameable_model' => Fintech\Auth\Models\User::class,
     'blameable_guard' => 'sanctum',
     /*
@@ -131,9 +131,9 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'encrypt_response' => (bool)env('PACKAGE_CORE_ENCRYPT_COMMUNICATION', false),
-    'encryption_key' => env('PACKAGE_CORE_ENCRYPT_KEY', ''),
-    'append_status_code' => (bool)env('PACKAGE_CORE_APPEND_HTTP_CODE', false),
+    'encrypt_response' => (bool)env('CORE_ENCRYPT_COMMUNICATION', false),
+    'encryption_key' => env('CORE_ENCRYPT_KEY', ''),
+    'append_status_code' => (bool)env('CORE_APPEND_HTTP_CODE', false),
 
     /*
     |--------------------------------------------------------------------------

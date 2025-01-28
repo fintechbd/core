@@ -52,9 +52,8 @@ class CoreServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any package services.
-     * @param Router $router
      */
-    public function boot(Router $router): void
+    public function boot(): void
     {
         $this->loadSettings();
 
