@@ -68,14 +68,19 @@ class AppUpdateCommand extends Command
         } catch (AlreadyLatestVersionException $e) {
 
             $this->errorMessage($e->getMessage(), 'ERROR', false);
+
             $this->successMessage("Application Upgrade", 'SKIPPED', false);
+
+            return self::SUCCESS;
 
         } catch (\Exception $e) {
 
             $this->errorMessage($e->getMessage());
+
             $this->errorMessage("Application Upgrade", 'FAILED', false);
+
+            return self::FAILURE;
         }
-        return self::FAILURE;
     }
 
 }
