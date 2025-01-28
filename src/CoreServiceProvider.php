@@ -15,7 +15,6 @@ use Fintech\Core\Providers\RepositoryServiceProvider;
 use Fintech\Core\Providers\RouteServiceProvider;
 use Fintech\Core\Providers\ValidatorServiceProvider;
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
-use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
