@@ -10,7 +10,7 @@ trait HasCoreSetting
 {
     private function prefix(): string
     {
-        return "<fgColor=bright-white;bgColor=bright-blue;options=bold> {$this->module} </> ";
+        return " ";
     }
 
     /**
@@ -31,18 +31,12 @@ trait HasCoreSetting
                 });
                 return;
             }
-            $this->components->twoColumnDetail(
-                "<fgColor=white;bgColor=bright-blue;options=bold> {$this->module} </> <fgColor=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
-                "<fgColor=yellow;options=bold>SKIP</>"
-            );
+            $this->infoMessage("<fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.", "SKIP");
         } catch (Exception $exception) {
             $this->errorMessage($exception->getMessage());
         }
     }
 
-    /**
-     * @throws Throwable
-     */
     public function task(string $message, $task = null, $doneLabel = 'DONE', $failLabel = 'FAILED'): void
     {
         $startTime = microtime(true);
@@ -50,41 +44,35 @@ trait HasCoreSetting
         $result = false;
 
         try {
-            $result = ($task ?: fn () => true)($this);
+            $result = ($task ?: fn() => true)($this);
         } catch (Throwable $e) {
             throw $e;
         } finally {
             $runTime = ($task != null) ? number_format((microtime(true) - $startTime) * 1000) . "ms "
                 : "";
 
-            $this->components->twoColumnDetail(
-                $this->prefix() . $message,
-                "<fgColor=gray>{$runTime}</>" . ($result !== false ? "<fgColor=green;options=bold>{$doneLabel}</>" : "<fgColor=red;options=bold>{$failLabel}</>")
-            );
+            ($result !== false)
+                ? $this->successMessage($message, $doneLabel, false, "<fg=gray>{$runTime}</>")
+                : $this->errorMessage($message, $failLabel, false, "<fg=gray>{$runTime}</>");
         }
     }
-
-    public function errorMessage(string $message, string $label = 'ERROR', bool $addNewline = true): void
+    public function errorMessage(string $message, string $label = 'ERROR', bool $addNewline = true, string $pretext = ''): void
+    {
+        $this->customLineMessage($message, $label, $addNewline, $pretext, 'red');
+    }
+    public function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true, string $pretext = ''): void
+    {
+        $this->customLineMessage($message, $label, $addNewline, $pretext, 'yellow');
+    }
+    public function successMessage(string $message, string $label = 'DONE', bool $addNewline = true, string $pretext = ''): void
+    {
+        $this->customLineMessage($message, $label, $addNewline, $pretext, 'green');
+    }
+    public function customLineMessage(string $message, string $label, bool $addNewline, string $pretext, string $fgColor = 'white', string $bgColor = ''): void
     {
         if ($addNewline) {
             $this->newLine();
         }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=red;options=bold>{$label}</>");
-    }
-
-    public function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
-    {
-        if ($addNewline) {
-            $this->newLine();
-        }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=bright-yellow;options=bold>{$label}</>");
-    }
-
-    public function successMessage(string $message, string $label = 'DONE', bool $addNewline = true): void
-    {
-        if ($addNewline) {
-            $this->newLine();
-        }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=bright-green;options=bold>{$label}</>");
+        $this->components->twoColumnDetail("<fg=bright-white;bg=bright-blue;options=bold> {$this->module} </> {$message}", "{$pretext}<fg=bright-{$fgColor};options=bold;bg={$bgColor}>{$label}</>");
     }
 }

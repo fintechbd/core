@@ -67,11 +67,13 @@ class HealthCheckupCommand extends Command
     private function checkAvailablePackages(): void
     {
         foreach (config('fintech.core.packages', []) as $code => $package) {
-            $this->components->twoColumnDetail(
-                "<fg=bright-white;bg=bright-blue;options=bold> {$package} </> API routes",
-                (config("fintech.{$code}.enabled", false) ? "<fg=green;options=bold>ENABLED</>" : "<fg=red;options=bold>DISABLED</>")
-            );
+            $this->module = $package;
+            (config("fintech.{$code}.enabled", false))
+                ? $this->successMessage("API routes", "ENABLED", false)
+                : $this->errorMessage("API routes", "DISABLED", false);
         }
+
+        $this->module = 'Core';
     }
 
     /**
