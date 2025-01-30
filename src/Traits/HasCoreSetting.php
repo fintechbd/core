@@ -10,7 +10,7 @@ trait HasCoreSetting
 {
     private function prefix(): string
     {
-        return "<fg=bright-white;bg=bright-blue;options=bold> {$this->module} </> ";
+        return "<fgColor=bright-white;bgColor=bright-blue;options=bold> {$this->module} </> ";
     }
 
     /**
@@ -32,8 +32,8 @@ trait HasCoreSetting
                 return;
             }
             $this->components->twoColumnDetail(
-                "<fg=white;bg=bright-blue;options=bold> {$this->module} </> <fg=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
-                "<fg=yellow;options=bold>SKIP</>"
+                "<fgColor=white;bgColor=bright-blue;options=bold> {$this->module} </> <fgColor=red;options=bold>" . __CLASS__ . "</> class is missing the settings property.",
+                "<fgColor=yellow;options=bold>SKIP</>"
             );
         } catch (Exception $exception) {
             $this->errorMessage($exception->getMessage());
@@ -59,7 +59,7 @@ trait HasCoreSetting
 
             $this->components->twoColumnDetail(
                 $this->prefix() . $message,
-                "<fg=gray>{$runTime}</>" . ($result !== false ? " <fg=green;options=bold>{$doneLabel}</>" : " <fg=red;options=bold>{$failLabel}</>")
+                "<fgColor=gray>{$runTime}</>" . ($result !== false ? "<fgColor=green;options=bold>{$doneLabel}</>" : "<fgColor=red;options=bold>{$failLabel}</>")
             );
         }
     }
@@ -69,7 +69,7 @@ trait HasCoreSetting
         if ($addNewline) {
             $this->newLine();
         }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=red;options=bold>{$label}</>");
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=red;options=bold>{$label}</>");
     }
 
     public function infoMessage(string $message, string $label = 'INFO', bool $addNewline = true): void
@@ -77,7 +77,7 @@ trait HasCoreSetting
         if ($addNewline) {
             $this->newLine();
         }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-yellow;options=bold>{$label}</>");
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=bright-yellow;options=bold>{$label}</>");
     }
 
     public function successMessage(string $message, string $label = 'DONE', bool $addNewline = true): void
@@ -85,6 +85,6 @@ trait HasCoreSetting
         if ($addNewline) {
             $this->newLine();
         }
-        $this->components->twoColumnDetail($this->prefix() . $message, "<fg=bright-green;options=bold>{$label}</>");
+        $this->components->twoColumnDetail($this->prefix() . $message, "<fgColor=bright-green;options=bold>{$label}</>");
     }
 }
