@@ -154,10 +154,10 @@ if (!function_exists('singleton')) {
      */
     function singleton(string $abstract, $filters = null): mixed
     {
-        if (!app()->offsetExists($abstract)) {
-            $singleton = app($abstract);
-            app()->instance($abstract, $singleton);
-        }
+//        if (!app()->offsetExists($abstract)) {
+//            $singleton = app($abstract);
+//            app()->instance($abstract, $singleton);
+//        }
 
         $singleton = app($abstract);
 
