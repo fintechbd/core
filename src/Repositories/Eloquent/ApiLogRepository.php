@@ -31,18 +31,20 @@ class ApiLogRepository extends EloquentRepository implements InterfacesApiLogRep
 
         //Searching
         if (!empty($filters['search'])) {
-            $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%")
-                ->orWhere('request_id', '=', $filters['search'])
-                ->orWhere('user_id', '=', $filters['search'])
-                ->orWhere('method', '=', $filters['search'])
-                ->orWhere('ip_address', '=', $filters['search'])
-                ->orWhere('status_code', '=', $filters['search'])
-                ->orWhere('host', 'like', "%{$filters['search']}%")
-                ->orWhere('direction', 'like', "%{$filters['search']}%")
-                ->orWhere('url', 'like', "%{$filters['search']}%")
-                ->orWhere('request', 'like', "%{$filters['search']}%")
-                ->orWhere('response', 'like', "%{$filters['search']}%")
-                ->orWhere('user_agent', 'like', "%{$filters['search']}%");
+            $query->where(function ($query) use ($filters) {
+                return $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%")
+                    ->orWhere('request_id', '=', $filters['search'])
+                    ->orWhere('user_id', '=', $filters['search'])
+                    ->orWhere('method', '=', $filters['search'])
+                    ->orWhere('ip_address', '=', $filters['search'])
+                    ->orWhere('status_code', '=', $filters['search'])
+                    ->orWhere('host', 'like', "%{$filters['search']}%")
+                    ->orWhere('direction', 'like', "%{$filters['search']}%")
+                    ->orWhere('url', 'like', "%{$filters['search']}%")
+                    ->orWhere('request', 'like', "%{$filters['search']}%")
+                    ->orWhere('response', 'like', "%{$filters['search']}%")
+                    ->orWhere('user_agent', 'like', "%{$filters['search']}%");
+            });
         }
 
         if (!empty($filters['id_not_in'])) {
