@@ -66,19 +66,19 @@ class CoreServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../lang' => $this->app->langPath('vendor/core'),
-        ]);
+        ], 'fintech-core-lang');
 
         $this->publishes([
             __DIR__ . '/../config/core.php' => config_path('fintech/core.php'),
             __DIR__ . '/../config/media-library.php' => config_path('media-library.php'),
-        ]);
+        ], 'fintech-core-config');
         $this->publishes([
             __DIR__ . '/../config/changelog.php' => config_path('fintech/changelog.php'),
-        ], 'fintech-changelog');
+        ], 'fintech-core-changelog');
 
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/core'),
-        ]);
+        ], 'fintech-core-views');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
