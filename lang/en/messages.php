@@ -57,4 +57,5 @@ return [
         'success' => 'Successfully assigned order to requested vendor [:slug].',
         'quote_failed' => 'Something went wrong. Please try again later.',
     ],
+    'package_not_installed' => ':module package/module is not installed/available.',
 ];

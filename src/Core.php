@@ -2,6 +2,7 @@
 
 namespace Fintech\Core;
 
+use Fintech\Core\Exceptions\PackageNotInstalledException;
 use Fintech\Core\Services\ApiLogService;
 use Fintech\Core\Services\FailedJobService;
 use Fintech\Core\Services\JobService;
@@ -67,17 +68,22 @@ class Core
     //** Crud Service Method Point Do not Remove **//
 
 
-
-
-
     /**
      * verify if a available addon or package is installed
      *
      * @param string $name
+     * @param bool $throw
      * @return bool
+     * @throws PackageNotInstalledException
      */
-    public function packageExists(string $name): bool
+    public function packageExists(string $name, bool $throw = false): bool
     {
-        return class_exists("\Fintech\\{$name}\Facades\\{$name}");
+        $proof = class_exists("\Fintech\\{$name}\Facades\\{$name}");
+
+        if ($throw && !$proof) {
+            throw new PackageNotInstalledException($name);
+        }
+
+        return $proof;
     }
 }
