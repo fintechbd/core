@@ -17,4 +17,5 @@ enum CatalogType: string implements \JsonSerializable
     case ProofOfAddress = 'proof-of-address';
     case Relation = 'relation';
     case RemittancePurpose = 'remittance-purpose';
+    case BusinessIndustry = 'business-industry';
 }
