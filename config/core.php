@@ -191,7 +191,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'translation_model' => \Fintech\Core\Models\Translation::class,
+    'translation_model' => Fintech\Core\Models\Translation::class,
 
 
     /*
@@ -201,7 +201,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'job_batch_model' => \Fintech\Core\Models\JobBatch::class,
+    'job_batch_model' => Fintech\Core\Models\JobBatch::class,
 
 
     /*
@@ -211,7 +211,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'client_error_model' => \Fintech\Core\Models\ClientError::class,
+    'client_error_model' => Fintech\Core\Models\ClientError::class,
 
 
     /*
@@ -221,7 +221,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'mail_model' => \Fintech\Core\Models\Mail::class,
+    'mail_model' => Fintech\Core\Models\Mail::class,
 
     //** Model Config Point Do not Remove **//
 
@@ -257,7 +257,8 @@ return [
         Fintech\Core\Interfaces\ClientErrorRepository::class
         => Fintech\Core\Repositories\Eloquent\ClientErrorRepository::class,
 
-        \Fintech\Core\Interfaces\MailRepository::class => \Fintech\Core\Repositories\Eloquent\MailRepository::class,
+        Fintech\Core\Interfaces\MailRepository::class
+        => Fintech\Core\Repositories\Eloquent\MailRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
