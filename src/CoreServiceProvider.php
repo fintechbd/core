@@ -9,6 +9,7 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
 use Fintech\Core\Commands\HealthCheckupCommand;
 use Fintech\Core\Commands\InstallCommand;
+use Fintech\Core\Commands\ScheduledNotificationCommand;
 use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
@@ -87,7 +88,8 @@ class CoreServiceProvider extends ServiceProvider
                 AppReleaseCommand::class,
                 InstallCommand::class,
                 EncryptionKeyGenerateCommand::class,
-                HealthCheckupCommand::class
+                HealthCheckupCommand::class,
+                ScheduledNotificationCommand::class,
             ]);
         }
     }

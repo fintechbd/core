@@ -4,9 +4,28 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Illuminate\Support\Facades\Artisan;
 
 return [
-//    '1.0.5' => function (AppUpdateCommand $command) {
-//
-//    },
+    '1.0.5' => function (AppUpdateCommand $command) {
+     $this->task('Register schedule tasks', function (){
+
+         $task = [
+             'name' => 'Fire Scheduled Notification Event',
+             'description' => 'This schedule program fire any scheduled notification event.',
+             'command' => 'core:scheduled-notification',
+             'enabled' => true,
+             'timezone' => 'UTC',
+             'interval' => '*/5 * * * *',
+             'priority' => 5,
+         ];
+
+         $taskModel = \Fintech\Core\Facades\Core::schedule()->findWhere(['command' => $task['command']]);
+
+            if ($taskModel) {
+                return;
+            }
+
+            \Fintech\Core\Facades\Core::schedule()->create($task);
+        });
+    },
     '1.0.4' => function (AppUpdateCommand $command) {
         Artisan::call('migrate');
     },
