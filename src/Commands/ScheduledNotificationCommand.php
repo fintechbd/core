@@ -33,7 +33,7 @@ class ScheduledNotificationCommand extends Command
                 'scheduled' => true,
                 ])->each(function ($trigger) {
 
-            });
+                });
         }
 
     }

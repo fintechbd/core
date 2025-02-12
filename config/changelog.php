@@ -5,19 +5,19 @@ use Illuminate\Support\Facades\Artisan;
 
 return [
     '1.0.5' => function (AppUpdateCommand $command) {
-     $this->task('Register schedule tasks', function (){
+        $this->task('Register schedule tasks', function () {
 
-         $task = [
-             'name' => 'Fire Scheduled Notification Event',
-             'description' => 'This schedule program fire any scheduled notification event.',
-             'command' => 'core:scheduled-notification',
-             'enabled' => true,
-             'timezone' => 'UTC',
-             'interval' => '*/5 * * * *',
-             'priority' => 5,
-         ];
+            $task = [
+                'name' => 'Fire Scheduled Notification Event',
+                'description' => 'This schedule program fire any scheduled notification event.',
+                'command' => 'core:scheduled-notification',
+                'enabled' => true,
+                'timezone' => 'UTC',
+                'interval' => '*/5 * * * *',
+                'priority' => 5,
+            ];
 
-         $taskModel = \Fintech\Core\Facades\Core::schedule()->findWhere(['command' => $task['command']]);
+            $taskModel = \Fintech\Core\Facades\Core::schedule()->findWhere(['command' => $task['command']]);
 
             if ($taskModel) {
                 return;
