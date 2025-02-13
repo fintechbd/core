@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 
 return [
     '1.0.5' => function (AppUpdateCommand $command) {
-        $this->task('Register schedule tasks', function () {
+        $command->task('Register schedule tasks', function () {
 
             $task = [
                 'name' => 'Fire Scheduled Notification Event',
