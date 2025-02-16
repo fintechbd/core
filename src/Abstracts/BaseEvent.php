@@ -15,11 +15,9 @@ abstract class BaseEvent
     public $templates;
 
 
-
     protected function init(): void
     {
-        //        $this->ip();
-        //        $this->userAgent();
+        $this->userAgent();
         $this->variables();
     }
 
@@ -46,7 +44,12 @@ abstract class BaseEvent
         if (empty($this->variables)) {
 
             $this->variables = $this->aliases();
+
             $this->variables['__timestamp__'] = now()->format('r');
+
+            if (empty($this->agent)) {
+                $this->variables['__platform__'] = $this->agent;
+            }
         }
 
         return $this->variables;
