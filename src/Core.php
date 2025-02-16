@@ -65,7 +65,16 @@ class Core
         return app(\Fintech\Core\Services\MailService::class);
     }
 
+    /**
+     * @return \Fintech\Core\Services\MigrationService
+     */
+    public function migration()
+    {
+        return app(\Fintech\Core\Services\MigrationService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 
     /**

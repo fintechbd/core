@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Fintech\Core\Services\JobBatchService jobBatch()
  * @method static \Fintech\Core\Services\ClientErrorService clientError()
  * @method static \Fintech\Core\Services\MailService mail()
+ * @method static \Fintech\Core\Services\MigrationService migration()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Core\Core

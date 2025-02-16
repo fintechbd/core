@@ -74,6 +74,8 @@ if (Config::get('fintech.core.enabled')) {
                 ->only(['index', 'show', 'destroy']);
             Route::post('mails/{mail}/restore', [\Fintech\Core\Http\Controllers\MailController::class, 'restore'])->name('mails.restore');
 
-            //DO NOT REMOVE THIS LINE//
+            Route::apiResource('migrations', \Fintech\Core\Http\Controllers\MigrationController::class);
+
+    //DO NOT REMOVE THIS LINE//
         });
 }
