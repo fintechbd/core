@@ -2,13 +2,8 @@
 
 namespace Fintech\Core\Listeners;
 
-use Fintech\Core\Abstracts\BaseModel;
-use Fintech\Core\Enums\Bell\NotificationMedium;
 use Fintech\Core\Facades\Core;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Notification;
 
 class TriggerListener implements ShouldQueue
 {
