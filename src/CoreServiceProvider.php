@@ -3,13 +3,13 @@
 namespace Fintech\Core;
 
 use Exception;
+use Fintech\Bell\Commands\ScheduledNotificationCommand;
 use Fintech\Core\Commands\AppInstallCommand;
 use Fintech\Core\Commands\AppReleaseCommand;
 use Fintech\Core\Commands\AppUpdateCommand;
 use Fintech\Core\Commands\EncryptionKeyGenerateCommand;
 use Fintech\Core\Commands\HealthCheckupCommand;
 use Fintech\Core\Commands\InstallCommand;
-use Fintech\Core\Commands\ScheduledNotificationCommand;
 use Fintech\Core\Providers\EventServiceProvider;
 use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
