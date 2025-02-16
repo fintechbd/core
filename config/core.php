@@ -223,6 +223,16 @@ return [
     */
     'mail_model' => Fintech\Core\Models\Mail::class,
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Migration Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'migration_model' => \Fintech\Core\Models\Migration::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -259,6 +269,9 @@ return [
 
         Fintech\Core\Interfaces\MailRepository::class
         => Fintech\Core\Repositories\Eloquent\MailRepository::class,
+
+        Fintech\Core\Interfaces\MigrationRepository::class =>
+            Fintech\Core\Repositories\Eloquent\MigrationRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

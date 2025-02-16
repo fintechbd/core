@@ -4,6 +4,18 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Illuminate\Support\Facades\Artisan;
 
 return [
+    '1.0.6' => function (AppUpdateCommand $command) {
+        $command->task('Moving Schedule Table to Main DB', function () {
+            \Fintech\Core\Facades\Core::migration()->list(['migration' => [
+                '2024_09_13_120926_create_schedules_table',
+                '2024_09_15_054031_update_columns_in_schedules_table'
+            ]])
+                ->each(function ($migration) {
+                \Fintech\Core\Facades\Core::migration()->destroy($migration->getKey());
+            });
+            Artisan::call('migrate', ['--force' => true]);
+        });
+    },
     '1.0.5' => function (AppUpdateCommand $command) {
         $command->task('Register schedule tasks', function () {
 
