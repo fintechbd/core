@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Core\Interfaces\MigrationRepository as InterfacesMigrationRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class MigrationRepository
@@ -17,7 +15,7 @@ class MigrationRepository extends MongodbRepository implements InterfacesMigrati
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.core.migration_model', \Fintech\Core\Models\Migration::class));
+        parent::__construct(config('fintech.core.migration_model', \Fintech\Core\Models\Migration::class));
     }
 
     /**

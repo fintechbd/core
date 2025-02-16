@@ -1,6 +1,7 @@
 <?php
 
 namespace Fintech\Core\Http\Controllers;
+
 use Exception;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
@@ -72,7 +73,7 @@ class MigrationController extends Controller
             $migration = Core::migration()->create($inputs);
 
             if (!$migration) {
-                throw (new StoreOperationException)->setModel(config('fintech.core.migration_model'));
+                throw (new StoreOperationException())->setModel(config('fintech.core.migration_model'));
             }
 
             return response()->created([
@@ -102,7 +103,7 @@ class MigrationController extends Controller
             $migration = Core::migration()->find($id);
 
             if (!$migration) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.migration_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.migration_model'), $id);
             }
 
             return new MigrationResource($migration);
@@ -135,14 +136,14 @@ class MigrationController extends Controller
             $migration = Core::migration()->find($id);
 
             if (!$migration) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.migration_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.migration_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (!Core::migration()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.core.migration_model'), $id);
+                throw (new UpdateOperationException())->setModel(config('fintech.core.migration_model'), $id);
             }
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Migration Controller']));
@@ -174,7 +175,7 @@ class MigrationController extends Controller
             $migration = Core::migration()->find($id);
 
             if (!$migration) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.migration_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.migration_model'), $id);
             }
 
             if (!Core::migration()->destroy($id)) {
@@ -210,7 +211,7 @@ class MigrationController extends Controller
             $migration = Core::migration()->find($id, true);
 
             if (!$migration) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.core.migration_model'), $id);
+                throw (new ModelNotFoundException())->setModel(config('fintech.core.migration_model'), $id);
             }
 
             if (!Core::migration()->restore($id)) {

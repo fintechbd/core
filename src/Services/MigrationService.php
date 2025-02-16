@@ -2,7 +2,6 @@
 
 namespace Fintech\Core\Services;
 
-
 use Fintech\Core\Interfaces\MigrationRepository;
 
 /**
@@ -16,7 +15,9 @@ class MigrationService
      * MigrationService constructor.
      * @param MigrationRepository $migrationRepository
      */
-    public function __construct(private readonly MigrationRepository $migrationRepository) { }
+    public function __construct(private readonly MigrationRepository $migrationRepository)
+    {
+    }
 
     /**
      * @param array $filters
