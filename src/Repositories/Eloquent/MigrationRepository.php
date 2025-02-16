@@ -27,11 +27,12 @@ class MigrationRepository extends EloquentRepository implements InterfacesMigrat
     public function list(array $filters = [])
     {
         $query = $this->model->newQuery();
-
-        $query->where(function ($query) use ($filters) {
-            return $query->where('migration', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('batch', 'like', '%' . $filters['search'] . '%');
-        });
+        if (!empty($filters['search'])) {
+            $query->where(function ($query) use ($filters) {
+                return $query->where('migration', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('batch', 'like', '%' . $filters['search'] . '%');
+            });
+        }
 
         if (!empty($filters['id_in'])) {
             $query->where('id_in', $filters['id_in']);
