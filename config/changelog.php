@@ -22,7 +22,7 @@ return [
             $task = [
                 'name' => 'Fire Scheduled Notification Event',
                 'description' => 'This schedule program fire any scheduled notification event.',
-                'command' => 'core:scheduled-notification',
+                'command' => 'bell:scheduled-notification',
                 'enabled' => true,
                 'timezone' => 'UTC',
                 'interval' => '*/5 * * * *',
