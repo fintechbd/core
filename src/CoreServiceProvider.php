@@ -3,7 +3,6 @@
 namespace Fintech\Core;
 
 use Exception;
-use Fintech\Bell\Commands\ScheduledNotificationCommand;
 use Fintech\Core\Commands\AppInstallCommand;
 use Fintech\Core\Commands\AppReleaseCommand;
 use Fintech\Core\Commands\AppUpdateCommand;
@@ -88,8 +87,7 @@ class CoreServiceProvider extends ServiceProvider
                 AppReleaseCommand::class,
                 InstallCommand::class,
                 EncryptionKeyGenerateCommand::class,
-                HealthCheckupCommand::class,
-                ScheduledNotificationCommand::class,
+                HealthCheckupCommand::class
             ]);
         }
     }
