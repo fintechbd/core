@@ -11,8 +11,8 @@ return [
                 '2024_09_15_054031_update_columns_in_schedules_table'
             ]])
                 ->each(function ($migration) {
-                \Fintech\Core\Facades\Core::migration()->destroy($migration->getKey());
-            });
+                    \Fintech\Core\Facades\Core::migration()->destroy($migration->getKey());
+                });
             Artisan::call('migrate', ['--force' => true]);
         });
     },

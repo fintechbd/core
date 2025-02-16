@@ -76,6 +76,6 @@ if (Config::get('fintech.core.enabled')) {
 
             Route::apiResource('migrations', \Fintech\Core\Http\Controllers\MigrationController::class);
 
-    //DO NOT REMOVE THIS LINE//
+            //DO NOT REMOVE THIS LINE//
         });
 }

@@ -6,8 +6,6 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\MigrationRepository as InterfacesMigrationRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class MigrationRepository
