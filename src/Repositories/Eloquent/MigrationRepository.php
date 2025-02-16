@@ -39,7 +39,7 @@ class MigrationRepository extends EloquentRepository implements InterfacesMigrat
         }
 
         if (!empty($filters['migration'])) {
-            $query->where('migration', (array)$filters['migration']);
+            $query->whereIn('migration', (array)$filters['migration']);
         }
 
         //Handle Sorting
