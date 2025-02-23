@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Config;
  */
 class ConfigurationController extends Controller
 {
-    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules', 'packages'];
+    private array $hiddenFields = ['repositories', 'root_prefix', 'middleware', '^(.*)_model', '^(.*)_rules', 'packages', 'driver'];
 
     /**
      * @lrd:start
