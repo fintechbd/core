@@ -2,8 +2,8 @@
 
 namespace Fintech\Core\Repositories\Eloquent;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\MigrationRepository as InterfacesMigrationRepository;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 

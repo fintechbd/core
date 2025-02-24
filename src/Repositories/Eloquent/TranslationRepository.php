@@ -2,9 +2,9 @@
 
 namespace Fintech\Core\Repositories\Eloquent;
 
+use Fintech\Core\Interfaces\TranslationRepository as InterfacesTranslationRepository;
 use Fintech\Core\Models\Translation;
 use Fintech\Core\Repositories\EloquentRepository;
-use Fintech\Core\Interfaces\TranslationRepository as InterfacesTranslationRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 

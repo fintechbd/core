@@ -2,8 +2,8 @@
 
 namespace Fintech\Core\Repositories\Eloquent;
 
-use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Core\Interfaces\ClientErrorRepository as InterfacesClientErrorRepository;
+use Fintech\Core\Repositories\EloquentRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 

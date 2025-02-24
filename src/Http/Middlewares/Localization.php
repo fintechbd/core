@@ -3,7 +3,6 @@
 namespace Fintech\Core\Http\Middlewares;
 
 use Closure;
-use Fintech\Core\Supports\Encryption;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

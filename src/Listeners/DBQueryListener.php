@@ -5,7 +5,6 @@ namespace Fintech\Core\Listeners;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-
 use function config;
 
 class DBQueryListener

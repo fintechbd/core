@@ -2,8 +2,8 @@
 
 namespace Fintech\Core\Seeders;
 
-use Illuminate\Database\Seeder;
 use Fintech\Core\Facades\Core;
+use Illuminate\Database\Seeder;
 
 class TranslationSeeder extends Seeder
 {
