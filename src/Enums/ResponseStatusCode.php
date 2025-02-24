@@ -10,7 +10,7 @@ enum ResponseStatusCode: string implements \JsonSerializable
     use EnumHasSerialization;
 
     #[Enumeration(color: Color::Emerald500, description: 'OK')]
-    case OK = '200';
+    case Ok = '200';
 
     #[Enumeration(color: Color::Green500, description: 'Created')]
     case Created = '201';
