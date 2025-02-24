@@ -69,11 +69,7 @@ class FailedJobController extends Controller
 
             return new FailedJobResource($failedJob);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -106,11 +102,7 @@ class FailedJobController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Failed Job']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -139,11 +131,7 @@ class FailedJobController extends Controller
 
             }
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

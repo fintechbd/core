@@ -103,11 +103,7 @@ class TranslationController extends Controller
 
             return new TranslationResource($translation);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -141,11 +137,7 @@ class TranslationController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Translation']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -179,11 +171,7 @@ class TranslationController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Translation']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -215,11 +203,7 @@ class TranslationController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Translation']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

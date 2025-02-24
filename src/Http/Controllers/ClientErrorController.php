@@ -102,11 +102,7 @@ class ClientErrorController extends Controller
 
             return new ClientErrorResource($clientError);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -140,11 +136,7 @@ class ClientErrorController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Client Error']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -178,11 +170,7 @@ class ClientErrorController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Client Error']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -214,11 +202,7 @@ class ClientErrorController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Client Error']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

@@ -66,11 +66,7 @@ class ApiLogController extends Controller
 
             return new ApiLogResource($apiLog);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -103,11 +99,7 @@ class ApiLogController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Api Log']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

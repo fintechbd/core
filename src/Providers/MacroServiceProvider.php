@@ -4,6 +4,7 @@ namespace Fintech\Core\Providers;
 
 use Exception;
 use Fintech\Core\Enums\RequestPlatform;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -131,6 +132,17 @@ class MacroServiceProvider extends ServiceProvider
          * @return JsonResponse
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
+
+            logger()->debug("Exception", ['Exception'=> $data instanceof Exception ? get_class($data) : json_encode($data)]);
+
+            if ($data instanceof ModelNotFoundException) {
+
+                throw_if(config('app.debug', false), $data);
+
+                $data = $data->getMessage();
+
+                return response()->json(response_format($data, Response::HTTP_NOT_FOUND), Response::HTTP_NOT_FOUND, $headers);
+            }
 
             if ($data instanceof Exception) {
 

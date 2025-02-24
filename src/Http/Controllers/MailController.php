@@ -73,11 +73,7 @@ class MailController extends Controller
 
             return new MailResource($mail);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -110,11 +106,7 @@ class MailController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Mail']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -146,11 +138,7 @@ class MailController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Mail']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
