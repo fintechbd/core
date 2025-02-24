@@ -41,5 +41,4 @@ enum ResponseStatusCode: string implements \JsonSerializable
 
     #[Enumeration(color: Color::Purple500, description: 'Service Unavailable')]
     case ServiceUnavailable = '503';
-
 }
