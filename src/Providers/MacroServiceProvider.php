@@ -133,11 +133,9 @@ class MacroServiceProvider extends ServiceProvider
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
 
-            logger()->debug("Exception", ['Exception'=> $data instanceof Exception ? get_class($data) : json_encode($data)]);
+            logger()->debug("Exception Info", ['Exception'=> $data instanceof Exception ? get_class($data) : json_encode($data)]);
 
             if ($data instanceof ModelNotFoundException) {
-
-                throw_if(config('app.debug', false), $data);
 
                 $data = $data->getMessage();
 
