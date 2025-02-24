@@ -136,8 +136,6 @@ class MacroServiceProvider extends ServiceProvider
 
             if ($data instanceof ModelNotFoundException) {
 
-                throw_if(config('app.debug', false), $data);
-
                 $model = Str::replace('_', ' ', Str::snake(class_basename($data->getModel())));
 
                 $data = ucfirst("{$model} not found.");
