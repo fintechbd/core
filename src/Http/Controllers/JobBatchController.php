@@ -102,7 +102,7 @@ class JobBatchController extends Controller
 
             return new JobBatchResource($jobBatch);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -136,7 +136,7 @@ class JobBatchController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Job Batch']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -170,7 +170,7 @@ class JobBatchController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Job Batch']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -202,7 +202,7 @@ class JobBatchController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Job Batch']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

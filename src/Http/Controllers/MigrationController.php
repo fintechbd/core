@@ -108,7 +108,7 @@ class MigrationController extends Controller
 
             return new MigrationResource($migration);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -144,7 +144,7 @@ class MigrationController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Migration Controller']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -177,7 +177,7 @@ class MigrationController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Migration Controller']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -209,7 +209,7 @@ class MigrationController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Migration Controller']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

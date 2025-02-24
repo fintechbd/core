@@ -102,7 +102,7 @@ class SettingController extends Controller
 
             return new SettingResource($setting);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -135,7 +135,7 @@ class SettingController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Setting']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -169,7 +169,7 @@ class SettingController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Setting']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -201,7 +201,7 @@ class SettingController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Setting']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

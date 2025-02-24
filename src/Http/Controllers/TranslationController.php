@@ -103,7 +103,7 @@ class TranslationController extends Controller
 
             return new TranslationResource($translation);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -137,7 +137,7 @@ class TranslationController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Translation']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -171,7 +171,7 @@ class TranslationController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Translation']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -203,7 +203,7 @@ class TranslationController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Translation']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

@@ -66,7 +66,7 @@ class JobController extends Controller
 
             return new JobResource($job);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -100,7 +100,7 @@ class JobController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Job']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

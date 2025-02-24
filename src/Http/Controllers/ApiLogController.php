@@ -66,7 +66,7 @@ class ApiLogController extends Controller
 
             return new ApiLogResource($apiLog);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -99,7 +99,7 @@ class ApiLogController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Api Log']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
