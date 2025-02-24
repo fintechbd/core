@@ -38,7 +38,7 @@ class IndexApiLogRequest extends FormRequest
             'paginate' => ['boolean'],
             'sort' => ['string', 'nullable', 'min:2', 'max:255'],
             'dir' => ['string', 'min:3', 'max:4'],
-            'status_code' => ['string', Rule::in(ResponseStatusCode::values())],
+            'status_code' => ['numeric', Rule::in(ResponseStatusCode::values())],
             'trashed' => ['boolean', 'nullable'],
         ];
     }
