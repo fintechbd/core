@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response as ResponseFacade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class MacroServiceProvider extends ServiceProvider
@@ -133,18 +134,20 @@ class MacroServiceProvider extends ServiceProvider
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
 
-            logger()->debug("Exception Info", ['Exception' => $data instanceof Exception ? get_class($data) : json_encode($data)]);
-
             if ($data instanceof ModelNotFoundException) {
 
-                $data = $data->getMessage();
+                throw_if(config('app.debug', false), $data);
+
+                $model = Str::replace('_', ' ', Str::snake(class_basename($data->getModel())));
+
+                $data = ucfirst("{$model} not found.");
 
                 return response()->json(response_format($data, Response::HTTP_NOT_FOUND), Response::HTTP_NOT_FOUND, $headers);
             }
 
-            if ($data instanceof Exception) {
+            if ($data instanceof \Throwable) {
 
-                //                throw_if(config('app.debug', false), $data);
+                throw_if(config('app.debug', false), $data);
 
                 $data = $data->getMessage();
             }

@@ -6,6 +6,7 @@ use Fintech\Auth\Models\User;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Enums\RequestMethod;
+use Fintech\Core\Enums\ResponseStatusCode;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiLog extends BaseModel
@@ -28,6 +29,7 @@ class ApiLog extends BaseModel
         'user_agent' => 'array',
         'direction' => RequestDirection::class,
         'method' => RequestMethod::class,
+        'status_code' => ResponseStatusCode::class,
     ];
 
     /*
