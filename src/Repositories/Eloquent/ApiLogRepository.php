@@ -59,6 +59,10 @@ class ApiLogRepository extends EloquentRepository implements InterfacesApiLogRep
             $query->where('method', $filters['method']);
         }
 
+        if (!empty($filters['status_code'])) {
+            $query->where('status_code', $filters['status_code']);
+        }
+
         if (!empty($filters['direction'])) {
             $query->where('direction', '=', $filters['direction']);
         }

@@ -4,6 +4,7 @@ namespace Fintech\Core\Http\Requests;
 
 use Fintech\Core\Enums\RequestDirection;
 use Fintech\Core\Enums\RequestMethod;
+use Fintech\Core\Enums\ResponseStatusCode;
 use Fintech\Core\Traits\RestApi\HasPaginateQuery;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -37,6 +38,7 @@ class IndexApiLogRequest extends FormRequest
             'paginate' => ['boolean'],
             'sort' => ['string', 'nullable', 'min:2', 'max:255'],
             'dir' => ['string', 'min:3', 'max:4'],
+            'status_code' => ['string', Rule::in(ResponseStatusCode::values())],
             'trashed' => ['boolean', 'nullable'],
         ];
     }

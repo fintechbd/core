@@ -27,6 +27,7 @@ enum ResponseStatusCode: string implements \JsonSerializable
     #[Enumeration(color: Color::Stone500, description: 'Unauthenticated', label: '401')]
     case Unauthenticated = '401';
 
+
     #[Enumeration(color: Color::Gray500, description: 'Access Forbidden', label: '403')]
     case Forbidden = '403';
 
