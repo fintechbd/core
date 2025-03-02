@@ -17,10 +17,10 @@ class DetectTimezone
      */
     public function handle(Request $request, Closure $next)
     {
-//        if ($request->hasHeader('Timestamp')) {
-//            $datetime = $request->header('Timestamp', now()->format('c'));
-//            app()->setLocale($locale);
-//        }
+        //        if ($request->hasHeader('Timestamp')) {
+        //            $datetime = $request->header('Timestamp', now()->format('c'));
+        //            app()->setLocale($locale);
+        //        }
 
         return $next($request);
     }
