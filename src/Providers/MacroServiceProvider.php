@@ -143,7 +143,7 @@ class MacroServiceProvider extends ServiceProvider
                 $statusCode = Response::HTTP_NOT_FOUND;
 
             } else if ($data instanceof ConnectionException) {
-                $data = __('core::messages.general_exception', ['exception' => class_basename($data)]);
+                $data = __('core::messages.exception.general_exception', ['exception' => class_basename($data)]);
             }
             else if ($data instanceof \Throwable) {
                 throw_if(config('app.debug', false), $data);
