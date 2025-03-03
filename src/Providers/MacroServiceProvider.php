@@ -5,6 +5,7 @@ namespace Fintech\Core\Providers;
 use Exception;
 use Fintech\Core\Enums\RequestPlatform;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -134,23 +135,22 @@ class MacroServiceProvider extends ServiceProvider
          */
         ResponseFacade::macro('failed', function ($data, array $headers = []) {
 
+            $statusCode = Response::HTTP_BAD_REQUEST;
+
             if ($data instanceof ModelNotFoundException) {
-
                 $model = Str::replace('_', ' ', Str::snake(class_basename($data->getModel())));
-
                 $data = ucfirst("{$model} not found.");
+                $statusCode = Response::HTTP_NOT_FOUND;
 
-                return response()->json(response_format($data, Response::HTTP_NOT_FOUND), Response::HTTP_NOT_FOUND, $headers);
+            } else if ($data instanceof ConnectionException) {
+                $data = __('core::messages.general_exception', ['exception' => class_basename($data)]);
             }
-
-            if ($data instanceof \Throwable) {
-
+            else if ($data instanceof \Throwable) {
                 throw_if(config('app.debug', false), $data);
-
                 $data = $data->getMessage();
             }
 
-            return response()->json(response_format($data, Response::HTTP_BAD_REQUEST), Response::HTTP_BAD_REQUEST, $headers);
+            return response()->json(response_format($data, $statusCode), $statusCode, $headers);
         });
 
         /**

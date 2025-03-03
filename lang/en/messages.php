@@ -26,6 +26,7 @@ return [
         'restore' => 'There\'s been an error. :model with ID::id might not have been restored.',
         'default' => 'There\'s been an error. Please try again later.',
         'relation_missing' => ':model:::method() missing relational return type.',
+        'general_exception' => 'There\'s been an error. Please try again later. Error: :exception',
     ],
     'action' => [
         'show' => 'Preview',
