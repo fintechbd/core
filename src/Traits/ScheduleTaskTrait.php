@@ -9,6 +9,7 @@ trait ScheduleTaskTrait
 {
     /**
      * Define the application's command schedule.
+     * @deprecated  until Laravel 10.x
      */
     protected function schedule(Schedule $schedule): void
     {
