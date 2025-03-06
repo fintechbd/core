@@ -18,7 +18,7 @@
     "require": {
         "php": "^8.2",
         "ext-dom": "*",
-        "alexusmai/laravel-file-manager": "^3.3",
+        "alexusmai/laravel-file-manager": "^3.1",
         "illuminate/contracts": "^11.0",
         "spatie/laravel-medialibrary": "^11.0"
     },
