@@ -144,7 +144,7 @@ class MacroServiceProvider extends ServiceProvider
 
             } elseif ($data instanceof ConnectionException) {
                 $data = __('core::messages.exception.general_exception', ['exception' => class_basename($data)]);
-            } elseif ($data instanceof \Throwable) {
+            } elseif ($data instanceof \Exception || $data instanceof \Throwable) {
                 throw_if(config('app.debug', false), $data);
                 $data = $data->getMessage();
             }
