@@ -1,6 +1,6 @@
 <?php
 
-namespace Fintech\Core\Enums\Reload;
+namespace Fintech\Core\Enums\Remit;
 
 use Fintech\Core\Attributes\Enumeration;
 use Fintech\Core\Enums\Color;
