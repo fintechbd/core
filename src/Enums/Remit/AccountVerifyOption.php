@@ -14,7 +14,7 @@ enum AccountVerifyOption: string implements \JsonSerializable
     case BankTransfer = 'bank_transfer';
 
     #[Enumeration(color: Color::Purple500)]
-    case Wallet = 'wallet';
+    case WalletTransfer = 'wallet-transfer';
 
     #[Enumeration(color: Color::Blue500)]
     case CashPickup = 'cash_pickup';
