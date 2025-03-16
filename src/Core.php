@@ -109,7 +109,7 @@ class Core
     {
         $name = \Illuminate\Support\Str::studly($name);
 
-        (new self)->packageExists($name, true);
+        (new self())->packageExists($name, true);
 
         $abstract = "\Fintech\\{$name}\\{$name}";
 

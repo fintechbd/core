@@ -5,7 +5,6 @@ use Fintech\Core\Exceptions\PackageNotInstalledException;
 use Fintech\Core\Supports\Currency;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
-
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
     {
@@ -384,7 +383,7 @@ if (!function_exists('tab')) {
      * @return \Fintech\Tab\Tab
      * @throws PackageNotInstalledException|BindingResolutionException
      */
-    function  tab(): \Fintech\Tab\Tab
+    function tab(): \Fintech\Tab\Tab
     {
         return Core::launch('Tab');
     }
@@ -400,4 +399,3 @@ if (!function_exists('transaction')) {
         return Core::launch('Transaction');
     }
 }
-
