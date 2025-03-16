@@ -36,6 +36,7 @@ class Core
     {
         return \singleton(ScheduleService::class, $filters);
     }
+
     public function translation($filters = null)
     {
         return \singleton(TranslationService::class, $filters);
@@ -76,7 +77,6 @@ class Core
     //** Crud Service Method Point Do not Remove **//
 
 
-
     /**
      * verify if a available addon or package is installed
      *
@@ -87,6 +87,8 @@ class Core
      */
     public function packageExists(string $name, bool $throw = false): bool
     {
+        $name = \Illuminate\Support\Str::studly($name);
+
         $proof = class_exists("\Fintech\\{$name}\Facades\\{$name}");
 
         if ($throw && !$proof) {
@@ -94,5 +96,23 @@ class Core
         }
 
         return $proof;
+    }
+
+    /**
+     * Return an instance of package class if available
+     *
+     * @param string $name
+     * @return mixed
+     * @throws PackageNotInstalledException
+     */
+    public static function launch(string $name = 'Core'): mixed
+    {
+        $name = \Illuminate\Support\Str::studly($name);
+
+        (new self)->packageExists($name, true);
+
+        $abstract = "\Fintech\\{$name}\\{$name}";
+
+        return app($abstract);
     }
 }

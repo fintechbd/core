@@ -1,6 +1,10 @@
 <?php
 
+use Fintech\Core\Core;
+use Fintech\Core\Exceptions\PackageNotInstalledException;
 use Fintech\Core\Supports\Currency;
+use Illuminate\Contracts\Container\BindingResolutionException;
+
 
 if (!function_exists('permission_format')) {
     function permission_format(string $name, string $origin = 'auth'): string
@@ -175,9 +179,9 @@ if (!function_exists('next_purchase_number')) {
      */
     function next_purchase_number(string $countryIso3): string
     {
-        $serial = \Fintech\Core\Facades\Core::setting()->getValue('transaction', 'purchase_count', 1);
+        $serial = Core::setting()->getValue('transaction', 'purchase_count', 1);
 
-        \Fintech\Core\Facades\Core::setting()->setValue('transaction', 'purchase_count', $serial + 1, 'integer');
+        Core::setting()->setValue('transaction', 'purchase_count', $serial + 1, 'integer');
 
         return entry_number($serial, $countryIso3, \Fintech\Core\Enums\Transaction\OrderStatusConfig::Purchased->value);
     }
@@ -220,3 +224,180 @@ if (!function_exists('throttle_key')) {
         );
     }
 }
+
+if (!function_exists('core')) {
+    /**
+     * @return Core
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function core(): Core
+    {
+        return Core::launch();
+    }
+}
+
+if (!function_exists('airtime')) {
+    /**
+     * @return \Fintech\Airtime\Airtime
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function airtime(): \Fintech\Airtime\Airtime
+    {
+        return Core::launch('Airtime');
+    }
+}
+
+if (!function_exists('fintech_auth')) {
+    /**
+     * @return \Fintech\Auth\Auth
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function fintech_auth(): \Fintech\Auth\Auth
+    {
+        return Core::launch('Auth');
+    }
+}
+
+if (!function_exists('banco')) {
+    /**
+     * @return \Fintech\Banco\Banco
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function banco(): \Fintech\Banco\Banco
+    {
+        return Core::launch('Banco');
+    }
+}
+
+if (!function_exists('business')) {
+    /**
+     * @return \Fintech\Business\Business
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function business(): \Fintech\Business\Business
+    {
+        return Core::launch('Business');
+    }
+}
+
+if (!function_exists('card')) {
+    /**
+     * @return \Fintech\Card\Card
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function card(): \Fintech\Card\Card
+    {
+        return Core::launch('Card');
+    }
+}
+
+if (!function_exists('chat')) {
+    /**
+     * @return \Fintech\Chat\Chat
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function chat(): \Fintech\Chat\Chat
+    {
+        return Core::launch('Chat');
+    }
+}
+
+if (!function_exists('ekyc')) {
+    /**
+     * @return \Fintech\Ekyc\Ekyc
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function ekyc(): \Fintech\Ekyc\Ekyc
+    {
+        return Core::launch('Ekyc');
+    }
+}
+
+if (!function_exists('gift')) {
+    /**
+     * @return \Fintech\Gift\Gift
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function gift(): \Fintech\Gift\Gift
+    {
+        return Core::launch('Gift');
+    }
+}
+
+if (!function_exists('meatadata')) {
+    /**
+     * @return \Fintech\MetaData\MetaData
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function metadata(): \Fintech\MetaData\MetaData
+    {
+        return Core::launch('MetaData');
+    }
+}
+
+if (!function_exists('promo')) {
+    /**
+     * @return \Fintech\Promo\Promo
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function promo(): \Fintech\Promo\Promo
+    {
+        return Core::launch('Promo');
+    }
+}
+
+if (!function_exists('reload')) {
+    /**
+     * @return \Fintech\Reload\Reload
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function reload(): \Fintech\Reload\Reload
+    {
+        return Core::launch('Reload');
+    }
+}
+
+if (!function_exists('remit')) {
+    /**
+     * @return \Fintech\Remit\Remit
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function remit(): \Fintech\Remit\Remit
+    {
+        return Core::launch('Remit');
+    }
+}
+
+if (!function_exists('sanction')) {
+    /**
+     * @return \Fintech\Sanction\Sanction
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function sanction(): \Fintech\Sanction\Sanction
+    {
+        return Core::launch('Sanction');
+    }
+}
+
+if (!function_exists('tab')) {
+    /**
+     * @return \Fintech\Tab\Tab
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function  tab(): \Fintech\Tab\Tab
+    {
+        return Core::launch('Tab');
+    }
+}
+
+if (!function_exists('transaction')) {
+    /**
+     * @return \Fintech\Transaction\Transaction
+     * @throws PackageNotInstalledException|BindingResolutionException
+     */
+    function transaction(): \Fintech\Transaction\Transaction
+    {
+        return Core::launch('Transaction');
+    }
+}
+
