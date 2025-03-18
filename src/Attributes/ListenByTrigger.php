@@ -11,6 +11,7 @@ class ListenByTrigger
      * @param string $name
      * @param string $description
      * @param bool $enabled
+     * @param bool $anonymous event don't have user model reference
      * @param array $variables
      * @param array $recipients
      */
@@ -18,6 +19,7 @@ class ListenByTrigger
         private string $name = '',
         private string $description = '',
         private bool   $enabled = false,
+        private bool   $anonymous = false,
         private array  $variables = [],
         private array  $recipients = [],
     ) {
@@ -44,6 +46,14 @@ class ListenByTrigger
     public function variables(): array
     {
         return $this->variables;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAnonymous(): bool
+    {
+        return $this->anonymous;
     }
 
     /**
