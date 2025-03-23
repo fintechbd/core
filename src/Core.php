@@ -105,11 +105,15 @@ class Core
      * @return mixed
      * @throws PackageNotInstalledException
      */
-    public static function launch(string $name = 'Core'): mixed
+    public function launch(string $name = 'Core'): mixed
     {
         $name = \Illuminate\Support\Str::studly($name);
 
-        (new self())->packageExists($name, true);
+        if (in_array($name, ['core', 'Core'])) {
+            return $this;
+        }
+
+        $this->packageExists($name, true);
 
         $abstract = "\Fintech\\{$name}\\{$name}";
 
