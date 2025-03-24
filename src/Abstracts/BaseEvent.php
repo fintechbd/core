@@ -62,4 +62,10 @@ abstract class BaseEvent
         }
         return $this->templates == null ? collect() : $this->templates;
     }
+
+    public function user(): mixed
+    {
+        return request()->user('sanctum');
+    }
+
 }
