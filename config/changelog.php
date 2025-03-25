@@ -4,6 +4,11 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Illuminate\Support\Facades\Artisan;
 
 return [
+    '1.0.7' => function (AppUpdateCommand $command) {
+        $command->task('Changing the auditable_id field data type', function () {
+            Artisan::call('migrate', ['--force' => true, '--quiet' => true, '--ansi' => true]);
+        });
+    },
     '1.0.6' => function (AppUpdateCommand $command) {
         $command->task('Moving Schedule Table to Main DB', function () {
             \Fintech\Core\Facades\Core::migration()->list(['migration' => [
