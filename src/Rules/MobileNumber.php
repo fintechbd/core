@@ -17,7 +17,7 @@ class MobileNumber implements ValidationRule
     {
         $matches = [];
 
-        preg_match('/^\+[1-9]\d{9,14}$/i', $value, $matches);
+        preg_match(MOBILE_NUMBER_PATTERN, $value, $matches);
 
         if (empty($matches)) {
             $fail('The :attribute is not a valid E164 mobile number value e.g +8801234567891.');
