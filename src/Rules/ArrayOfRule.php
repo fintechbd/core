@@ -5,8 +5,6 @@ namespace Fintech\Core\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidBase64Data;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\MimeTypeNotAllowed;
 
 class ArrayOfRule implements ValidationRule
 {
@@ -26,12 +24,12 @@ class ArrayOfRule implements ValidationRule
     {
         if (is_array($value)) {
             foreach ($value as $item) {
-                if(!in_array(gettype($item), $this->allowedTypes)) {
+                if (!in_array(gettype($item), $this->allowedTypes)) {
                     $fail('The :attribute item is not a valid data type of ['.json_encode($this->allowedTypes).'].');
                 }
             }
         } else {
-            if(!in_array(gettype($value), $this->allowedTypes)) {
+            if (!in_array(gettype($value), $this->allowedTypes)) {
                 $fail('The :attribute item is not a valid data type of ['.json_encode($this->allowedTypes).'].');
             }
         }
