@@ -58,7 +58,15 @@ abstract class BaseEvent
     public function templates()
     {
         if (Core::packageExists('Bell') && $this->templates == null) {
-            $this->templates = \Fintech\Bell\Facades\Bell::template()->list(['trigger_code' => get_class($this), 'enabled' => true]);
+            $filters = [
+                'trigger_code' => get_class($this),
+                'enabled' => true,
+            ];
+            if ($channels = $this->preferChannels()) {
+                $filters['medium_in'] = $channels;
+            }
+
+            $this->templates = \Fintech\Bell\Facades\Bell::template($filters);
         }
         return $this->templates == null ? collect() : $this->templates;
     }
@@ -66,6 +74,11 @@ abstract class BaseEvent
     public function user(): mixed
     {
         return request()->user('sanctum');
+    }
+
+    public function preferChannels(): array
+    {
+        return [];
     }
 
 }
