@@ -8,6 +8,9 @@ return [
         $command->task('Fixing Agrani Bank Vendor Code Typo', function () {
             Artisan::call('agrani-bank-typo-fix', ['--ansi' => true]);
         });
+        $command->task('Setup Agrani Bank Vendor Configuration', function () {
+            Artisan::call('remit:agrani-bank-setup', ['--ansi' => true]);
+        });
     },
     '1.0.7' => function (AppUpdateCommand $command) {
         $command->task('Changing the auditable_id field data type', function () {

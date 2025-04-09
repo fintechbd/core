@@ -10,24 +10,26 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('command');
-            $table->json('parameters')->nullable();
-            $table->string('timezone')->default('UTC');
-            $table->string('interval')->default('0 0 0 0 0');
-            $table->smallInteger('priority')->nullable();
-            $table->boolean('enabled')->default(false);
-            $table->foreignId('creator_id')->nullable();
-            $table->foreignId('editor_id')->nullable();
-            $table->foreignId('destroyer_id')->nullable();
-            $table->foreignId('restorer_id')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
-            $table->timestamp('restored_at')->nullable();
-        });
+        if (!Schema::connection('support')->hasTable('schedules')) {
+            Schema::connection('support')->create('schedules', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->text('description')->nullable();
+                $table->string('command');
+                $table->json('parameters')->nullable();
+                $table->string('timezone')->default('UTC');
+                $table->string('interval')->default('0 0 0 0 0');
+                $table->smallInteger('priority')->nullable();
+                $table->boolean('enabled')->default(false);
+                $table->foreignId('creator_id')->nullable();
+                $table->foreignId('editor_id')->nullable();
+                $table->foreignId('destroyer_id')->nullable();
+                $table->foreignId('restorer_id')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+                $table->timestamp('restored_at')->nullable();
+            });
+        }
     }
 
     /**
@@ -35,6 +37,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('schedules');
+        Schema::connection('support')->dropIfExists('schedules');
     }
 };
