@@ -119,18 +119,18 @@ class AppInstallCommand extends Command
                 $this->call('sanction:install', $this->passableOptions());
             }
 
-            sleep(10);
+            sleep(2);
 
             $this->call('core:health-checkup', $this->passableOptions());
-
-            //            $this->call('db:seed', $this->passableOptions());
 
             $this->components->info('Run database seed command to finalize the setup.');
 
             return self::SUCCESS;
 
         } catch (\Exception $e) {
-            throw $e;
+
+            $this->components->error($e->getMessage());
+
             return self::FAILURE;
         }
     }

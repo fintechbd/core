@@ -4,6 +4,11 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Illuminate\Support\Facades\Artisan;
 
 return [
+    '1.0.8' => function (AppUpdateCommand $command) {
+        $command->task('Fixing Agrani Bank Vendor Code Typo', function () {
+            Artisan::call('agrani-bank-typo-fix', ['--ansi' => true]);
+        });
+    },
     '1.0.7' => function (AppUpdateCommand $command) {
         $command->task('Changing the auditable_id field data type', function () {
             Artisan::call('migrate', ['--force' => true, '--quiet' => true, '--ansi' => true]);
