@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiLog extends BaseModel
 {
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
