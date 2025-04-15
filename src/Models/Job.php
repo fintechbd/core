@@ -6,13 +6,13 @@ use Fintech\Core\Abstracts\BaseModel;
 
 class Job extends BaseModel
 {
-    protected $connection = 'support';
 
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $connection = 'support';
 
     protected $primaryKey = 'id';
 

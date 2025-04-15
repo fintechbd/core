@@ -14,12 +14,12 @@ class ClientError extends BaseModel
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $connection = 'support';
 
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
 
-    protected $connection = 'support';
 
     protected $casts = ['client_error_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

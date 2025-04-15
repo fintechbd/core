@@ -11,13 +11,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApiLog extends BaseModel
 {
-    protected $connection = 'support';
 
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+
+    protected $connection = 'support';
 
     protected $primaryKey = 'id';
 

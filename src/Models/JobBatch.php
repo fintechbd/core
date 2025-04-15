@@ -14,12 +14,12 @@ class JobBatch extends BaseModel
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $connection = 'support';
 
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
 
-    protected $connection = 'support';
 
     protected $casts = ['job_batch_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

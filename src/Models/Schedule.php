@@ -16,6 +16,7 @@ class Schedule extends BaseModel
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $connection = 'support';
 
     protected $attributes = [
         'enabled' => false,
