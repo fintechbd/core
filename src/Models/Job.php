@@ -6,7 +6,6 @@ use Fintech\Core\Abstracts\BaseModel;
 
 class Job extends BaseModel
 {
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
