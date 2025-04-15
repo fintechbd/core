@@ -40,7 +40,7 @@ class AppInstallCommand extends Command
         try {
 
             if (Config::get('database.connections.support') == null) {
-                $this->components->error('Missing `support` connection in database configuration.');
+                $this->errorMessage('Missing `support` connection in database configuration.');
                 return self::FAILURE;
             }
 
@@ -129,7 +129,7 @@ class AppInstallCommand extends Command
 
         } catch (\Exception $e) {
 
-            $this->components->error($e->getMessage());
+            $this->errorMessage($e->getMessage());
 
             return self::FAILURE;
         }
