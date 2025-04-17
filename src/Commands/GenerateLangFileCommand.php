@@ -4,9 +4,7 @@ namespace Fintech\Core\Commands;
 
 use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Throwable;
-use function Laravel\Prompts\search;
 
 /**
  * Class InstallCommand
@@ -29,7 +27,7 @@ class GenerateLangFileCommand extends Command
 
             return self::SUCCESS;
 
-        }catch (Throwable $e){
+        } catch (Throwable $e) {
 
             $this->error($e->getMessage());
 

@@ -59,12 +59,12 @@ class Translation extends BaseModel implements Auditable
     |--------------------------------------------------------------------------
     */
 
-//    public function locale(): Attribute
-//    {
-//        return Attribute::make(
-//            get: fn() => set: fn() =>
-//        );
-//    }
+    //    public function locale(): Attribute
+    //    {
+    //        return Attribute::make(
+    //            get: fn() => set: fn() =>
+    //        );
+    //    }
 
     /*
     |--------------------------------------------------------------------------
