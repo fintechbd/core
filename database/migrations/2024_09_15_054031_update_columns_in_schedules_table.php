@@ -10,9 +10,11 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::connection('support')->table('schedules', function (Blueprint $table) {
-            $table->json('schedule_data')->nullable()->after('enabled');
-        });
+        if (!Schema::connection('support')->hasColumn('schedules', 'schedule_data')) {
+            Schema::connection('support')->table('schedules', function (Blueprint $table) {
+                $table->json('schedule_data')->nullable()->after('enabled');
+            });
+        }
     }
 
     /**
@@ -20,8 +22,10 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::connection('support')->table('schedules', function (Blueprint $table) {
-            $table->dropColumn('schedule_data');
-        });
+        if (Schema::connection('support')->hasColumn('schedules', 'schedule_data')) {
+            Schema::connection('support')->table('schedules', function (Blueprint $table) {
+                $table->dropColumn('schedule_data');
+            });
+        }
     }
 };
