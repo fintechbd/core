@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class_alias(determine_base_model(), VirtualModel::class);
 
 /**
+ * @property int|null $id
  * @method string|int getKey()
  * @method void fresh()
  * @method bool save()
@@ -58,73 +59,6 @@ class_alias(determine_base_model(), VirtualModel::class);
  * @const string|null CREATED_AT
  * @const string|null UPDATED_AT
  *
- * @property int|null $id
- * @property int|null $source_country_id
- * @property int|null $destination_country_id
- * @property int|null $parent_id
- * @property string|null $description
- * @property int|null $sender_receiver_id
- * @property int|null $user_id
- * @property int|null $service_id
- * @property int|null $service_vendor_id
- * @property string|null $vendor
- * @property int|null $transaction_form_id
- * @property Carbon|null $ordered_at
- * @property float|null $amount
- * @property string|null $currency
- * @property float|null $converted_amount
- * @property string|null $converted_currency
- * @property string|null $order_number
- * @property RiskProfile|null $risk_profile
- * @property string|null $notes
- * @property bool|null $is_refunded
- * @property array|null $order_data
- * @property OrderStatus|null $status
- * @property int|null $assigned_user_id
- * @property array|null $timeline
- * @property int|null $creator_id
- * @property int|null $editor_id
- * @property int|null $destroyer_id
- * @property int|null $restorer_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property Carbon|null $restored_at
- *
- * @relations
- *
- * @property self $parentOrder
- * @property TransactionForm $transactionForm
- * @property \Fintech\Auth\Models\User $assignedUser
- * @property \Fintech\Business\Models\Service $service
- * @property \Fintech\Business\Models\ServiceVendor $serviceVendor
- * @property OrderDetail $orderDetails
- * @property-read array $links
- * @property-read OrderType $orderType
- * @property-read float $current_balance
- * @property-read float $transaction_amount
- *
- * @see HasOrderAttributes
- *
- * @property-read RequestPlatform $platform
- * @property-read string $amount_formatted
- * @property-read string $converted_amount_formatted
- * @property-read string $charge_amount
- * @property-read string $charge_amount_formatted
- * @property-read string $discount_amount
- * @property-read string $discount_amount_formatted
- * @property-read string $commission_amount
- * @property-read string $commission_amount_formatted
- * @property-read string $cost_amount
- * @property-read string $cost_amount_formatted
- * @property-read string $total_amount
- * @property-read string $total_amount_formatted
- * @property-read string $previous_amount
- * @property-read string $previous_amount_formatted
- * @property-read string $current_amount
- * @property-read string $current_amount_formatted
- * @property-read string $interac_charge
- * @property-read string $interac_charge_formatted
  *
  * @extends Model
  */
