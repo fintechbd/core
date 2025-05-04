@@ -2,15 +2,7 @@
 
 namespace Fintech\Core\Abstracts;
 
-use Carbon\Carbon;
-use Fintech\Core\Enums\Auth\RiskProfile;
-use Fintech\Core\Enums\RequestPlatform;
-use Fintech\Core\Enums\Transaction\OrderStatus;
-use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\VirtualModel;
-use Fintech\Transaction\Models\OrderDetail;
-use Fintech\Transaction\Models\TransactionForm;
-use Fintech\Transaction\Traits\HasOrderAttributes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
