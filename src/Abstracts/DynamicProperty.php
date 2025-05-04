@@ -29,7 +29,6 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
     protected array $casts = [];
 
     protected array $defaults = [];
-
     public function __construct(array $attributes = [])
     {
         foreach ($this->defaults as $key => $value) {
@@ -39,6 +38,11 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
         foreach ($attributes as $key => $value) {
             $this->offsetSet($key, $value);
         }
+    }
+
+    public function __debugInfo(): ?array
+    {
+        return $this->attributes;
     }
 
     /**
