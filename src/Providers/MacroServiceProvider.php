@@ -227,7 +227,7 @@ class MacroServiceProvider extends ServiceProvider
          * @return bool
          */
         Auth::macro('can', function (...$permissions) {
-            return Auth::guard('api')->user()?->can($permissions) ?? false;
+            return \request()->user()?->can($permissions) ?? false;
         });
     }
 }
