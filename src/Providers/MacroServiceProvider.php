@@ -2,12 +2,12 @@
 
 namespace Fintech\Core\Providers;
 
-use Exception;
 use Fintech\Core\Enums\RequestPlatform;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response as ResponseFacade;
 use Illuminate\Support\ServiceProvider;
@@ -218,6 +218,16 @@ class MacroServiceProvider extends ServiceProvider
          */
         ResponseFacade::macro('overflow', function ($data, array $headers = []) {
             return response()->json(response_format($data, Response::HTTP_TOO_MANY_REQUESTS), Response::HTTP_TOO_MANY_REQUESTS, $headers);
+        });
+
+        /**
+         * Alias of Auth::user()->can() method
+         *
+         * @param mixed $permissions
+         * @return bool
+         */
+        Auth::macro('can', function (...$permissions) {
+            return Auth::guard('api')->user()?->can($permissions) ?? false;
         });
     }
 }
