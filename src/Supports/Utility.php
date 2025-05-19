@@ -58,28 +58,23 @@ class Utility
     {
         $xmlArray = [];
 
-        //        try {
+        try {
 
-        $xmlObject = new \DOMDocument();
-        $xmlObject->preserveWhiteSpace = false;
-        $xmlObject->formatOutput = true;
-        $xmlObject->loadXML($content);
+            $xmlObject = new \DOMDocument();
+            $xmlObject->preserveWhiteSpace = false;
+            $xmlObject->formatOutput = true;
+            $xmlObject->loadXML($content);
 
-        $node = $xmlObject->firstChild;
+            $node = $xmlObject->firstChild;
 
-        self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
+            self::domToArray($node, $node->tagName, $xmlArray, $node->prefix, $preserveNS);
 
-        return $xmlArray;
+            return $xmlArray;
 
-        //        } catch (Exception $exception) {
-        //
-        //            throw $exception;
-        //        }
-        //        } finally {
-        //
-        //            return $xmlArray;
-        //        }
-        //        return $xmlArray;
+        } catch (Exception $exception) {
+
+            throw $exception;
+        }
     }
 
     /**
