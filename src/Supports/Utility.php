@@ -171,4 +171,28 @@ class Utility
 
         return false;
     }
+
+    public static function splitName(string $fullName, bool $withMiddle = false): array
+    {
+        $fullName = trim($fullName);
+
+        $info = [
+            'first' => '',
+            'middle' => '',
+            'last' => '',
+        ];
+
+        if (mb_strpos($fullName, ' ') !== false) {
+            $info['first'] = $fullName;
+            return $info;
+        }
+
+        $nameParts = explode(' ', $fullName);
+        $info['first'] = $nameParts[0];
+
+        unset($nameParts[0]);
+        $info['last'] = implode(' ', $nameParts);
+
+        return $info;
+    }
 }
