@@ -42,6 +42,8 @@ abstract class DynamicProperty implements ArrayAccess, Arrayable, Jsonable, Json
 
     public function __debugInfo(): ?array
     {
+        unset($this->fillable, $this->casts, $this->defaults);
+
         return $this->attributes;
     }
 
