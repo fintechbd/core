@@ -53,14 +53,14 @@ class MacroServiceProvider extends ServiceProvider
          * @param string $payload
          * @return \Illuminate\Http\Client\Response
          */
-        Http::macro('soap', function (string $url = '/', string $method = '', string $payload = '') {
+        Http::macro('soap', function (string $url = '/', string $method = '', string $payload = '', array $headers = []) {
             return Http::withoutVerifying()
                 ->withHeaders([
                     'Host' => parse_url($url, PHP_URL_HOST),
                     'SOAPAction' => $method,
                     'Content-Length' => strlen($payload),
                     'Content-Type' => 'text/xml;charset=utf-8',
-                ])
+                ] + $headers)
                 ->withBody($payload, 'text/xml;charset=utf-8')
                 ->post($url);
         });
