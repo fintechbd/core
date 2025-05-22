@@ -5,7 +5,6 @@ namespace Fintech\Core\Providers;
 use Fintech\Core\Enums\RequestPlatform;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,18 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MacroServiceProvider extends ServiceProvider
 {
-    public function register()
-    {
-        $this->app->singleton(Factory::class, function ($app) {
-            return (new Factory($app))
-                ->withHeaders([
-                    'X-User-Agent' => Str::studly(config('app.name'))." By Fintech Bangladesh/". $app::version(),
-                    'X-Environment' => Str::title(config('app.env')),
-                ]);
-        });
-
-    }
-
     /**
      * Define your route model bindings, pattern filters, etc.
      *
