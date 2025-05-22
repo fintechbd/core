@@ -4,6 +4,11 @@ use Fintech\Core\Commands\AppUpdateCommand;
 use Illuminate\Support\Facades\Artisan;
 
 return [
+    '1.0.9' => function (AppUpdateCommand $command) {
+        $command->task('Setup Prime Bank Vendor Configuration', function () {
+            Artisan::call('remit:prime-bank-setup', ['--ansi' => true]);
+        });
+    },
     '1.0.8' => function (AppUpdateCommand $command) {
         $command->task('Setup Agrani Bank Vendor Configuration', function () {
             Artisan::call('remit:agrani-bank-setup', ['--ansi' => true]);
