@@ -3,7 +3,6 @@
 namespace Fintech\Core\Rules;
 
 use Closure;
-use Fintech\Business\Facades\Business;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
@@ -36,7 +35,7 @@ class ChargeLowerLimit implements DataAwareRule, ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!Business::chargeBreakDown()->available($this->data['service_stat_id'], $this->data['lower_limit'])) {
+        if (!business()->chargeBreakDown()->available($this->data['service_stat_id'], $this->data['lower_limit'])) {
             $fail("The lower limit isn't allowed.");
         }
     }

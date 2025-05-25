@@ -3,7 +3,6 @@
 namespace Fintech\Core\Rules;
 
 use Closure;
-use Fintech\Business\Facades\Business;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
@@ -26,7 +25,7 @@ class ServiceTypeParent implements ValidationRule
     {
 
         if ($value != null) {
-            $serviceType = Business::serviceType()->find($value);
+            $serviceType = business()->serviceType()->find($value);
             if ($serviceType->service_type_is_parent != $this->type) {
                 $fail("The parent service type {$serviceType->service_type_name} needs to be set ({$this->type}).");
             }

@@ -58,14 +58,14 @@ return [
     },
     '1.0.3' => function (AppUpdateCommand $command) {
         if (\Fintech\Core\Facades\Core::packageExists('Business')) {
-            \Fintech\Business\Facades\Business::serviceType()->list()->each(function ($service) use ($command) {
+            \Fintech\Business\Facades\business()->serviceType()->list()->each(function ($service) use ($command) {
                 $service->enabled = true;
                 if ($service->save()) {
                     $command->successMessage("[<fg=bright-yellow;options=bold>{$service->service_type_name}</>] service type has been updated", 'DONE', false);
                 }
             });
 
-            \Fintech\Business\Facades\Business::serviceStat()->list()->each(function ($serviceStat) use ($command) {
+            \Fintech\Business\Facades\business()->serviceStat()->list()->each(function ($serviceStat) use ($command) {
                 $serviceStat->enabled = true;
                 if ($serviceStat->save()) {
                     $command->successMessage("[<fg=bright-yellow;options=bold>{$serviceStat->id}</>] service stat has been updated", 'DONE', false);
@@ -76,7 +76,7 @@ return [
     '1.0.2' => function (AppUpdateCommand $command) {
         if (\Fintech\Core\Facades\Core::packageExists('Business')) {
 
-            if ($serviceSetting = \Fintech\Business\Facades\Business::serviceSetting()->create([
+            if ($serviceSetting = \Fintech\Business\Facades\business()->serviceSetting()->create([
                 'service_setting_type' => 'service',
                 'service_setting_name' => 'Visible Website Kommerce',
                 'service_setting_field_name' => 'visible_website_kommerce',
@@ -89,7 +89,7 @@ return [
 
                 $command->successMessage("Visible Website Kommerce Service Setting created successfully.", false);
 
-                \Fintech\Business\Facades\Business::service()->list()->each(function ($service) use ($command) {
+                \Fintech\Business\Facades\business()->service()->list()->each(function ($service) use ($command) {
                     $serviceData = $service->service_data ?? [];
                     $serviceData['visible_website_kommerce'] = 'yes';
                     $service->service_data = $serviceData;

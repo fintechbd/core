@@ -1,6 +1,7 @@
 <?php
 
 use Fintech\Core\Exceptions\PackageNotInstalledException;
+use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Currency;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
@@ -167,6 +168,10 @@ if (!function_exists('singleton')) {
             return $singleton->list($filters);
         }
 
+        if (method_exists($singleton, 'find') && is_numeric($filters)) {
+            return $singleton->find($filters);
+        }
+
         return $singleton;
     }
 }
@@ -226,7 +231,6 @@ if (!function_exists('throttle_key')) {
 if (!function_exists('core')) {
     /**
      * @return \Fintech\Core\Facades\Core
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function core(): \Fintech\Core\Facades\Core
     {
@@ -237,7 +241,6 @@ if (!function_exists('core')) {
 if (!function_exists('airtime')) {
     /**
      * @return \Fintech\Airtime\Airtime
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function airtime(): \Fintech\Airtime\Airtime
     {
@@ -248,7 +251,6 @@ if (!function_exists('airtime')) {
 if (!function_exists('fintech_auth')) {
     /**
      * @return \Fintech\Auth\Auth
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function fintech_auth(): \Fintech\Auth\Auth
     {
@@ -259,7 +261,6 @@ if (!function_exists('fintech_auth')) {
 if (!function_exists('banco')) {
     /**
      * @return \Fintech\Banco\Banco
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function banco(): \Fintech\Banco\Banco
     {
@@ -270,7 +271,6 @@ if (!function_exists('banco')) {
 if (!function_exists('business')) {
     /**
      * @return \Fintech\Business\Business
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function business(): \Fintech\Business\Business
     {
@@ -281,7 +281,6 @@ if (!function_exists('business')) {
 if (!function_exists('card')) {
     /**
      * @return \Fintech\Card\Card
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function card(): \Fintech\Card\Card
     {
@@ -292,7 +291,6 @@ if (!function_exists('card')) {
 if (!function_exists('chat')) {
     /**
      * @return \Fintech\Chat\Chat
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function chat(): \Fintech\Chat\Chat
     {
@@ -303,7 +301,6 @@ if (!function_exists('chat')) {
 if (!function_exists('ekyc')) {
     /**
      * @return \Fintech\Ekyc\Ekyc
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function ekyc(): \Fintech\Ekyc\Ekyc
     {
@@ -314,7 +311,6 @@ if (!function_exists('ekyc')) {
 if (!function_exists('gift')) {
     /**
      * @return \Fintech\Gift\Gift
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function gift(): \Fintech\Gift\Gift
     {
@@ -325,7 +321,6 @@ if (!function_exists('gift')) {
 if (!function_exists('meatadata')) {
     /**
      * @return \Fintech\MetaData\MetaData
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function metadata(): \Fintech\MetaData\MetaData
     {
@@ -336,7 +331,6 @@ if (!function_exists('meatadata')) {
 if (!function_exists('promo')) {
     /**
      * @return \Fintech\Promo\Promo
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function promo(): \Fintech\Promo\Promo
     {
@@ -347,7 +341,6 @@ if (!function_exists('promo')) {
 if (!function_exists('reload')) {
     /**
      * @return \Fintech\Reload\Reload
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function reload(): \Fintech\Reload\Reload
     {
@@ -358,7 +351,6 @@ if (!function_exists('reload')) {
 if (!function_exists('remit')) {
     /**
      * @return \Fintech\Remit\Remit
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function remit(): \Fintech\Remit\Remit
     {
@@ -369,7 +361,6 @@ if (!function_exists('remit')) {
 if (!function_exists('sanction')) {
     /**
      * @return \Fintech\Sanction\Sanction
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function sanction(): \Fintech\Sanction\Sanction
     {
@@ -380,7 +371,6 @@ if (!function_exists('sanction')) {
 if (!function_exists('tab')) {
     /**
      * @return \Fintech\Tab\Tab
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function tab(): \Fintech\Tab\Tab
     {
@@ -391,7 +381,6 @@ if (!function_exists('tab')) {
 if (!function_exists('transaction')) {
     /**
      * @return \Fintech\Transaction\Transaction
-     * @throws PackageNotInstalledException|BindingResolutionException
      */
     function transaction(): \Fintech\Transaction\Transaction
     {
