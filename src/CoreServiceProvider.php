@@ -14,6 +14,7 @@ use Fintech\Core\Providers\MacroServiceProvider;
 use Fintech\Core\Providers\OverwriteServiceProvider;
 use Fintech\Core\Providers\RepositoryServiceProvider;
 use Fintech\Core\Providers\RouteServiceProvider;
+use Fintech\Core\Providers\ScheduleServiceProvider;
 use Fintech\Core\Providers\ValidatorServiceProvider;
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
 use Illuminate\Support\Facades\Log;
@@ -49,6 +50,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->register(MacroServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
         $this->app->register(ValidatorServiceProvider::class);
+        $this->app->register(ScheduleServiceProvider::class);
     }
 
     /**
