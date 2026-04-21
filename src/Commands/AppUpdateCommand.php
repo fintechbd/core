@@ -54,8 +54,10 @@ class AppUpdateCommand extends Command
 
                 $update = app()->make($versionClass);
 
-                $this->task("Executed version <fg=bright-yellow;options=bold>{$version}</> tasks",
-                    fn() => $update->handle($this));
+                $this->task(
+                    "Executed version <fg=bright-yellow;options=bold>{$version}</> tasks",
+                    fn () => $update->handle($this)
+                );
 
                 $updater->setCurrent($version);
             }

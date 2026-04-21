@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Artisan;
 
 class Version108 implements Changelog
 {
-
     /**
      * This command will run and apply the changes when the app update command is executed.
      * You can use this to run any database migrations, seeders, or any other changes
