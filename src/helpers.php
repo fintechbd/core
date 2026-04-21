@@ -249,6 +249,7 @@ if (!function_exists('airtime')) {
 if (!function_exists('fintech_auth')) {
     /**
      * @return \Fintech\Auth\Auth
+     * @throws \Fintech\Core\Exceptions\PackageNotInstalledException
      */
     function fintech_auth(): \Fintech\Auth\Auth
     {
@@ -259,6 +260,7 @@ if (!function_exists('fintech_auth')) {
 if (!function_exists('banco')) {
     /**
      * @return \Fintech\Banco\Banco
+     * @throws \Fintech\Core\Exceptions\PackageNotInstalledException
      */
     function banco(): \Fintech\Banco\Banco
     {
@@ -269,6 +271,7 @@ if (!function_exists('banco')) {
 if (!function_exists('business')) {
     /**
      * @return \Fintech\Business\Business
+     * @throws \Fintech\Core\Exceptions\PackageNotInstalledException
      */
     function business(): \Fintech\Business\Business
     {

@@ -50,9 +50,12 @@ class AppUpdateCommand extends Command
 
             $this->infoMessage("Latest Version Detected", $updater->latest(), false);
 
-            foreach ($updater->availableVersions() as $version => $task) {
+            foreach ($updater->availableVersions() as $version => $versionClass) {
 
-                $this->task("Executed version <fg=bright-yellow;options=bold>{$version}</> tasks", $task);
+                $update = app()->make($versionClass);
+
+                $this->task("Executed version <fg=bright-yellow;options=bold>{$version}</> tasks",
+                    fn() => $update->handle($this));
 
                 $updater->setCurrent($version);
             }

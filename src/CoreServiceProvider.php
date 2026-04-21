@@ -56,8 +56,6 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadSettings();
-
         $this->injectOnConfig();
 
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -74,6 +72,7 @@ class CoreServiceProvider extends ServiceProvider
             __DIR__ . '/../config/core.php' => config_path('fintech/core.php'),
             __DIR__ . '/../config/media-library.php' => config_path('media-library.php'),
         ], 'fintech-core-config');
+
         $this->publishes([
             __DIR__ . '/../config/changelog.php' => config_path('fintech/changelog.php'),
         ], 'fintech-core-changelog');
@@ -92,6 +91,8 @@ class CoreServiceProvider extends ServiceProvider
                 HealthCheckupCommand::class
             ]);
         }
+
+        $this->loadSettings();
     }
 
     private function loadSettings(): void
