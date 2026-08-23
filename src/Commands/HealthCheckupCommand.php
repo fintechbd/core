@@ -5,6 +5,7 @@ namespace Fintech\Core\Commands;
 use Fintech\Core\Traits\HasCoreSetting;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Process;
 use Throwable;
 
 /**
@@ -82,10 +83,21 @@ class HealthCheckupCommand extends Command
     private function setPermissions()
     {
         if (PHP_OS_FAMILY == "Linux") {
-            $this->task("Verify storage directory permission", function () {
-                shell_exec('sudo chown -R ubuntu:ubuntu /var/www/html/storage');
-                shell_exec('sudo chmod -R 777 /var/www/html/storage');
-            });
+
+            $adminPrivilege = Process::run('sudo -l -n');
+
+            if ($adminPrivilege->successful()) {
+
+                $this->task("Verify storage directory permission", function () {
+                    $directory = storage_path();
+                    
+                    $result = Process::run("chown -R ubuntu:ubuntu {$directory}");
+                    
+                    if ($result->successful()) {
+                        Process::run("chmod -R 777 {$directory}");
+                    }
+                });
+            }
         }
     }
 }
