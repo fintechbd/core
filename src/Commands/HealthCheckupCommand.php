@@ -90,9 +90,9 @@ class HealthCheckupCommand extends Command
 
                 $this->task("Verify storage directory permission", function () {
                     $directory = storage_path();
-                    
+
                     $result = Process::run("chown -R ubuntu:ubuntu {$directory}");
-                    
+
                     if ($result->successful()) {
                         Process::run("chmod -R 777 {$directory}");
                     }
